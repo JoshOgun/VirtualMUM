@@ -111,7 +111,6 @@ public class Task_Data {
                     VMTask.COLUMN_NAME_TITLE6 + " INTEGER," +
                     VMTask.COLUMN_NAME_TITLE7 + " REAL," +
                     VMTask.COLUMN_NAME_TITLE8 + " INTEGER)";
-
     public static final String SQL_DELETE_TASKS =
             "DROP TABLE IF EXISTS " + VMTask.TABLE_NAME;
 
