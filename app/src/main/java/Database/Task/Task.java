@@ -3,19 +3,18 @@ package Database.Task;
 import android.provider.BaseColumns;
 
 
-public class Task_Data {
+public class Task {
 
     private int id;
     private String name;
     private String startDate;
     private String dueDate;
-    private String difficulty;
-    private String priority;
-    private String estimatedHours;
-    private String completed;
+    private int difficulty;
+    private int priority;
+    private double estimatedHours;
+    private int completed;
 
-    public Task_Data(int id, String name, String startDate, String dueDate, String difficulty, String priority, String estimatedHours, String completed) {
-        this.id = id;
+    public Task(String name, String startDate, String dueDate, int difficulty, int priority, double estimatedHours, int completed) {
         this.name = name;
         this.startDate = startDate;
         this.dueDate = dueDate;
@@ -25,12 +24,8 @@ public class Task_Data {
         this.completed = completed;
     }
 
-    public int getId() {
-        return id;
-    }
+    public Task(){
 
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -57,36 +52,44 @@ public class Task_Data {
         this.dueDate = dueDate;
     }
 
-    public String getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
-    public String getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
-    public String getEstimatedHours() {
+    public double getEstimatedHours() {
         return estimatedHours;
     }
 
-    public void setEstimatedHours(String estimatedHours) {
+    public void setEstimatedHours(double estimatedHours) {
         this.estimatedHours = estimatedHours;
     }
 
-    public String getCompleted() {
+    public int getCompleted() {
         return completed;
     }
 
-    public void setCompleted(String completed) {
+    public void setCompleted(int completed) {
         this.completed = completed;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /* Inner class that defines the table contents */
@@ -111,6 +114,7 @@ public class Task_Data {
                     VMTask.COLUMN_NAME_TITLE6 + " INTEGER," +
                     VMTask.COLUMN_NAME_TITLE7 + " REAL," +
                     VMTask.COLUMN_NAME_TITLE8 + " INTEGER)";
+
     public static final String SQL_DELETE_TASKS =
             "DROP TABLE IF EXISTS " + VMTask.TABLE_NAME;
 
