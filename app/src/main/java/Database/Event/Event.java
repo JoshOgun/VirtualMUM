@@ -72,7 +72,7 @@ public class Event {
         public static final String COLUMN_NAME_TITLE5 = "Location";
     }
 
-    public static final String SQL_CREATE_TASKS =
+    public static final String SQL_CREATE_EVENTS =
             "CREATE TABLE " + Event.VMEvent.TABLE_NAME + " (" +
                     Event.VMEvent._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     Event.VMEvent.COLUMN_NAME_TITLE2 + " TEXT," +
@@ -80,6 +80,6 @@ public class Event {
                     Event.VMEvent.COLUMN_NAME_TITLE4 + " TEXT," +
                     Event.VMEvent.COLUMN_NAME_TITLE5 + " TEXT)";
 
-    public static final String SQL_DELETE_TASKS =
+    public static final String SQL_DELETE_EVENTS =
             "DROP TABLE IF EXISTS " + VMEvent.TABLE_NAME;
 }

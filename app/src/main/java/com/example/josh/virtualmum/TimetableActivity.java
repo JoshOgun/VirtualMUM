@@ -3,11 +3,15 @@ package com.example.josh.virtualmum;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import Database.Task.Task;
+import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
@@ -56,6 +60,19 @@ public class TimetableActivity extends AppCompatActivity {
 
         });
 
+        // CODE FOR DATABASE TESTING
+//        // Database Helper
+//        VMDbHelper db;
+//        db = new VMDbHelper(getApplicationContext());
+//
+//        //long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
+//
+//        List<Task> allTasks = db.getAllTasks();
+//        for (Task task : allTasks) {
+//            Log.d("Task Name", task.getName());
+//        }
+//
+//        db.closeDB();
 
     }
 

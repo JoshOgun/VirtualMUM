@@ -25,12 +25,14 @@ public class VMDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Task.SQL_CREATE_TASKS);
+        db.execSQL(Event.SQL_CREATE_EVENTS);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
        db.execSQL(Task.SQL_DELETE_TASKS);
+       db.execSQL(Event.SQL_DELETE_EVENTS);
         onCreate(db);
     }
 
@@ -38,7 +40,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    /* Insert Table Methods*/
+    /* TASK Table Methods*/
     public long insertTask(String name, String startDate, String dueDate, int difficulty, int priority, double estimatedHours, int completed ) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
@@ -166,7 +168,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /* Event Table Methods*/
+    /* EVENT Table Methods*/
     public long insertEvent(String name, String startDate, String endDate, String location) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
@@ -238,4 +240,10 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    // closing database
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
 }
