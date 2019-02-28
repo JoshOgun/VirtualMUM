@@ -9,7 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import Database.Completion.Completion;
 import Database.Event.Event;
+import Database.Progress.Progress;
+import Database.Report.Report;
 import Database.Task.Task;
 
 public class VMDbHelper extends SQLiteOpenHelper {
@@ -26,6 +29,9 @@ public class VMDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Task.SQL_CREATE_TASKS);
         db.execSQL(Event.SQL_CREATE_EVENTS);
+        db.execSQL(Report.SQL_CREATE_REPORTS);
+        db.execSQL(Progress.SQL_CREATE_PROGRESS);
+        db.execSQL(Completion.SQL_CREATE_COMPLETIONS);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -33,6 +39,9 @@ public class VMDbHelper extends SQLiteOpenHelper {
         // to simply to discard the data and start over
        db.execSQL(Task.SQL_DELETE_TASKS);
        db.execSQL(Event.SQL_DELETE_EVENTS);
+       db.execSQL(Report.SQL_DELETE_REPORTS);
+       db.execSQL(Progress.SQL_DELETE_PROGRESS);
+       db.execSQL(Completion.SQL_DELETE_COMPLETIONS);
         onCreate(db);
     }
 
@@ -199,7 +208,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(Event.VMEvent.TABLE_NAME,
                 new String[]{Event.VMEvent._ID, Event.VMEvent.COLUMN_NAME_TITLE2, Event.VMEvent.COLUMN_NAME_TITLE3,
                         Event.VMEvent.COLUMN_NAME_TITLE4, Event.VMEvent.COLUMN_NAME_TITLE5},
-                Task.VMTask._ID + "=?",
+                Event.VMEvent._ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null)
@@ -271,6 +280,195 @@ public class VMDbHelper extends SQLiteOpenHelper {
         return events;
     }
 
+<<<<<<< HEAD
+=======
+    /* REPORT Table Methods*/
+    public long insertReport(double hoursSpent, float estimatedHours) {
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // the id of a report should be the same as the id of the task it corresponds to ******
+
+        values.put(Report.VMReport.COLUMN_NAME_TITLE2, hoursSpent);
+        values.put(Report.VMReport.COLUMN_NAME_TITLE3, estimatedHours);
+
+        //insert row
+        long id = db.insert(Report.VMReport.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Report getReport(long id){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Report.VMReport.TABLE_NAME,
+                new String[]{Report.VMReport._ID, Report.VMReport.COLUMN_NAME_TITLE2, Report.VMReport.COLUMN_NAME_TITLE3},
+                Report.VMReport._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare report object
+        Report report = new Report(
+                cursor.getDouble(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE2)),
+                cursor.getFloat(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE3)));
+
+        // close the db connection
+        cursor.close();
+
+        return report;
+    }
+
+    public int updateReport(Report report) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Report.VMReport.COLUMN_NAME_TITLE2, report.getHoursSpent());
+        values.put(Report.VMReport.COLUMN_NAME_TITLE3, report.getEstimatedHours());
+
+
+        // updating row
+        return db.update(Report.VMReport.TABLE_NAME, values, Report.VMReport._ID + " = ?",
+                new String[]{String.valueOf(report.getId())});
+
+    }
+
+    public void deleteReport(Report report) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Report.VMReport.TABLE_NAME, Report.VMReport._ID + " = ?",
+                new String[]{String.valueOf(report.getId())});
+        db.close();
+
+    }
+
+    /* PROGRESS Table Methods */
+    public long insertProgress(float progress, double hoursSpent){
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // the id of the progress should be the same as the id of the task it corresponds to ******
+
+        values.put(Progress.VMProgress.COLUMN_NAME_TITLE2, progress);
+        values.put(Progress.VMProgress.COLUMN_NAME_TITLE3, hoursSpent);
+
+        //insert row
+        long id = db.insert(Progress.VMProgress.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Progress getProgress(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Progress.VMProgress.TABLE_NAME,
+                new String[]{Progress.VMProgress._ID, Progress.VMProgress.COLUMN_NAME_TITLE2, Progress.VMProgress.COLUMN_NAME_TITLE3},
+                Progress.VMProgress._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare report object
+        Progress progress = new Progress(
+                cursor.getFloat(cursor.getColumnIndex(Progress.VMProgress.COLUMN_NAME_TITLE2)),
+                cursor.getDouble(cursor.getColumnIndex(Progress.VMProgress.COLUMN_NAME_TITLE3)));
+
+        // close the db connection
+        cursor.close();
+
+        return progress;
+    }
+
+    public int updateProgress(Progress progress) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Progress.VMProgress.COLUMN_NAME_TITLE2, progress.getProgress());
+        values.put(Progress.VMProgress.COLUMN_NAME_TITLE3, progress.getHoursSpent());
+
+
+        // updating row
+        return db.update(Progress.VMProgress.TABLE_NAME, values, Progress.VMProgress._ID + " = ?",
+                new String[]{String.valueOf(progress.getId())});
+
+    }
+
+    public void deleteProgress(Progress progress) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Progress.VMProgress.TABLE_NAME, Progress.VMProgress._ID + " = ?",
+                new String[]{String.valueOf(progress.getId())});
+        db.close();
+    }
+
+    /*COMPLETION Table Methods*/
+    public long insertCompletion(float hoursForCompletion){
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        // the id of the progress should be the same as the id of the task it corresponds to ******
+
+        values.put(Completion.VMCompletion.COLUMN_NAME_TITLE2, hoursForCompletion);
+
+        //insert row
+        long id = db.insert(Completion.VMCompletion.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public Completion getCompletion(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Completion.VMCompletion.TABLE_NAME,
+                new String[]{Completion.VMCompletion._ID, Completion.VMCompletion.COLUMN_NAME_TITLE2},
+                Completion.VMCompletion._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare report object
+        Completion completion = new Completion(
+                cursor.getFloat(cursor.getColumnIndex(Completion.VMCompletion.COLUMN_NAME_TITLE2)));
+
+        // close the db connection
+        cursor.close();
+
+        return completion;
+
+    }
+
+    public int updateCompletion(Completion completion){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Completion.VMCompletion.COLUMN_NAME_TITLE2, completion.getHoursForCompletion());
+
+        // updating row
+        return db.update(Completion.VMCompletion.TABLE_NAME, values, Completion.VMCompletion._ID + " = ?",
+                new String[]{String.valueOf(completion.getId())});
+
+    }
+
+    public void deleteCompletion(Completion completion) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Completion.VMCompletion.TABLE_NAME, Completion.VMCompletion._ID + " = ?",
+                new String[]{String.valueOf(completion.getId())});
+        db.close();
+    }
+
+
+>>>>>>> DatabaseBranch
     // closing database
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
