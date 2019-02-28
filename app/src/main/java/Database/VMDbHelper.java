@@ -249,6 +249,37 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<Event> getAllEvents() {
+        List<Event> events = new ArrayList<>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Event.VMEvent.TABLE_NAME + " ORDER BY " +
+                Event.VMEvent.COLUMN_NAME_TITLE4 + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Event event = new Event();
+                event.setId(cursor.getInt(cursor.getColumnIndex(Task.VMTask._ID)));
+                event.setName(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE2)));
+                event.setStartDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE3)));
+                event.setEndDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE4)));
+                event.setLocation(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE5)));
+
+                events.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return events;
+    }
+
     /* REPORT Table Methods*/
     public long insertReport(double hoursSpent, float estimatedHours) {
         // get writable database as we want to write data
