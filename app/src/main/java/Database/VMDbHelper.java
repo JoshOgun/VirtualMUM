@@ -15,6 +15,7 @@ import Database.Progress.Progress;
 import Database.Report.Report;
 import Database.Task.Task;
 import Database.Timetable.Timetable;
+import Database.UserPreference.UserPref;
 
 public class VMDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
@@ -250,6 +251,37 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<Event> getAllEvents() {
+        List<Event> events = new ArrayList<>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Event.VMEvent.TABLE_NAME + " ORDER BY " +
+                Event.VMEvent.COLUMN_NAME_TITLE4 + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Event event = new Event();
+                event.setId(cursor.getInt(cursor.getColumnIndex(Task.VMTask._ID)));
+                event.setName(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE2)));
+                event.setStartDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE3)));
+                event.setEndDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE4)));
+                event.setLocation(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE5)));
+
+                events.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return events;
+    }
+
     /* REPORT Table Methods*/
     public long insertReport(double hoursSpent, float estimatedHours) {
         // get writable database as we want to write data
@@ -435,8 +467,70 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /*TIMETABLE Table Methods*/
+    /* USER PREFERENCE Table Methods*/
+    public long insertUserPref(String workPref, String noDayPref){
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        // the id of the progress should be the same as the id of the task it corresponds to ******
+
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE2, workPref);
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE3, noDayPref);
+
+        //insert row
+        long id = db.insert(UserPref.VMUserPref.TABLE_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public UserPref getUserPref(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(UserPref.VMUserPref.TABLE_NAME,
+                new String[]{UserPref.VMUserPref._ID, UserPref.VMUserPref.COLUMN_NAME_TITLE2, UserPref.VMUserPref.COLUMN_NAME_TITLE3},
+                UserPref.VMUserPref._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare report object
+        UserPref userPref = new UserPref(
+                cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE2)),
+                cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE3)));
+
+                // close the db connection
+        cursor.close();
+
+        return userPref;
+
+    }
+
+    public int updateUserPref(UserPref userPref){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE2, userPref.getWorkPref());
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE3, userPref.getNoDayPref());
+
+
+        // updating row
+        return db.update(UserPref.VMUserPref.TABLE_NAME, values, UserPref.VMUserPref._ID + " = ?",
+                new String[]{String.valueOf(userPref.getId())});
+
+    }
+
+    public void deleteUserPref(UserPref userPref) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(UserPref.VMUserPref.TABLE_NAME, UserPref.VMUserPref._ID + " = ?",
+                new String[]{String.valueOf(userPref.getId())});
+        db.close();
+    }
+
+    /*TIMETABLE Table Methods*/
     public long insertTimetable(String date, int taskID, int eventID, float duration, int completed){
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();

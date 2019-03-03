@@ -60,19 +60,19 @@ public class TimetableActivity extends AppCompatActivity {
 
         });
 
-        // CODE FOR DATABASE TESTING
-//        // Database Helper
-//        VMDbHelper db;
-//        db = new VMDbHelper(getApplicationContext());
-//
-//        //long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
-//
-//        List<Task> allTasks = db.getAllTasks();
-//        for (Task task : allTasks) {
-//            Log.d("Task Name", task.getName());
-//        }
-//
-//        db.closeDB();
+         // CODE FOR DATABASE TESTING
+        // Database Helper
+        VMDbHelper db;
+        db = new VMDbHelper(getApplicationContext());
+
+        long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
+
+        List<Task> allTasks = db.getAllTasks();
+        for (Task task : allTasks) {
+            Log.d("Task Name", task.getName());
+        }
+
+        db.closeDB();
 
     }
 
