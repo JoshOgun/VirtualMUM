@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">VirtualMUM</string>
+    <string-array name="time_array">
+        <item>Morning</item>
+        <item>Afternoon</item>
+        <item>Evening</item>
+        <item>No Preference</item>
+    </string-array>
+
+    <string-array name="period_array">
+        <item>1AM</item>
+        <item>2AM</item>
+        <item>3AM</item>
+        <item>4AM</item>
+    </string-array>
+
+    <string-array name="day_array">
+        <item>Mon</item>
+        <item>Tues</item>
+        <item>Wed</item>
+        <item>Thurs</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string name="title_activity_timetable">TimetableActivity</string>
 </resources>
