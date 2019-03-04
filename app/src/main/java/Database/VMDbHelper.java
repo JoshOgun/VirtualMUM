@@ -281,8 +281,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         return events;
     }
 
-<<<<<<< HEAD
-=======
+
     /* REPORT Table Methods*/
     public long insertReport(double hoursSpent, float estimatedHours) {
         // get writable database as we want to write data
@@ -531,7 +530,6 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
->>>>>>> DatabaseBranch
     // closing database
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();
