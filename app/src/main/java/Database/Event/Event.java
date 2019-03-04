@@ -2,6 +2,10 @@ package Database.Event;
 
 import android.provider.BaseColumns;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -24,11 +28,35 @@ public class Event {
         this.endDate = endDate;
         this.location = location;
 
-
+        dayNumber = parseDay(endDate);
+        startTimeNumber = parseHours(startDate);
+        endTimeNumber = parseHours(endDate) + 1;
     }
 
 
     public Event(){
+
+    }
+
+    private int parseDay(String date){
+        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss" );
+        String datenow = date;
+        try {
+            Date date2 = formatter.parse(datenow);
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(date2);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            return dayOfWeek-1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+    }
+
+    private int parseHours(String date){
+       return date.charAt(8) + date.charAt(9);
 
     }
 

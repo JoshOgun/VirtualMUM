@@ -180,7 +180,7 @@ public class assignTimetable {
         cleanTimetable(startOfWeek, endOfWeek); // removes all currently assigned tasks
         int counter = 0; // counter variable for no of free hours at once
         // why the % in the for??
-        for (int i = startOfWeek; i < endOfWeek; i = (i + 1) % 7) { // iterates through working week
+        for (int i = startOfWeek; i != endOfWeek; i = (i + 1) % 7) { // iterates through working week
             freeTimeInDay(i);
             int index = 0;
             // [length of interval] [start time of interval] [end time of interval]
