@@ -14,6 +14,7 @@ import Database.Event.Event;
 import Database.Progress.Progress;
 import Database.Report.Report;
 import Database.Task.Task;
+import Database.Timetable.Timetable;
 import Database.UserPreference.UserPref;
 
 public class VMDbHelper extends SQLiteOpenHelper {
@@ -527,6 +528,77 @@ public class VMDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(UserPref.VMUserPref.TABLE_NAME, UserPref.VMUserPref._ID + " = ?",
                 new String[]{String.valueOf(userPref.getId())});
+        db.close();
+    }
+
+    /*TIMETABLE Table Methods*/
+    public long insertTimetable(String date, int taskID, int eventID, float duration, int completed){
+        // get writable database as we want to write data
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE2, date);
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE3, taskID);
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE4, eventID);
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE5, duration);
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE6, completed);
+
+        //insert row
+        long id = db.insert(Timetable.VMTimetable.TABLE_NAME, null, values);
+
+        db.close();
+        //return date ???
+        return id;
+    }
+
+    public Timetable getTimetable(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(Timetable.VMTimetable.TABLE_NAME,
+                new String[]{Timetable.VMTimetable._ID, Timetable.VMTimetable.COLUMN_NAME_TITLE2 , Timetable.VMTimetable.COLUMN_NAME_TITLE3,
+                        Timetable.VMTimetable.COLUMN_NAME_TITLE4, Timetable.VMTimetable.COLUMN_NAME_TITLE5, Timetable.VMTimetable.COLUMN_NAME_TITLE6},
+                Timetable.VMTimetable._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        // prepare report object
+        Timetable timetable = new Timetable(
+                cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)),
+                cursor.getFloat(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
+
+        // close the db connection
+        cursor.close();
+
+        return timetable;
+
+    }
+
+    public int updateTimetable(Timetable timetable){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE2, timetable.getDate());
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE3, timetable.getTaskID());
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE4, timetable.getEventID());
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE5, timetable.getDuration());
+        values.put(Timetable.VMTimetable.COLUMN_NAME_TITLE6, timetable.getCompleted());
+
+        // updating row
+        return db.update(Timetable.VMTimetable.TABLE_NAME, values, Timetable.VMTimetable._ID + " = ?",
+                new String[]{String.valueOf(timetable.getId())});
+
+    }
+
+    public void deleteTimetable(Timetable timetable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable._ID + " = ?",
+                new String[]{String.valueOf(timetable.getId())});
         db.close();
     }
 

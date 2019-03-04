@@ -43,16 +43,17 @@ public class Progress {
     /* Inner class that defines the table contents */
     public static class VMProgress implements BaseColumns {
         public static final String TABLE_NAME = "Progress_Data";
-        public static final String COLUMN_NAME_TITLE2 = "Hours_Spent";
-        public static final String COLUMN_NAME_TITLE3 = "Estimated_Hours";
+        public static final String COLUMN_NAME_TITLE2 = "Progress";
+        public static final String COLUMN_NAME_TITLE3 = "Hours_Spent";
 
     }
 
     public static final String SQL_CREATE_PROGRESS =
             "CREATE TABLE " + VMProgress.TABLE_NAME + " (" +
-                    VMProgress._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    VMProgress._ID + " INTEGER," +
                     VMProgress.COLUMN_NAME_TITLE2 + " INTEGER," +
-                    VMProgress.COLUMN_NAME_TITLE3 + " INTEGER)";
+                    VMProgress.COLUMN_NAME_TITLE3 + " INTEGER" +
+                    " FOREIGN KEY (_ID) REFERENCES Task_Data(_ID))";
 
     public static final String SQL_DELETE_PROGRESS =
             "DROP TABLE IF EXISTS " + VMProgress.TABLE_NAME;
