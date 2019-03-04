@@ -11,7 +11,7 @@ public class Event {
     private String name;
     private String startDate;
     private String endDate;
-    private String Location;
+    private String location;
 
     public int dayNumber;
     public int startTimeNumber;
@@ -22,21 +22,11 @@ public class Event {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        Location = location;
+        this.location = location;
+
+
     }
 
-    public Event(String n, Date s, Date e, String r) {
-        this.name = n;
-        this.startDate = s;
-        this.endDate = e;
-        this.recurrence = r;
-        this.dayNumber = s.getDay();
-        this.startTimeNumber = s.getHours();
-        this.endTimeNumber = e.getHours();
-        if(startTimeNumber==endTimeNumber) {
-            endTimeNumber++;
-        }
-    }
 
     public Event(){
 
@@ -75,11 +65,11 @@ public class Event {
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        location = location;
     }
 
     /* Inner class that defines the table contents */

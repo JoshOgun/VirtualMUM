@@ -14,6 +14,14 @@ public class Task {
     private double estimatedHours;
     private int completed;
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     private int weight;
 
     public Task(String name, String startDate, String dueDate, int difficulty, int priority, double estimatedHours, int completed) {
