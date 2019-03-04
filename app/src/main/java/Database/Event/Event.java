@@ -2,6 +2,8 @@ package Database.Event;
 
 import android.provider.BaseColumns;
 
+import java.util.Date;
+
 
 public class Event {
 
@@ -11,12 +13,29 @@ public class Event {
     private String endDate;
     private String Location;
 
+    public int dayNumber;
+    public int startTimeNumber;
+    public int endTimeNumber;
+
     public Event(String name, String startDate, String endDate, String location) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         Location = location;
+    }
+
+    public Event(String n, Date s, Date e, String r) {
+        this.name = n;
+        this.startDate = s;
+        this.endDate = e;
+        this.recurrence = r;
+        this.dayNumber = s.getDay();
+        this.startTimeNumber = s.getHours();
+        this.endTimeNumber = e.getHours();
+        if(startTimeNumber==endTimeNumber) {
+            endTimeNumber++;
+        }
     }
 
     public Event(){

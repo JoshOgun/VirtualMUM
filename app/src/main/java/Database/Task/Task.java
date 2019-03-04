@@ -14,6 +14,8 @@ public class Task {
     private double estimatedHours;
     private int completed;
 
+    private int weight;
+
     public Task(String name, String startDate, String dueDate, int difficulty, int priority, double estimatedHours, int completed) {
         this.name = name;
         this.startDate = startDate;
@@ -22,6 +24,7 @@ public class Task {
         this.priority = priority;
         this.estimatedHours = estimatedHours;
         this.completed = completed;
+        weight = priority * difficulty;
     }
 
     public Task(){
@@ -58,6 +61,8 @@ public class Task {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
+        weight = priority * difficulty;
+
     }
 
     public int getPriority() {
@@ -66,6 +71,8 @@ public class Task {
 
     public void setPriority(int priority) {
         this.priority = priority;
+        weight = priority * difficulty;
+
     }
 
     public double getEstimatedHours() {
