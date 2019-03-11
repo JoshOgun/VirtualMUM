@@ -51,9 +51,9 @@ public class Progress {
     public static final String SQL_CREATE_PROGRESS =
             "CREATE TABLE " + VMProgress.TABLE_NAME + " (" +
                     VMProgress._ID + " INTEGER," +
-                    VMProgress.COLUMN_NAME_TITLE2 + " INTEGER," +
-                    VMProgress.COLUMN_NAME_TITLE3 + " INTEGER" +
-                    " FOREIGN KEY (_ID) REFERENCES Task_Data(_ID))";
+                    VMProgress.COLUMN_NAME_TITLE2 + " INTEGER, " +
+                    VMProgress.COLUMN_NAME_TITLE3 + " INTEGER," +
+                    " FOREIGN KEY (_id) REFERENCES Task_Data(_id))";
 
     public static final String SQL_DELETE_PROGRESS =
             "DROP TABLE IF EXISTS " + VMProgress.TABLE_NAME;

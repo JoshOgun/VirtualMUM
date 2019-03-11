@@ -94,13 +94,13 @@ public class Timetable {
     public static final String SQL_CREATE_TIMETABLES =
             "CREATE TABLE " + VMTimetable.TABLE_NAME + " (" +
                     VMTimetable._ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    VMTimetable.COLUMN_NAME_TITLE2 + " STRING," +
-                    VMTimetable.COLUMN_NAME_TITLE3 + " INTEGER," +
-                    VMTimetable.COLUMN_NAME_TITLE4 + " INTEGER," +
-                    VMTimetable.COLUMN_NAME_TITLE5 + " REAL," +
-                    VMTimetable.COLUMN_NAME_TITLE6 + " INTEGER " +
-                    " FOREIGN KEY (Task_ID) REFERENCES Task_Data(_ID) " +
-                    " FOREIGN KEY (Event_ID) REFERENCES Event_Data(_ID))";
+                    VMTimetable.COLUMN_NAME_TITLE2 + " STRING, " +
+                    VMTimetable.COLUMN_NAME_TITLE3 + " INTEGER, " +
+                    VMTimetable.COLUMN_NAME_TITLE4 + " INTEGER, " +
+                    VMTimetable.COLUMN_NAME_TITLE5 + " REAL, " +
+                    VMTimetable.COLUMN_NAME_TITLE6 + " INTEGER, " +
+                    " FOREIGN KEY (Task_ID) REFERENCES Task_Data(_id)," +
+                    " FOREIGN KEY (Event_ID) REFERENCES Event_Data(_id))";
 
     public static final String SQL_DELETE_TIMETABLES =
             "DROP TABLE IF EXISTS " + VMTimetable.TABLE_NAME;
