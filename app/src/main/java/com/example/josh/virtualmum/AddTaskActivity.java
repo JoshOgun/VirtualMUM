@@ -64,6 +64,7 @@ public class AddTaskActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 VMDbHelper db;
                 db = new VMDbHelper(getApplicationContext());
 
@@ -78,15 +79,14 @@ public class AddTaskActivity extends AppCompatActivity {
                 Spinner spinners = findViewById(R.id.daySpinner);
                 dateDue  = spinners.getSelectedItem().toString();
                 spinners = findViewById(R.id.monSpinner);
-                dateDue  = dateDue + (spinners.getSelectedItemPosition() + 1);
+                if(spinners.getSelectedItemPosition() + 1 < 10){
+                    dateDue  = dateDue + "0" +(spinners.getSelectedItemPosition() + 1);
+                }
+                else{
+                    dateDue  = dateDue + (spinners.getSelectedItemPosition() + 1);
+                }
                 spinners = findViewById(R.id.yearSpinner);
                 dateDue  = dateDue + spinners.getSelectedItem().toString() + 120000;
-//                Date dateD;
-//                try {
-//                    dateD = new SimpleDateFormat("ddMMMyyyyHHmmss").parse(dateDue);
-//                    dateDue = dateD.toString();
-//                } catch (ParseException e) {
-//                }
 
 
                 SeekBar prioritySB = findViewById(R.id.PrioritySeekBar);
