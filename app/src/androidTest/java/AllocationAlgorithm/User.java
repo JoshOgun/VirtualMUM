@@ -40,12 +40,14 @@ public class User {
 
         db = new VMDbHelper(context);
         taskList = db.getAllTasks();
+        timetableHandler.orderTasks();
     }
 
     public void updateEvents(Context context){
 
         db = new VMDbHelper(context);
         eventList = db.getAllEvents();
+        timetableHandler.updateEvents();
     }
 
 //    public boolean addEvent(String name, Date startDate, Date endDate, String recurrance) {  //adds an event to the user's event list
