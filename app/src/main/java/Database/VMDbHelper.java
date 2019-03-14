@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
 import Database.Completion.Completion;
 import Database.Event.Event;
 import Database.Progress.Progress;
@@ -21,9 +22,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "VM.db";
+    private User user;
+    private Context context;
 
     public VMDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+        user = new User();
     }
 
     // All the tables must be created here when the application is downloaded and opened
@@ -70,6 +75,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // insert row
         long id = db.insert(Task.VMTask.TABLE_NAME, null, values);
+        user.updateEvents(context);
+        user.updateEvents(context);
 
         // close db connection
         db.close();

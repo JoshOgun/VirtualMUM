@@ -1,9 +1,8 @@
-package AllocationAlgorithm;
+package Database.AllocationAlgorithm;
 
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import Database.Event.Event;
@@ -41,6 +40,7 @@ public class User {
         db = new VMDbHelper(context);
         taskList = db.getAllTasks();
         timetableHandler.orderTasks();
+        db.closeDB();
     }
 
     public void updateEvents(Context context){
@@ -48,6 +48,7 @@ public class User {
         db = new VMDbHelper(context);
         eventList = db.getAllEvents();
         timetableHandler.updateEvents();
+        db.closeDB();
     }
 
 //    public boolean addEvent(String name, Date startDate, Date endDate, String recurrance) {  //adds an event to the user's event list

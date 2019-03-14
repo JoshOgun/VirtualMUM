@@ -1,6 +1,4 @@
-package AllocationAlgorithm;
-
-import java.util.Date;
+package Database.AllocationAlgorithm;
 
 public class Tester {
     /*
