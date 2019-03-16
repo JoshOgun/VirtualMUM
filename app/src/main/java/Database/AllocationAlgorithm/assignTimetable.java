@@ -1,5 +1,7 @@
 package Database.AllocationAlgorithm;
 
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -94,11 +96,11 @@ public class assignTimetable {
      */
     public void print() {
         for (int i = 0; i < 7; i++) {
-            System.out.print(startOfDay + "am: "); // marks the user determined start of the day
+            Log.d("Timetable", startOfDay + "am: "); // marks the user determined start of the day
             for (int j = startOfDay; j < endOfDay; j++) { // working day visualisation
-                System.out.print("[" + testTimetable[i][j] + "]" + " ");
+                Log.d("Timetable","[" + testTimetable[i][j] + "]" + " ");
             }
-            System.out.println("");
+            Log.d("Gap", "\n");
         }
     }
 
@@ -224,7 +226,15 @@ public class assignTimetable {
             // this is how you sort 2d arrays apparently
             java.util.Arrays.sort(temp, new java.util.Comparator<int[]>() {
                 public int compare(int[] a, int[] b) {
-                    return Integer.compare(a[0], b[0]);
+                    if (a[0] > b[0]){
+                        return 1;
+                    }
+                    else if(a[0] < b[0]){
+                        return -1;
+                    }
+                    else{
+                        return 0;
+                    }
                 }
             });
 
@@ -483,7 +493,16 @@ public class assignTimetable {
         // this is how you sort 2d arrays apparently
         java.util.Arrays.sort(temp, new java.util.Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
-                return Integer.compare(a[0], b[0]);
+                if (a[0] > b[0]){
+                    return 1;
+                }
+                else if(a[0] < b[0]){
+                    return -1;
+                }
+                else{
+                    return 0;
+                }
+                //return Integer.compare(a[0], b[0]);
             }
         });
 

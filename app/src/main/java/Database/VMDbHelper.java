@@ -272,11 +272,11 @@ public class VMDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Event event = new Event();
-                event.setId(cursor.getInt(cursor.getColumnIndex(Task.VMTask._ID)));
-                event.setName(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE2)));
-                event.setStartDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE3)));
-                event.setEndDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE4)));
-                event.setLocation(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE5)));
+                event.setId(cursor.getInt(cursor.getColumnIndex(Event.VMEvent._ID)));
+                event.setName(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE2)));
+                event.setStartDate(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE3)));
+                event.setEndDate(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE4)));
+                event.setLocation(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE5)));
 
                 events.add(event);
             } while (cursor.moveToNext());

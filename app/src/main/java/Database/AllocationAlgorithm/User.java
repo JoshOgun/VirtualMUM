@@ -29,6 +29,7 @@ public class User {
         taskList = new ArrayList<Task>();
         eventList = new ArrayList<Event>();
         timetableHandler = new assignTimetable(this);
+
     }
 
     public void setGoogleURL(String url) { //adds google url to user

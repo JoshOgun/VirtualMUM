@@ -15,6 +15,8 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
+import Database.Event.Event;
 import Database.Task.Task;
 import Database.VMDbHelper;
 import DividerDetails.MyDividerItemDecoration;
@@ -54,6 +56,36 @@ public class TaskListActivity extends AppCompatActivity {
         recyclerView.setAdapter(tAdapter);
 
         prepareTaskData();
+
+        User u = new User();
+        u.printTimetable();
+        u.updateEvents(getApplicationContext());
+        u.updateTasks(getApplicationContext());
+
+//        // ADDING A BUNCH OF EVENTS
+//        VMDbHelper db;
+//        db = new VMDbHelper(getApplicationContext());
+//
+////        long event_id = db.insertEvent("Lecture 1", "180320191415", "180320191515", "1E.39");
+////         event_id = db.insertEvent("Lecture 2", "190320191115", "190320191315", "1E.39");
+////         event_id = db.insertEvent("Lecture 3", "190320191415", "190320191615", "1E.39");
+////         event_id = db.insertEvent("Lecture 4", "200320191415", "200320191415", "1E.39");
+////         event_id = db.insertEvent("Lecture 5", "200320191115", "200320191415", "1E.39");
+////         event_id = db.insertEvent("Lecture 6", "210320191015", "210320191215", "1E.39");
+////         event_id = db.insertEvent("Lecture 7", "210320191415", "210320191615", "1E.39");
+////         event_id = db.insertEvent("Lecture 8", "220320190915", "220320191015", "1E.39");
+////         event_id = db.insertEvent("Lecture 9", "220320191115", "220320191315", "1E.39");
+////         event_id = db.insertEvent("Lecture 10", "220320191315", "220320191715", "1E.39");
+//
+//        List<Event> allEvents = db.getAllEvents();
+//        for (Event event : allEvents) {
+//            event.setLocation("1W.39");
+//            db.updateEvent(event);
+//            Log.d(" Events", event.getId() + "\t" + event.getName() + "\t" + event.getStartDate()  + "\t" +
+//                    event.getEndDate() + "\t" + event.getLocation());
+//        }
+//
+//        db.closeDB();
 
     }
 
