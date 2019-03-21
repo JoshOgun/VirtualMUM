@@ -51,6 +51,15 @@ public class ProgressActivity extends AppCompatActivity {
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+        
+        
+        graph.getViewport().setMaxX(5);
+        graph.getViewport().setMaxY(110);
+        //enables scrolling as well as scaling on the graph
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+        //scrolls to the end
+        graph.getViewport().scrollToEnd();
         graph.addSeries(series);
 
     }
