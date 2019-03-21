@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,6 @@ public class TaskListActivity extends AppCompatActivity {
             }
         });
 
-
-
         recyclerView = (RecyclerView) findViewById(R.id.taskRV);
 
         tAdapter = new TaskAdapter(taskList);
@@ -53,14 +52,43 @@ public class TaskListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
+        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
+        reloadFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                taskList.clear();
+                tAdapter.notifyDataSetChanged();
+                prepareTaskData();
+                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         recyclerView.setAdapter(tAdapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Task task = taskList.get(position);
+                Toast.makeText(getApplicationContext(), task.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                int taskId = task.getId();
+                Intent intent = new Intent(TaskListActivity.this, EditTaskActivity.class);
+                intent.putExtra("TASK", Integer.toString(taskId));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         prepareTaskData();
 
         User u = new User();
-        u.printTimetable();
-        u.updateEvents(getApplicationContext());
-        u.updateTasks(getApplicationContext());
+        //u.printTimetable();
+        //u.updateEvents(getApplicationContext());
+        //u.updateTasks(getApplicationContext());
 
 //        // ADDING A BUNCH OF EVENTS
 //        VMDbHelper db;

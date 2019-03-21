@@ -1,6 +1,5 @@
 package com.example.josh.virtualmum;
 
-import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,7 +92,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 SeekBar difficultySB = findViewById(R.id.DifficultySeekBar);
                 int difficulty = difficultySB.getProgress() + 1;
 
-                textView = findViewById(R.id.EstimatedHoursField);
+                textView = findViewById(R.id.LocationField);
                 double estimatedHours = Double.valueOf(textView.getText().toString());
 
                 long task_id = db.insertTask(taskName, formattedDateTime, dateDue, difficulty, priority, estimatedHours, 0);
