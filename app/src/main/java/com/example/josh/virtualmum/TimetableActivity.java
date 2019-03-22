@@ -1,20 +1,25 @@
 package com.example.josh.virtualmum;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.view.View;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,30 +28,42 @@ import Database.Task.Task;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
+import com.example.timetableview.Schedule;
+import com.example.timetableview.TimetableView;
+public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    private TimetableView timetable;
 
-    ListView listview;
-    ListView listview1;
-    TextView textView;
+    private Context context;
+    public static final int REQUEST_ADD = 1;
+    public static final int REQUEST_EDIT = 2;
 
-    private String[] data = {"Mango"};
-    private String[] data1 = {"Apple"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listview = findViewById(R.id.lecture);
-        listview1 = findViewById(R.id.coursework);
-        textView = findViewById(R.id.textView);
+        this.context = this;
+        timetable = findViewById(R.id.timetable);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(context, EditActivity.class);
+                i.putExtra("mde",REQUEST_ADD);
+                startActivityForResult(i,REQUEST_ADD);
+
+            }
+        });
+        timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
+            @Override
+            public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
+                Intent i = new Intent(context, EditActivity.class);
+                i.putExtra("mode",REQUEST_EDIT);
+                i.putExtra("idx", idx);
+                i.putExtra("schedules", schedules);
+                startActivityForResult(i,REQUEST_EDIT);
             }
         });
 
@@ -78,21 +95,12 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        date = Calendar.getInstance().getTime();
 //                        position = originalPosition;
 //                    }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(TimetableActivity.this, android.R.layout.simple_list_item_1, data);
-                        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(TimetableActivity.this, android.R.layout.simple_list_item_1, data1);
+                        loadSavedData();
+                       if (isSameDate(cur,date)){
+                           timetable.removeAll();
 
+                 }
 
-                        if (isSameDate(date, cur) == false) {
-
-                            listview.setAdapter(adapter);
-
-                            listview1.setAdapter(adapter);
-                        } else if (isSameDate(date, cur) == true) {
-
-                            listview.setAdapter(adapter1);
-
-                            listview1.setAdapter(adapter1);
-                        }
                     }
 
                 }
@@ -155,5 +163,49 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+            case REQUEST_ADD:
+                if(resultCode == EditActivity.RESULT_OK_ADD){
+                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+                    timetable.add(item);
+                    saveByPreference(timetable.createSaveData());
+                }
+                break;
+            case REQUEST_EDIT:
+                /** Edit -> Submit */
+                if(resultCode == EditActivity.RESULT_OK_EDIT){
+                    int idx = data.getIntExtra("idx",-1);
+                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+                    timetable.edit(idx,item);
+                }
+                /** Edit -> Delete */
+                else if(resultCode == EditActivity.RESULT_OK_DELETE){
+                    int idx = data.getIntExtra("idx",-1);
+                    timetable.remove(idx);
+                }
+                break;
+        }
+    }
+
+    /** save timetableView's data to SharedPreferences in json format */
+    private void saveByPreference(String data){
+        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putString("timetable_demo",data);
+        editor.commit();
+        Toast.makeText(this,"saved!",Toast.LENGTH_SHORT).show();
+    }
+
+    /** get json data from SharedPreferences and then restore the timetable */
+    private void loadSavedData(){
+        timetable.removeAll();
+        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String savedData = mPref.getString("timetable_demo","");
+        if(savedData == null && savedData.equals("")) return;
+        timetable.load(savedData);
+        //Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
     }
 }

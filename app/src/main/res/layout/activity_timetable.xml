@@ -19,38 +19,14 @@
             android:layout_marginTop="0dp"
             android:background="@color/colorPrimary"
             app:textColorSelected="#ffffff" />
-
-        <TextView
-            android:id="@+id/textView3"
+        <com.example.timetableview.TimetableView
+            android:id="@+id/timetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="LECTURES" />
 
-        <ListView
-            android:id="@+id/lecture"
-            style="@style/Widget.AppCompat.Light.ListView.DropDown"
-            android:layout_width="match_parent"
-            android:layout_height="362dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="COURSEWORK"
-            android:textColor="@android:color/tertiary_text_dark" />
-
-        <ListView
-            android:id="@+id/coursework"
-            style="@style/Widget.AppCompat.Light.ListView.DropDown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
-
-
+            />
     </LinearLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
