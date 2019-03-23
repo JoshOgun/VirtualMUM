@@ -23,6 +23,7 @@ public class ProgressActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        testing();
         //get data on each task progress
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
