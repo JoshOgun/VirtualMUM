@@ -13,17 +13,20 @@
             android:name=".TaskListActivity"
             android:label="@string/title_activity_task_list"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+           
         </activity>
         <activity android:name=".AddTaskActivity">
 
         </activity>
         <activity android:name=".TimetableActivity" />
         <activity android:name=".SetUpActivity"></activity>
+        <activity android:name=".ProgressActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

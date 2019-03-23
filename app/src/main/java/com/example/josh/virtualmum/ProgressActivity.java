@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jjoe64.graphview.*;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -50,9 +51,13 @@ public class ProgressActivity extends AppCompatActivity {
 
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-        
-        
+        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
+
+        series.setSpacing(50);
+        series.setDrawValuesOnTop(true);
+
         graph.getViewport().setMaxX(5);
         graph.getViewport().setMaxY(110);
         //enables scrolling as well as scaling on the graph
@@ -62,6 +67,15 @@ public class ProgressActivity extends AppCompatActivity {
         graph.getViewport().scrollToEnd();
         graph.addSeries(series);
 
+    }
+
+    public void testing(){
+        VMDbHelper db;
+        db = new VMDbHelper(getApplicationContext());
+
+        db.insertTask("courswork 2", "110219","110318", 5, 3, 7.5, 0);
+        db.insertProgress(80, 5);
+        db.close();
     }
 
 
