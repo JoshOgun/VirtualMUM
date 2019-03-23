@@ -25,6 +25,7 @@ public class ProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         testing();
         //get data on each task progress
+        /*
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
         int taskCount = db.getTasksCount();
@@ -34,11 +35,7 @@ public class ProgressActivity extends AppCompatActivity {
         //ideally it would be progress for each individual task
 
         progress = new double[taskCount][2];
-        /*
-        for (int x = 0; x<taskCount;x++){
-            progress[x][0] =
-        }
-        */
+
         for (Task task : allTasks) {
             progress[task.getId()][0] = task.getEstimatedHours();
             Progress taskProgress = db.getProgress(task.getId());
@@ -50,10 +47,13 @@ public class ProgressActivity extends AppCompatActivity {
             points[task.getId()] = new DataPoint(task.getId(), progress[task.getId()][2]);
         }
 
+        */
+
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
         //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-
+        DataPoint[] points = new DataPoint[4];
+        points[0] = new DataPoint(1,5);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
 
         series.setSpacing(50);
