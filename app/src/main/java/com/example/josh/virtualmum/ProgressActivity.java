@@ -1,7 +1,9 @@
 package com.example.josh.virtualmum;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -26,7 +28,7 @@ public class ProgressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_progress_graph);
         testing();
         //get data on each task progress
-        /*
+
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
         int taskCount = db.getTasksCount();
@@ -43,30 +45,57 @@ public class ProgressActivity extends AppCompatActivity {
             progress[task.getId()][1] = taskProgress.getHoursSpent();
             progress[task.getId()][2] = taskProgress.getProgress();
         }
-        DataPoint points[] = new DataPoint[taskCount];
-        for (Task task : allTasks) {
-            points[task.getId()] = new DataPoint(task.getId(), progress[task.getId()][2]);
-        }
 
-        */
 
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        //LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-        DataPoint[] points = new DataPoint[4];
-        points[0] = new DataPoint(1,5);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
+        for (Task task : allTasks) {
+            series.appendData(new DataPoint(task.getId(), progress[task.getId()][2]), true, taskCount);
+        }
 
+
+
+        //everything below customises the graph
         series.setSpacing(50);
         series.setDrawValuesOnTop(true);
+        series.setValuesOnTopColor(Color.BLUE);
 
-        graph.getViewport().setMaxX(5);
-        graph.getViewport().setMaxY(110);
+        Viewport viewport = graph.getViewport();
+        viewport.setMaxX(7.5);
+        viewport.setYAxisBoundsManual(true);
+        viewport.setMinY(0);
+        viewport.setMaxY(110);
         //enables scrolling as well as scaling on the graph
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(true);
-        //scrolls to the end
-        graph.getViewport().scrollToEnd();
+        viewport.setScalable(true);
+        viewport.setScalableY(true);
+
+        //label axis
+        GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
+        gridLabel.setHorizontalAxisTitle("Tasks");
+        gridLabel.setVerticalAxisTitle("Completion percent");
+
+
+        //changes the name for the data along the x axis
+        //need to get this to be the actual name of the task rather than task 1 etc.
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    // show normal x values
+                    if(value == 0) {
+                        return "";
+                    } else {
+                        return "task" + super.formatLabel(value, isValueX);
+                    }
+                } else {
+                    // show currency for y values
+                    return super.formatLabel(value, isValueX);
+                }
+            }
+        });
+
+
         graph.addSeries(series);
 
     }
