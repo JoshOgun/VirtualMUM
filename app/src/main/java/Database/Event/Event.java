@@ -37,11 +37,14 @@ public class Event {
 
     }
 
+    public void calculateDay(){
+        dayNumber = parseDay(endDate);
+    }
+
     private int parseDay(String date){
-        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss" );
-        String datenow = date;
+        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmm" );
         try {
-            Date date2 = formatter.parse(datenow);
+            Date date2 = formatter.parse(date);
 
             Calendar c = Calendar.getInstance();
             c.setTime(date2);

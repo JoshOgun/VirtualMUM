@@ -175,7 +175,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
                 db.closeDB();
 
-                Toast.makeText(getApplicationContext(), "Tasks Updated! " + newTask.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Tasks Updated!", Toast.LENGTH_SHORT).show();
                 allTasks = db.getAllTasks();
                 Log.d(" Tasks","TASKS");
                 for (Task task : allTasks) {

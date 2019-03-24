@@ -1,15 +1,13 @@
 package com.example.josh.virtualmum;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,14 +17,17 @@ import java.util.List;
 import Database.Event.Event;
 import Database.VMDbHelper;
 
-public class AddEventActivity extends AppCompatActivity {
+public class EditEventActivity extends AppCompatActivity {
+
+    String activityEventIDstr;
+    int activityEventID;
+    VMDbHelper db;
+    Event newEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_edit_event);
 
         Spinner spinner = findViewById(R.id.daySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -92,16 +93,89 @@ public class AddEventActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        FloatingActionButton fab = findViewById(R.id.AddFab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        activityEventIDstr = getIntent().getStringExtra("EVENT");
+        activityEventID = Integer.parseInt(activityEventIDstr);
 
-                VMDbHelper db;
+        db = new VMDbHelper(getApplicationContext());
+
+        newEvent = db.getEvent(activityEventID);
+
+        db.closeDB();
+
+        TextView textView = findViewById(R.id.NameField);
+        textView.setText(newEvent.getName());
+
+        String dateTime = newEvent.getStartDate();
+        String floatNumber = dateTime.substring(0,2);
+        int id;
+
+        Spinner spinners = findViewById(R.id.daySpinner);
+        id = Integer.parseInt(floatNumber) - 1;
+        spinners.setSelection(id);
+
+        spinners = findViewById(R.id.monSpinner);
+        floatNumber = dateTime.substring(2,4);
+        id = Integer.parseInt(floatNumber) - 1;
+        spinners.setSelection(id);
+
+        spinners = findViewById(R.id.yearSpinner);
+        floatNumber = dateTime.substring(4,8);
+        id = Integer.parseInt(floatNumber) - 2018;
+        spinners.setSelection(id);
+
+        spinners = findViewById(R.id.fromHourSpinner);
+        floatNumber = dateTime.substring(8,10);
+        id = Integer.parseInt(floatNumber) - 1;
+        spinners.setSelection(id);
+
+        spinners = findViewById(R.id.fromMinutesSpinner);
+        floatNumber = dateTime.substring(10,12);
+        id = (Integer.parseInt(floatNumber) / 5);
+        spinners.setSelection(id);
+
+         dateTime = newEvent.getEndDate();
+
+        spinners = findViewById(R.id.toHourSpinner);
+        floatNumber = dateTime.substring(8,10);
+        id = Integer.parseInt(floatNumber) - 1;
+        spinners.setSelection(id);
+
+        spinners = findViewById(R.id.toMinutesSpinner);
+        floatNumber = dateTime.substring(10,12);
+        id = (Integer.parseInt(floatNumber) / 5);
+        spinners.setSelection(id);
+
+        textView = findViewById(R.id.LocationField);
+        textView.setText(newEvent.getLocation());
+
+        final Button deleteBtn = findViewById(R.id.deleteBtnU);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                db = new VMDbHelper(getApplicationContext());
+
+                List<Event> allEvents = db.getAllEvents();
+                for (Event event : allEvents) {
+                    if(event.getId() == activityEventID) {
+                        db.deleteEvent(event);
+                    }
+                }
+
+                db.closeDB();
+
+                Toast.makeText(getApplicationContext(), "Event Deleted!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        final Button updateButton = findViewById(R.id.updateBtnU);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
                 db = new VMDbHelper(getApplicationContext());
 
                 TextView textView = findViewById(R.id.NameField);
-                String eventName = textView.getText().toString().toUpperCase();
+                newEvent.setName(textView.getText().toString().toUpperCase());
 
                 Date c = Calendar.getInstance().getTime();
                 SimpleDateFormat df = new SimpleDateFormat("ddMMMyyyyHHmmss");
@@ -124,25 +198,36 @@ public class AddEventActivity extends AppCompatActivity {
                 spinners = findViewById(R.id.fromHourSpinner);
                 startTime = spinners.getSelectedItem().toString();
                 spinners = findViewById(R.id.fromMinutesSpinner);
-                startTime = startTime.concat(spinners.getSelectedItem().toString());
+                newEvent.setStartDate(dateDue.concat(startTime.concat(spinners.getSelectedItem().toString())));
 
                 spinners = findViewById(R.id.toHourSpinner);
                 endTime = spinners.getSelectedItem().toString();
                 spinners = findViewById(R.id.toMinutesSpinner);
-                endTime = endTime.concat(spinners.getSelectedItem().toString());
+                newEvent.setEndDate(dateDue.concat(endTime.concat(spinners.getSelectedItem().toString())));
 
                 textView = findViewById(R.id.LocationField);
-                String location = textView.getText().toString();
+                newEvent.setLocation(textView.getText().toString());
 
-                long event_id = db.insertEvent(eventName, dateDue.concat(startTime), dateDue.concat(endTime), location);
+                List<Event> allEvents = db.getAllEvents();
+                for (Event event : allEvents) {
+                    if(event.getId() == activityEventID) {
+                        event.setName(newEvent.getName());
+                        event.setStartDate(newEvent.getStartDate());
+                        event.setEndDate(newEvent.getEndDate());
+                        event.setLocation(newEvent.getLocation());
+                        db.updateEvent(event);
+                    }
+
+                }
+
 
                 db.closeDB();
 
-                Snackbar.make(view, "Event Added!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), "Events Updated!", Toast.LENGTH_SHORT).show();
+
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 
 }

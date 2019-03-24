@@ -258,6 +258,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteSpecificEvent(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Event.VMEvent.TABLE_NAME, Event.VMEvent._ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
 

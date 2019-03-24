@@ -69,9 +69,9 @@ public class EventListActivity extends AppCompatActivity {
                 Event event = eventList.get(position);
                 Toast.makeText(getApplicationContext(), event.getName() + " is selected!", Toast.LENGTH_SHORT).show();
                 int eventId = event.getId();
-                //Intent intent = new Intent(EventListActivity.this, EditEventActivity.class);
-                //intent.putExtra("EVENT", Integer.toString(eventId));
-                //startActivity(intent);
+                Intent intent = new Intent(EventListActivity.this, EditEventActivity.class);
+                intent.putExtra("EVENT", Integer.toString(eventId));
+                startActivity(intent);
             }
 
             @Override
@@ -88,6 +88,8 @@ public class EventListActivity extends AppCompatActivity {
 
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
+
+
 
         List<Event> allEvents = db.getAllEvents();
         for (Event event : allEvents) {

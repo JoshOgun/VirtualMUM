@@ -89,6 +89,7 @@ public class assignTimetable {
                 testTimetable[e.dayNumber][i] = e.getName(); // puts event into correct slot in timetable
             }
         }
+        orderTasks();
     }
 
     /**

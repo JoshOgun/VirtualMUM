@@ -39,7 +39,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
          spinner = findViewById(R.id.monSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-
         adapter = ArrayAdapter.createFromResource(this,
                 R.array.monDate_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -49,7 +48,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
          spinner = findViewById(R.id.yearSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-
         adapter = ArrayAdapter.createFromResource(this,
                 R.array.yearDate_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
