@@ -10,6 +10,7 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Database.Progress.Progress;
@@ -20,46 +21,59 @@ public class ProgressActivity extends AppCompatActivity {
 
 
     //progress for each activity
-    double progress[][];
+    float progress[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_graph);
-        /*
-        testing();
-        //get data on each task progress
 
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
+
+        db.insertTask("coursework 2", "110219","110318", 5, 3, 7.5, 0);
+        db.insertProgress(80, 5);
+
         int taskCount = db.getTasksCount();
         List<Task> allTasks = db.getAllTasks();
-
+        List<Task> ableTasks = new ArrayList<>();
         //display every task or just ones not completed yet?
         //ideally it would be progress for each individual task
 
-        progress = new double[taskCount][2];
-
         for (Task task : allTasks) {
-            progress[task.getId()][0] = task.getEstimatedHours();
-            Progress taskProgress = db.getProgress(task.getId());
-            progress[task.getId()][1] = taskProgress.getHoursSpent();
-            progress[task.getId()][2] = taskProgress.getProgress();
-        }
-        */
+            //filter out tasks that are completed
+            //could be filtered so that if is completed but not handed in it still shows??
+            if(task.getCompleted() == 0){
+                ableTasks.add(task);
+            }
 
+        }
+        progress = new float[ableTasks.size()];
+
+        int m = 0;
+        for(Task task : ableTasks){
+            //db.getProgress(task.getId());
+            Progress taskProgress = db.getProgress(task.getId());
+            progress[m] = taskProgress.getProgress();
+            //Log.d("m value", "value: " + m);
+            m++;
+        }
+
+        db.close();
 
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
-        series.appendData(new DataPoint(1, 4), true, 1);
-        /*
-        for (Task task : allTasks) {
-            series.appendData(new DataPoint(task.getId(), progress[task.getId()][2]), true, taskCount);
+
+        //seems like there is a bug on the graph when there is only one datapoint, it messes up the graph a little bit
+        //series.appendData(new DataPoint(1, 4), true, 2);
+
+        int n = 0;
+        for(float y : progress){
+            n++;
+            series.appendData(new DataPoint(n, y) , true, progress.length);
         }
-        */
-
-
+        //Log.d("Progress length", "value: " + progress.length);
 
         //everything below customises the graph
         series.setSpacing(50);
@@ -103,15 +117,6 @@ public class ProgressActivity extends AppCompatActivity {
 
         graph.addSeries(series);
 
-    }
-
-    public void testing(){
-        VMDbHelper db;
-        db = new VMDbHelper(getApplicationContext());
-
-        db.insertTask("courswork 2", "110219","110318", 5, 3, 7.5, 0);
-        db.insertProgress(80, 5);
-        db.close();
     }
 
 
