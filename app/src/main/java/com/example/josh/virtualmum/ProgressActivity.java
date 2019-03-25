@@ -26,6 +26,7 @@ public class ProgressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_graph);
+        /*
         testing();
         //get data on each task progress
 
@@ -45,14 +46,18 @@ public class ProgressActivity extends AppCompatActivity {
             progress[task.getId()][1] = taskProgress.getHoursSpent();
             progress[task.getId()][2] = taskProgress.getProgress();
         }
+        */
 
 
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
+        series.appendData(new DataPoint(1, 4), true, 1);
+        /*
         for (Task task : allTasks) {
             series.appendData(new DataPoint(task.getId(), progress[task.getId()][2]), true, taskCount);
         }
+        */
 
 
 
