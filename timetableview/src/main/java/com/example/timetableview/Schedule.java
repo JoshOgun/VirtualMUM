@@ -16,6 +16,8 @@ public class Schedule implements Serializable {
     private Time endTime;
 
 
+
+
     private Date date;
 
     public Schedule() {

@@ -21,7 +21,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
+//import com.example.josh.virtualmum;
+//import com.example.timetableview.TimetableView;
 public class TimetableView extends LinearLayout {
     private static final int DEFAULT_ROW_COUNT = 17;
     private static final int DEFAULT_COLUMN_COUNT = 2;

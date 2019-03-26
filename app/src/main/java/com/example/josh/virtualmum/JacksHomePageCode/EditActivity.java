@@ -1,4 +1,4 @@
-package com.example.josh.virtualmum;
+package com.example.josh.virtualmum.JacksHomePageCode;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.timetableview.Schedule;
-import com.example.timetableview.Time;
+import com.example.josh.virtualmum.R;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Time;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int RESULT_OK_ADD = 1;
@@ -74,7 +74,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     /** check whether the mode is ADD or EDIT */
     private void checkMode(){
         Intent i = getIntent();
-        mode = i.getIntExtra("mode",TimetableActivity.REQUEST_ADD);
+        mode = i.getIntExtra("mode", TimetableActivity.REQUEST_ADD);
 
         if(mode == TimetableActivity.REQUEST_EDIT){
             loadScheduleData();

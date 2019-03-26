@@ -1,4 +1,4 @@
-package com.example.josh.virtualmum;
+package com.example.josh.virtualmum.JacksHomePageCode;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +28,10 @@ import Database.Task.Task;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
-import com.example.timetableview.Schedule;
-import com.example.timetableview.TimetableView;
+
+import com.example.josh.virtualmum.R;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
@@ -42,7 +44,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_navigate);
         this.context = this;
         timetable = findViewById(R.id.timetable);
 
@@ -82,7 +84,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-                    Date cur = new Date(2019 - 1900, 2, 5);
+                    Date cur = new Date(2019 - 1900, 2, 22);
 
                     @Override
                     public void onDateSelected(Date date, int position) {
@@ -110,7 +112,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
 
-        long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
+//        long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
 
         List<Task> allTasks = db.getAllTasks();
         for (Task task : allTasks) {
@@ -180,11 +182,15 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
+                    saveByPreference(timetable.createSaveData());
+
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
+                    saveByPreference(timetable.createSaveData());
+
                 }
                 break;
         }
@@ -206,6 +212,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         String savedData = mPref.getString("timetable_demo","");
         if(savedData == null && savedData.equals("")) return;
         timetable.load(savedData);
-        //Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
     }
 }
