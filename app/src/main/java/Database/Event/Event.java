@@ -2,6 +2,12 @@ package Database.Event;
 
 import android.provider.BaseColumns;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class Event {
 
@@ -9,17 +15,50 @@ public class Event {
     private String name;
     private String startDate;
     private String endDate;
-    private String Location;
+    private String location;
+
+    public int dayNumber;
+    public int startTimeNumber;
+    public int endTimeNumber;
 
     public Event(String name, String startDate, String endDate, String location) {
-        this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        Location = location;
+        this.location = location;
+
+        dayNumber = parseDay(endDate);
+        startTimeNumber = parseHours(startDate);
+        endTimeNumber = parseHours(endDate) + 1;
     }
 
+
     public Event(){
+
+    }
+
+    public void calculateDay(){
+        dayNumber = parseDay(endDate);
+    }
+
+    private int parseDay(String date){
+        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmm" );
+        try {
+            Date date2 = formatter.parse(date);
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(date2);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            return dayOfWeek-1;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+    }
+
+    private int parseHours(String date){
+       return date.charAt(8) + date.charAt(9);
 
     }
 
@@ -56,11 +95,11 @@ public class Event {
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
     /* Inner class that defines the table contents */

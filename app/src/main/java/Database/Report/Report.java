@@ -49,9 +49,10 @@ public class Report {
 
     public static final String SQL_CREATE_REPORTS =
             "CREATE TABLE " + VMReport.TABLE_NAME + " (" +
-                    VMReport._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    VMReport.COLUMN_NAME_TITLE2 + " INTEGER," +
-                    VMReport.COLUMN_NAME_TITLE3 + " INTEGER)";
+                    VMReport._ID + " INTEGER, " +
+                    VMReport.COLUMN_NAME_TITLE2 + " INTEGER, " +
+                    VMReport.COLUMN_NAME_TITLE3 + " INTEGER," +
+                    " FOREIGN KEY (_id) REFERENCES Task_Data(_id))";
 
     public static final String SQL_DELETE_REPORTS =
             "DROP TABLE IF EXISTS " + VMReport.TABLE_NAME;
