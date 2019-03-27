@@ -89,7 +89,8 @@ public class assignTimetable {
                 testTimetable[e.dayNumber][i] = e.getName(); // puts event into correct slot in timetable
             }
         }
-        orderTasks();
+        user.timeTable = testTimetable;
+       // orderTasks();
     }
 
     /**
@@ -281,7 +282,7 @@ public class assignTimetable {
                 if (taskHours[i] <= freeTimes[j][0]) {
                     for (int time = freeTimes[j][1]; time < freeTimes[j][2]; time++) {
                         if (taskHours[i] > 0) {
-                            testTimetable[day][time] = "TASK: " + taskArray[i].getWeight();
+                            testTimetable[day][time] = "TASK: " + taskArray[i].getId();
                             // decrease interval length
                             freeTimes[j][0]--;
                             // increase interval start time
@@ -320,7 +321,7 @@ public class assignTimetable {
             // taskHours array, then run again.
             if (taskHours[i] > 0) {
                 for (int time = freeTimes[j - 1][1]; time < freeTimes[j - 1][2]; time++) {
-                    testTimetable[day][time] = "TASK: " + taskArray[i].getName();
+                    testTimetable[day][time] = "TASK: " + taskArray[i].getId();
                     // decrease interval length
                     freeTimes[j - 1][0]--;
                     // increase interval start time
@@ -515,7 +516,7 @@ public class assignTimetable {
                 if (missedTaskHours[i] <= freeTimes[j][0]) {
                     for (int time = freeTimes[j][1]; time < freeTimes[j][2]; time++) {
                         if (missedTaskHours[i] > 0) {
-                            testTimetable[day][time] = "TASK: " + taskArray[i].getName();
+                            testTimetable[day][time] = "TASK: " + taskArray[i].getId();
                             // decrease interval length
                             freeTimes[j][0]--;
                             // increase interval start time
@@ -548,13 +549,12 @@ public class assignTimetable {
                 }
                 j++;
             }
-
             // if it goes through the while and it doesn't find a big enough slot, fit as
             // much as possible into the biggest slot, take that away from the task in
             // taskHours array, then run again.
-            if (missedTaskHours[i] > 0) {
+            if (missedTaskHours[i] > 0 && j<freeTimes.length) {
                 for (int time = freeTimes[j][1]; time < freeTimes[j][2]; time++) {
-                    testTimetable[day][time] = "TASK: " + taskArray[i].getName();
+                    testTimetable[day][time] = "TASK: " + taskArray[i].getId();
                     // decrease interval length
                     freeTimes[j][0]--;
                     // increase interval start time
@@ -590,7 +590,11 @@ public class assignTimetable {
         if (hoursLeft > 0) {
             fixTable(0);
         }
+    //    taskArray[0].getId();
     }
+
+
+
 
 }
 

@@ -110,7 +110,17 @@ public class TaskListActivity extends AppCompatActivity {
         List<Task> allTasks = db.getAllTasks();
         for (Task task : allTasks) {
             taskList.add(task);
+
+//                Log.d(" TASKS", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate()  + "\t" +
+//                        task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours());
+
         }
+
+//        List<Event> allEvents = db.getAllEvents();
+//        for (Event event : allEvents) {
+//            Log.d(" EVENTS", event.getId() + "\t" + event.getName() + "\t" + event.getStartDate()  + "\t" +
+//                    event.getEndDate() + "\t" + event.getLocation());
+//        }
 
         db.closeDB();
 

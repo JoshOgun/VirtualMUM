@@ -42,6 +42,7 @@ public class User {
         taskList = db.getAllTasks();
         timetableHandler.orderTasks();
         db.closeDB();
+
     }
 
     public void updateEvents(Context context){
@@ -51,6 +52,7 @@ public class User {
         populateNumbers();
         timetableHandler.updateEvents();
         db.closeDB();
+        updateTasks(context);
     }
 
     public void populateNumbers(){

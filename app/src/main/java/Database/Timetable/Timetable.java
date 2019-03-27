@@ -93,7 +93,7 @@ public class Timetable {
 
     public static final String SQL_CREATE_TIMETABLES =
             "CREATE TABLE " + VMTimetable.TABLE_NAME + " (" +
-                    VMTimetable._ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    VMTimetable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     VMTimetable.COLUMN_NAME_TITLE2 + " STRING, " +
                     VMTimetable.COLUMN_NAME_TITLE3 + " INTEGER, " +
                     VMTimetable.COLUMN_NAME_TITLE4 + " INTEGER, " +
