@@ -98,21 +98,42 @@ public class ProgressActivity extends AppCompatActivity {
         //changes the name for the data along the x axis
         //need to get this to be the actual name of the task rather than task 1 etc.
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+
+            public String formatLabel(double value, boolean isValueX, Task task){
+                if(isValueX) {
+
+                    if(value == 0 || value != (int) value ){
+                        return "";
+                    }else {
+                        return task.getName();
+                    }
+                } else {
+                    return super.formatLabel(value, isValueX);
+                }
+            }
+
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
                     // show normal x values
-                    if(value == 0) {
+                    if(value == 0 || value !=(int)value ) {
                         return "";
                     } else {
-                        return "task" + super.formatLabel(value, isValueX);
+                        return "task " + super.formatLabel(value, isValueX);
                     }
                 } else {
                     // show currency for y values
                     return super.formatLabel(value, isValueX);
                 }
             }
+
         });
+
+        /*
+        for(Task task: ableTasks){
+            graph.getGridLabelRenderer().getLabelFormatter().formatLabel(0 , true, task);
+        }
+        */
 
 
         graph.addSeries(series);
