@@ -31,8 +31,8 @@ public class ProgressActivity extends AppCompatActivity {
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
 
-        db.insertTask("coursework 2", "110219","110318", 5, 3, 7.5, 0);
-        db.insertProgress(80, 5);
+        // db.insertTask("coursework 2", "110219","110318", 5, 3, 7.5, 0);
+        //db.insertProgress(80, 5);
 
         int taskCount = db.getTasksCount();
         List<Task> allTasks = db.getAllTasks();
