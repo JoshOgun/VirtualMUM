@@ -97,6 +97,8 @@ public class ProgressActivity extends AppCompatActivity {
 
         //changes the name for the data along the x axis
         //need to get this to be the actual name of the task rather than task 1 etc.
+        
+        //make list to pass in task names
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
 
             public String formatLabel(double value, boolean isValueX, Task task){
