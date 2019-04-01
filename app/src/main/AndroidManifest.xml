@@ -28,6 +28,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.josh.virtualmum.EventListActivity" />
         </activity>
+        <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.EditActivity"></activity>
+        <activity android:name=".SetUpActivity"/>
         <activity
             android:name=".EventListActivity"
             android:label="@string/title_activity_event_list"
