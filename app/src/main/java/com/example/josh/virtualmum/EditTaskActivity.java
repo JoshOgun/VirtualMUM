@@ -1,7 +1,5 @@
 package com.example.josh.virtualmum;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -118,91 +116,72 @@ public class EditTaskActivity extends AppCompatActivity {
         final Button updateButton = findViewById(R.id.updateBtn);
         updateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                db = new VMDbHelper(getApplicationContext());
 
-                new AlertDialog.Builder(getApplicationContext())
-                        .setTitle("Update Task")
-                        .setMessage("Are you sure you want to update this task?")
+                TextView textView = findViewById(R.id.NameField);
+                String taskName = textView.getText().toString().toUpperCase();
+                newTask.setName(taskName);
 
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                db = new VMDbHelper(getApplicationContext());
-
-                                TextView textView = findViewById(R.id.NameField);
-                                String taskName = textView.getText().toString().toUpperCase();
-                                newTask.setName(taskName);
-
-                                String dateDue;
-                                Spinner spinners = findViewById(R.id.daySpinner);
-                                dateDue  = spinners.getSelectedItem().toString();
-                                spinners = findViewById(R.id.monSpinner);
-                                if(spinners.getSelectedItemPosition() + 1 < 10){
-                                    dateDue  = dateDue + "0" +(spinners.getSelectedItemPosition() + 1);
-                                }
-                                else{
-                                    dateDue  = dateDue + (spinners.getSelectedItemPosition() + 1);
-                                }
-                                spinners = findViewById(R.id.yearSpinner);
-                                dateDue  = dateDue + spinners.getSelectedItem().toString() + 120000;
-                                newTask.setDueDate(dateDue);
+                String dateDue;
+                Spinner spinners = findViewById(R.id.daySpinner);
+                dateDue  = spinners.getSelectedItem().toString();
+                spinners = findViewById(R.id.monSpinner);
+                if(spinners.getSelectedItemPosition() + 1 < 10){
+                    dateDue  = dateDue + "0" +(spinners.getSelectedItemPosition() + 1);
+                }
+                else{
+                    dateDue  = dateDue + (spinners.getSelectedItemPosition() + 1);
+                }
+                spinners = findViewById(R.id.yearSpinner);
+                dateDue  = dateDue + spinners.getSelectedItem().toString() + 120000;
+                newTask.setDueDate(dateDue);
 
 
-                                SeekBar prioritySB = findViewById(R.id.PrioritySeekBar);
-                                int priority = prioritySB.getProgress() + 1;
-                                newTask.setPriority(priority);
+                SeekBar prioritySB = findViewById(R.id.PrioritySeekBar);
+                int priority = prioritySB.getProgress() + 1;
+                newTask.setPriority(priority);
 
-                                SeekBar difficultySB = findViewById(R.id.DifficultySeekBar);
-                                int difficulty = difficultySB.getProgress() + 1;
-                                newTask.setDifficulty(difficulty);
+                SeekBar difficultySB = findViewById(R.id.DifficultySeekBar);
+                int difficulty = difficultySB.getProgress() + 1;
+                newTask.setDifficulty(difficulty);
 
-                                textView = findViewById(R.id.LocationField);
-                                double estimatedHours = Double.valueOf(textView.getText().toString());
-                                newTask.setEstimatedHours(estimatedHours);
+                textView = findViewById(R.id.LocationField);
+                double estimatedHours = Double.valueOf(textView.getText().toString());
+                newTask.setEstimatedHours(estimatedHours);
 
-                                Switch completed = findViewById(R.id.completedSwitch);
-                                if(completed.isChecked()){
-                                    newTask.setCompleted(1);
-                                }
-                                else{
-                                    newTask.setCompleted(0);
-                                }
+                 Switch completed = findViewById(R.id.completedSwitch);
+                if(completed.isChecked()){
+                    newTask.setCompleted(1);
+                }
+                else{
+                    newTask.setCompleted(0);
+                }
 
 //                task = db.getTask(activityTaskID);
-                                List<Task> allTasks = db.getAllTasks();
-                                for (Task task : allTasks) {
-                                    if(task.getId() == activityTaskID) {
-                                        task.setName(newTask.getName());
-                                        task.setDueDate(newTask.getDueDate());
-                                        task.setPriority(newTask.getPriority());
-                                        task.setDifficulty(newTask.getDifficulty());
-                                        task.setEstimatedHours(newTask.getEstimatedHours());
-                                        task.setCompleted(newTask.getCompleted());
-                                        db.updateTask(task);
-                                    }
+                List<Task> allTasks = db.getAllTasks();
+                for (Task task : allTasks) {
+                    if(task.getId() == activityTaskID) {
+                        task.setName(newTask.getName());
+                        task.setDueDate(newTask.getDueDate());
+                        task.setPriority(newTask.getPriority());
+                        task.setDifficulty(newTask.getDifficulty());
+                        task.setEstimatedHours(newTask.getEstimatedHours());
+                        task.setCompleted(newTask.getCompleted());
+                        db.updateTask(task);
+                    }
 
-                                }
-
-
-                                db.closeDB();
-
-                                Toast.makeText(getApplicationContext(), "Tasks Updated!", Toast.LENGTH_SHORT).show();
-                                allTasks = db.getAllTasks();
-                                Log.d(" Tasks","TASKS");
-                                for (Task task : allTasks) {
-                                    Log.d(" Tasks", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate() + "\t" +
-                                            task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours() + "\t" + task.getCompleted());
-                                }
-
-                            }
-                        })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                }
 
 
+                db.closeDB();
+
+                Toast.makeText(getApplicationContext(), "Tasks Updated!", Toast.LENGTH_SHORT).show();
+                allTasks = db.getAllTasks();
+                Log.d(" Tasks","TASKS");
+                for (Task task : allTasks) {
+                    Log.d(" Tasks", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate() + "\t" +
+                            task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours() + "\t" + task.getCompleted());
+                }
             }
         });
 
