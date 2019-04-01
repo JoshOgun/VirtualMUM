@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +99,8 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(this, TimetableActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, TimetableActivity.class);
+//            startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
 //            Intent intent = new Intent(this, .class);

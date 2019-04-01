@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".JacksHomePageCode.EditActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/edit_appbar" />
 
@@ -32,7 +31,6 @@
             android:layout_height="wrap_content"
             android:hint="Professor" />
 
-        <include layout="@layout/time_box"/>
 
     </LinearLayout>
 
