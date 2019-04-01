@@ -29,9 +29,12 @@ import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
+import com.example.josh.virtualmum.EventListActivity;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
+import com.example.josh.virtualmum.TaskListActivity;
+
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
@@ -44,7 +47,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate);
+        setContentView(R.layout.activity_navigate_timetable);
         this.context = this;
         timetable = findViewById(R.id.timetable);
 
@@ -109,6 +112,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         );
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
 
@@ -139,33 +143,51 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     }
    // @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
         } else if (id == R.id.nav_progress) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
         } else if (id == R.id.nav_reward) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
-        } else if (id == R.id.nav_calendar) {
+        } else if (id == R.id.nav_events) {
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
 
         }else if (id == R.id.nav_highscore) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
         }
         else if (id == R.id.nav_setting) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
         }
 
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
@@ -210,7 +232,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         timetable.removeAll();
         SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
         String savedData = mPref.getString("timetable_demo","");
-        if(savedData == null && savedData.equals("")) return;
+        if(savedData == null || savedData.equals("")) return;
         timetable.load(savedData);
         Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
     }

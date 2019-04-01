@@ -173,15 +173,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         editIdx = i.getIntExtra("idx",-1);
         ArrayList<Schedule> schedules = (ArrayList<Schedule>)i.getSerializableExtra("schedules");
         schedule = schedules.get(0);
-        subjectEdit.setText(schedule.getClassTitle());
-        classroomEdit.setText(schedule.getClassPlace());
-        professorEdit.setText(schedule.getProfessorName());
+        subjectEdit.setText(schedule.getTitle());
+        classroomEdit.setText(schedule.getLocation());
 
     }
 
     private void inputDataProcessing(){
-        schedule.setClassTitle(subjectEdit.getText().toString());
-        schedule.setClassPlace(classroomEdit.getText().toString());
-        schedule.setProfessorName(professorEdit.getText().toString());
+//        schedule.setClassTitle(subjectEdit.getText().toString());
+//        schedule.setClassPlace(classroomEdit.getText().toString());
     }
 }
