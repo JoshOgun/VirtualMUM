@@ -18,7 +18,7 @@
             android:id="@+id/subject_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Subject" />
+            android:hint="Name" />
 
         <EditText
             android:id="@+id/classroom_edit"
