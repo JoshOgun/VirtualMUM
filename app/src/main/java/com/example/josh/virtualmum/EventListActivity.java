@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +86,55 @@ public class EventListActivity extends AppCompatActivity {
 
         prepareEventData();
     }
+
+
+    // @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+//            Intent intent = new Intent(this, TimetableActivity.class);
+//            startActivity(intent);
+
+        } else if (id == R.id.nav_progress) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        } else if (id == R.id.nav_task) {
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_weektable) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        } else if (id == R.id.nav_reward) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        } else if (id == R.id.nav_events) {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
+        }else if (id == R.id.nav_highscore) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        }
+        else if (id == R.id.nav_setting) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        }
+
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
 
     private void prepareEventData() {
 
