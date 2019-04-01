@@ -28,15 +28,24 @@ public class ReportActivity extends AppCompatActivity {
         long taskID;
         
         //array for dates, amount of work done , expected amount of work done - needs to be part of 2d array
+
+        //get timetable
+        //only look at one task - assume this gets passed in??
+        //count how much work has been done and how much should have been done on each given day
+        //so check which days this task was on
+        //get the amount it should have been done
+        //get the amount that was actually done
+
+        //2d array= date , work done , expected
      
-     //maybe need to get context here instead of (GraphView)
+        //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> WorkDone = new BarGraphSeries<>();
      
         BarGraphSeries<DataPoint> ExpectedWork = new BarGraphSeries<>();
      
      
-     //customise
+         //customise
         WorkDone.setSpacing(50);
         WorkDone.setDrawValuesOnTop(true);
         WorkDone.setValuesOnTopColor(Color.BLUE);
