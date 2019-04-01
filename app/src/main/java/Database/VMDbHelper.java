@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -600,6 +601,40 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable._ID + " = ?",
                 new String[]{String.valueOf(timetable.getId())});
         db.close();
+    }
+
+    public List<Timetable> getAllTimetables(){
+
+        List<Timetable> timetables = new ArrayList<>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Timetable.VMTimetable.TABLE_NAME + " ORDER BY " +
+                Timetable.VMTimetable.COLUMN_NAME_TITLE4 + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Timetable timetable = new Timetable();
+                timetable.setId(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable._ID)));
+                timetable.setDate(cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)));
+                timetable.setTaskID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)));
+                timetable.setEventID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)));
+                timetable.setDuration(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)));
+                timetable.setCompleted(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
+
+                timetables.add(timetable);
+            } while (cursor.moveToNext());
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return timetables;
+
     }
 
     // closing database
