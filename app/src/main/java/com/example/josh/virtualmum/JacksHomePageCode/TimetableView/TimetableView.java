@@ -1,3 +1,4 @@
+
 package com.example.josh.virtualmum.JacksHomePageCode.TimetableView;
 
 import android.app.Activity;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+
 import android.widget.TableRow;
 import android.widget.TextView;
 
