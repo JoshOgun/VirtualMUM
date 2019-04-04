@@ -22,6 +22,7 @@ public class ProgressActivity extends AppCompatActivity {
 
     //progress for each activity
     float progress[];
+    List<Task> allTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -35,7 +36,7 @@ public class ProgressActivity extends AppCompatActivity {
         //db.insertProgress(80, 5);
 
         int taskCount = db.getTasksCount();
-        List<Task> allTasks = db.getAllTasks();
+        allTasks = db.getAllTasks();
         List<Task> ableTasks = new ArrayList<>();
         //display every task or just ones not completed yet?
         //ideally it would be progress for each individual task
@@ -81,11 +82,13 @@ public class ProgressActivity extends AppCompatActivity {
         series.setValuesOnTopColor(Color.BLUE);
 
         Viewport viewport = graph.getViewport();
-        viewport.setMaxX(7.5);
+        viewport.setXAxisBoundsManual(true);
+        viewport.setMinX(0);
+        viewport.setMaxX(10);
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(0);
-        viewport.setMaxY(110);
-        //enables scrolling as well as scaling on the graph
+        viewport.setMaxY(100);
+        //enables scrolling as well as zooming on the graph
         viewport.setScalable(true);
         viewport.setScalableY(true);
 
@@ -101,30 +104,15 @@ public class ProgressActivity extends AppCompatActivity {
         //make list to pass in task names
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
 
-            public String formatLabel(double value, boolean isValueX, Task task){
-                if(isValueX) {
-
-                    if(value == 0 || value != (int) value ){
-                        return "";
-                    }else {
-                        return task.getName();
-                    }
-                } else {
-                    return super.formatLabel(value, isValueX);
-                }
-            }
-
             @Override
             public String formatLabel(double value, boolean isValueX) {
-                if (isValueX) {
-                    // show normal x values
-                    if(value == 0 || value !=(int)value ) {
+                if(isValueX) {
+                    if(value != 0 || value == (int) value && value <= allTasks.size()){
+                        return allTasks.get((int) value -1).getName();
+                    }else {
                         return "";
-                    } else {
-                        return "task " + super.formatLabel(value, isValueX);
                     }
                 } else {
-                    // show currency for y values
                     return super.formatLabel(value, isValueX);
                 }
             }
