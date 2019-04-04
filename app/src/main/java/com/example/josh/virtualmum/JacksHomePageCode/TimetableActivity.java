@@ -149,7 +149,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_task) {
 
         } else if (id == R.id.nav_weektable) {
-
+             Intent i = new Intent(context,weektable.class);
+             startActivity(i);
         } else if (id == R.id.nav_reward) {
 
         } else if (id == R.id.nav_calendar) {
