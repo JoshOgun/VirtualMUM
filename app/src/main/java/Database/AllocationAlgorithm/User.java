@@ -18,10 +18,11 @@ public class User {
     public List<Event> eventList;
     public assignTimetable timetableHandler;
     public String[][] timeTable;
-    public int startOfDay = 8;
-    public int endOfDay = 17;
-    public int startOfWeek = 1;
-    public int endOfWeek = 6;
+    public int startOfDay;
+    public int endOfDay;
+    public int startOfWeek;
+    public int endOfWeek;
+    public formatter formatter;
 
     VMDbHelper db;
 
@@ -29,6 +30,12 @@ public class User {
         taskList = new ArrayList<Task>();
         eventList = new ArrayList<Event>();
         timetableHandler = new assignTimetable(this);
+        this.startOfDay = 8;
+        this.endOfDay = 17;
+        this.startOfWeek = 1;
+        this.endOfWeek = 6;
+        this.formatter = new formatter(startOfDay, endOfDay, timeTable);
+
 
     }
 
@@ -41,8 +48,23 @@ public class User {
         db = new VMDbHelper(context);
         taskList = db.getAllTasks();
         timetableHandler.orderTasks();
+        formatter.timeTable = this.timeTable;
+        saveToDb(context);
         db.closeDB();
+    }
 
+
+    public void saveToDb(Context context){
+        List<String> toDbList = formatter.convertor();
+        for (String str : toDbList){
+            String[] components  = str.split("/");
+            String date = components[0];
+            int taskId = Integer.parseInt(components[1]);
+            int eventId = 0;
+            float duration = (float)Integer.parseInt(components[2]);
+            int completed = 0;
+            db.insertTimetable(date, taskId, eventId, duration, completed);
+        }
     }
 
     public void updateEvents(Context context){
