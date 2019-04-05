@@ -49,6 +49,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         init();
+
     }
 
     private void init(){
@@ -58,7 +59,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         subjectEdit = findViewById(R.id.subject_edit);
         classroomEdit = findViewById(R.id.classroom_edit);
         professorEdit = findViewById(R.id.professor_edit);
-
         startTv = findViewById(R.id.start_time);
         endTv = findViewById(R.id.end_time);
         date = findViewById(R.id.date);
@@ -69,6 +69,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
        // schedule.setDate(new Date(Calendar.YEAR,Calendar.MONTH,Calendar.DATE));
         checkMode();
         initView();
+
     }
 
     /** check whether the mode is ADD or EDIT */
@@ -82,6 +83,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void initView(){
+
         submitBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
         date.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +105,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         startTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getStartTime().getHour(), schedule.getStartTime().getMinute(), false);
+                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getStartTime().getHour(), schedule.getStartTime().getMinute(), true);
                 dialog.show();
             }
 
@@ -119,7 +121,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         endTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getEndTime().getHour(), schedule.getEndTime().getMinute(), false);
+                TimePickerDialog dialog = new TimePickerDialog(context,listener,schedule.getEndTime().getHour(), schedule.getEndTime().getMinute(), true);
                 dialog.show();
             }
 
@@ -133,6 +135,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             };
         });
     }
+
 
     @Override
     public void onClick(View v) {

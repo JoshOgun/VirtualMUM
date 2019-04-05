@@ -32,10 +32,11 @@ import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Time;
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
-
+    private Schedule schedule;
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -43,11 +44,13 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
         this.context = this;
         timetable = findViewById(R.id.timetable);
-
+        schedule = new Schedule();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +100,15 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        date = Calendar.getInstance().getTime();
 //                        position = originalPosition;
 //                    }
-                        loadSavedData();
-                       if (isSameDate(cur,date)){
+
+                        add("1","Math","CB5.14",11,15,12,05);
+                        add("2","AI","CB1.11",14,15,15,05);
+
+                        add("3","FP","EB1.1",16,15,17,05);
+                        //loadSavedData();
+                        //timetable.removeAll();
+
+                        if (isSameDate(cur,date)){
                            timetable.removeAll();
 
                  }
@@ -148,6 +158,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_task) {
 
+
         } else if (id == R.id.nav_weektable) {
              Intent i = new Intent(context,weektable.class);
              startActivity(i);
@@ -166,6 +177,25 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void add(String z,String j,String k, int StartHour, int StartM,int endh,int endm){
+        schedule = new Schedule();
+
+        schedule.setClassTitle(z);
+        schedule.setClassPlace(j);
+        schedule.setProfessorName(k);
+        schedule.getStartTime().setHour(StartHour);
+        schedule.getStartTime().setMinute(StartM);
+        schedule.getEndTime().setHour(endh);
+        schedule.getEndTime().setMinute(endm);
+        Intent i = new Intent();
+        ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+        schedules.add(schedule);
+        i.putExtra("schedules",schedules);
+        onActivityResult(1,1,i);
+
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
