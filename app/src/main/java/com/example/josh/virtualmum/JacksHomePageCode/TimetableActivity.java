@@ -44,7 +44,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate);
+        setContentView(R.layout.activity_navigate_timetable);
         this.context = this;
         timetable = findViewById(R.id.timetable);
 
@@ -153,7 +153,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //             startActivity(i);
         } else if (id == R.id.nav_reward) {
 
-        } else if (id == R.id.nav_calendar) {
 
         }else if (id == R.id.nav_highscore) {
 
