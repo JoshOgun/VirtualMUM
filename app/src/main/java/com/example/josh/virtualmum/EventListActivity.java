@@ -3,6 +3,7 @@ package com.example.josh.virtualmum;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +24,7 @@ import Database.Event.Event;
 import Database.VMDbHelper;
 import DividerDetails.MyDividerItemDecoration;
 
-public class EventListActivity extends AppCompatActivity {
+public class EventListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private List<Event> eventList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -32,7 +33,7 @@ public class EventListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_list);
+        setContentView(R.layout.activity_navigate_event_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,6 +45,9 @@ public class EventListActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.eventRV);
 
