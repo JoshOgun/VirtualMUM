@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import Database.Task.Task;
+import Database.Timetable.Timetable;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
@@ -44,7 +45,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate);
+        setContentView(R.layout.activity_navigate_timetable);
         this.context = this;
         timetable = findViewById(R.id.timetable);
 
@@ -112,12 +113,12 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
 
-//        long task_id = db.insertTask("Coursework 6", "110219", "110318", 5, 3, 7.5, 0);
+        //long timetable_id = db.insertTimetable("080420191200", 0, 2, 1,0);
 
-        List<Task> allTasks = db.getAllTasks();
-        for (Task task : allTasks) {
-            Log.d("Task Name", task.getName());
-        }
+//        List<Timetable> allT = db.getTimetable();
+//        for (Timetable t : allT) {
+//            Log.d("Timetable Table", t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
+//        }
 
         db.closeDB();
 
@@ -153,7 +154,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //             startActivity(i);
         } else if (id == R.id.nav_reward) {
 
-        } else if (id == R.id.nav_calendar) {
 
         }else if (id == R.id.nav_highscore) {
 
