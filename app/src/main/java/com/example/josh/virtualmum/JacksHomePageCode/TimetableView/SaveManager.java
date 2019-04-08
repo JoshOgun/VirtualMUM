@@ -1,10 +1,11 @@
 package com.example.josh.virtualmum.JacksHomePageCode.TimetableView;
 
+
 import android.content.Context;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+//import com.google.gson.JsonArray;
+//import com.google.gson.JsonObject;
+//import com.google.gson.JsonParser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,34 +22,35 @@ import Database.VMDbHelper;
 public class SaveManager {
 
     public static String saveSticker(HashMap<Integer, Sticker> stickers){
-        JsonObject obj1 = new JsonObject();
-        JsonArray arr1 = new JsonArray();
-        int[] orders = getSortedKeySet(stickers);
-        for(int i = 0 ; i < orders.length; i++){
-            JsonObject obj2 = new JsonObject();
-            int idx = orders[i];
-            obj2.addProperty("idx",orders[i]);
-            JsonArray arr2 = new JsonArray();//5
-            ArrayList<Schedule> schedules = stickers.get(idx).getSchedules();
-            for(Schedule schedule : schedules){
-                JsonObject obj3 = new JsonObject();
-                obj3.addProperty("classTitle",schedule.title);
-                obj3.addProperty("classPlace",schedule.location);
-                JsonObject obj4 = new JsonObject();//startTime
-                obj4.addProperty("hour",schedule.getStartTime().getHour());
-                obj4.addProperty("minute",schedule.getStartTime().getMinute());
-                obj3.add("startTime",obj4);
-                JsonObject obj5 = new JsonObject();//endtTime
-                obj5.addProperty("hour",schedule.getEndTime().getHour());
-                obj5.addProperty("minute",schedule.getEndTime().getMinute());
-                obj3.add("endTime",obj5);
-                arr2.add(obj3);
-            }
-            obj2.add("schedule",arr2);
-            arr1.add(obj2);
-        }
-        obj1.add("sticker",arr1);
-        return obj1.toString();
+//        JsonObject obj1 = new JsonObject();
+//        JsonArray arr1 = new JsonArray();
+//        int[] orders = getSortedKeySet(stickers);
+//        for(int i = 0 ; i < orders.length; i++){
+//            JsonObject obj2 = new JsonObject();
+//            int idx = orders[i];
+//            obj2.addProperty("idx",orders[i]);
+//            JsonArray arr2 = new JsonArray();//5
+//            ArrayList<Schedule> schedules = stickers.get(idx).getSchedules();
+//            for(Schedule schedule : schedules){
+//                JsonObject obj3 = new JsonObject();
+//                obj3.addProperty("classTitle",schedule.title);
+//                obj3.addProperty("classPlace",schedule.location);
+//                JsonObject obj4 = new JsonObject();//startTime
+//                obj4.addProperty("hour",schedule.getStartTime().getHour());
+//                obj4.addProperty("minute",schedule.getStartTime().getMinute());
+//                obj3.add("startTime",obj4);
+//                JsonObject obj5 = new JsonObject();//endtTime
+//                obj5.addProperty("hour",schedule.getEndTime().getHour());
+//                obj5.addProperty("minute",schedule.getEndTime().getMinute());
+//                obj3.add("endTime",obj5);
+//                arr2.add(obj3);
+//            }
+//            obj2.add("schedule",arr2);
+//            arr1.add(obj2);
+//        }
+//        obj1.add("sticker",arr1);
+//        return obj1.toString();
+        return "t";
     }
 
     public static HashMap<Integer,Sticker> loadSticker(Context context){
@@ -80,6 +82,7 @@ public class SaveManager {
 //            }
 
         VMDbHelper db = new VMDbHelper(context);
+
         List<Timetable> AllTimetable = db.getTimetable();
        // db.insertTask("Test 1", "310320191200", "100420191200", 4, 2, 40, 0);
         int hours;

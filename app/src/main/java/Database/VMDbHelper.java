@@ -84,6 +84,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
         user.updateEvents(context);
         user.updateEvents(context);
 
+//        insertReport(i)
+
         // close db connection
         db.close();
 
@@ -336,6 +338,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // prepare report object
         Report report = new Report(
+                cursor.getInt(cursor.getColumnIndex(Report.VMReport._ID)),
                 cursor.getDouble(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE2)),
                 cursor.getFloat(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE3)));
 
