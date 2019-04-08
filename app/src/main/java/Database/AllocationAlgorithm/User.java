@@ -23,7 +23,7 @@ public class User {
     public int startOfWeek;
     public int endOfWeek;
     public Formatter formatter;
-
+    public List<String> toDbList;
     VMDbHelper db;
 
     public User() {
@@ -55,7 +55,7 @@ public class User {
 
 
     public void saveToDb(Context context){
-        List<String> toDbList = formatter.convertor();
+        toDbList = formatter.convertor();
         //here need to do SQL query to delete all tasks (it eventID = 0) from timetable
         for (String str : toDbList){
             String[] components  = str.split("/");
@@ -85,8 +85,6 @@ public class User {
             e.endTimeNumber = Integer.parseInt(e.getEndDate().substring(8,10));
     }
     }
-
-
 
 
     //test method please ignore
