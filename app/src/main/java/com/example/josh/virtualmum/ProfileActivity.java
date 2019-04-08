@@ -33,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             userPref = db.getTopUP();
         }
-
         Log.d(" UP", userPref.getId() + "\t" + userPref.getName() + "\t" + userPref.getWorkPref() + "\t" +
                     userPref.getNoDayPref() );
 

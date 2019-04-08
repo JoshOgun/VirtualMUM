@@ -56,6 +56,7 @@ public class User {
 
     public void saveToDb(Context context){
         List<String> toDbList = formatter.convertor();
+        //here need to do SQL query to delete all tasks (it eventID = 0) from timetable
         for (String str : toDbList){
             String[] components  = str.split("/");
             String date = components[0];
