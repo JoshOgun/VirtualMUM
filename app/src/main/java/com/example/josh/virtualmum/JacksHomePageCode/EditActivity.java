@@ -50,6 +50,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_edit);
         init();
 
+
     }
 
     private void init(){

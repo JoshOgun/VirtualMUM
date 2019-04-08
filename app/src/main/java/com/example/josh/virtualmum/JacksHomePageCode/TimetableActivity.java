@@ -87,7 +87,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-                    Date cur = new Date(2019 - 1900, 2, 22);
+                    Date cur = new Date(2019 - 1900, 3, 6);
+                    Date next = new Date(2019 - 1900, 3, 7);
 
                     @Override
                     public void onDateSelected(Date date, int position) {
@@ -101,18 +102,28 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        position = originalPosition;
 //                    }
 
-                        add("1","Math","CB5.14",11,15,12,05);
-                        add("2","AI","CB1.11",14,15,15,05);
 
-                        add("3","FP","EB1.1",16,15,17,05);
                         //loadSavedData();
                         //timetable.removeAll();
 
                         if (isSameDate(cur,date)){
                            timetable.removeAll();
+                            add("1","Math","CB5.14",11,15,12,05);
+                            add("2","AI","CB1.11",14,15,15,05);
+
+                            add("3","FP","EB1.1",16,15,17,05);
 
                  }
+                        else if(isSameDate(next,date)){
+                            timetable.removeAll();
+                            add("1","ALGE","CB5.14",10,15,11,05);
+                            add("2","AI","CB1.11",12,15,13,05);
 
+                            add("3","FPLab","EB1.1",16,15,18,05);
+                        }
+                         else{
+                             timetable.removeAll();
+                        }
                     }
 
                 }
@@ -204,7 +215,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 if(resultCode == EditActivity.RESULT_OK_ADD){
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.add(item);
-                    saveByPreference(timetable.createSaveData());
+                    //saveByPreference(timetable.createSaveData());
                 }
                 break;
             case REQUEST_EDIT:
@@ -213,14 +224,14 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
-                    saveByPreference(timetable.createSaveData());
+                  //  saveByPreference(timetable.createSaveData());
 
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
-                    saveByPreference(timetable.createSaveData());
+                //    saveByPreference(timetable.createSaveData());
 
                 }
                 break;

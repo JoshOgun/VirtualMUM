@@ -36,7 +36,7 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_SIDE_CELL_WIDTH_DP = 30;
     private static final int DEFAULT_START_TIME = 7;
     private static final int DEFAULT_SIDE_HEADER_FONT_SIZE_DP = 14;
-    private static final int DEFAULT_STICKER_FONT_SIZE_DP = 13;
+    private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
 
     private int rowCount;
     private int columnCount;

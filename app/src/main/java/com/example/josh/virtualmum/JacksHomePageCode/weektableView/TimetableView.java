@@ -36,7 +36,7 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_SIDE_HEADER_FONT_SIZE_DP = 13;
     private static final int DEFAULT_HEADER_FONT_SIZE_DP = 15;
     private static final int DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP = 15;
-    private static final int DEFAULT_STICKER_FONT_SIZE_DP = 13;
+    private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
 
 
     private int rowCount;
@@ -102,16 +102,6 @@ public class TimetableView extends LinearLayout {
 
 
 
-    /**
-     * date : 2019-02-08
-     * get all schedules TimetableView has.
-     */
-
-    /**
-     * date : 2019-02-08
-     * Used in Edit mode, To check a invalidate schedule.
-     */
-
 
     public void add(ArrayList<Schedule> schedules) {
         add(schedules, -1);
@@ -126,7 +116,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace());
+            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace()+"\n"+schedule.getProfessorName());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -143,8 +133,9 @@ public class TimetableView extends LinearLayout {
             sticker.addSchedule(schedule);
             stickers.put(count, sticker);
             stickerBox.addView(tv);
+
         }
-        setStickerColor();
+
     }
 
 
@@ -160,19 +151,19 @@ public class TimetableView extends LinearLayout {
         stickers.clear();
     }
 
-    public void edit(int idx, ArrayList<Schedule> schedules) {
-        remove(idx);
-        add(schedules, idx);
-    }
+  //  public void edit(int idx, ArrayList<Schedule> schedules) {
+    //    remove(idx);
+      //  add(schedules, idx);
+   // }
 
-    public void remove(int idx) {
-        Sticker sticker = stickers.get(idx);
-        for (TextView tv : sticker.getView()) {
-            stickerBox.removeView(tv);
-        }
-        stickers.remove(idx);
-        setStickerColor();
-    }
+  //  public void remove(int idx) {
+    //    Sticker sticker = stickers.get(idx);
+      //  for (TextView tv : sticker.getView()) {
+        //    stickerBox.removeView(tv);
+        //}
+       // stickers.remove(idx);
+        //setStickerColor();
+    //}
 
     public void setHeaderHighlight(int idx) {
         TableRow row = (TableRow) tableHeader.getChildAt(0);
@@ -183,22 +174,23 @@ public class TimetableView extends LinearLayout {
         tx.setTextSize(TypedValue.COMPLEX_UNIT_DIP,DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP);
     }
 
-    private void setStickerColor() {
+    public void setStickerColor(int x) {
         int size = stickers.size();
         int[] orders = new int[size];
         int i = 0;
-        for (int key : stickers.keySet()) {
-            orders[i++] = key;
+        for (int key : stickers.keySet())
+        { orders[i++] = key;
+
         }
         Arrays.sort(orders);
 
-        int colorSize = stickerColors.length;
+        //int colorSize = stickerColors.length;
 
-        for (i = 0; i < size; i++) {
-            for (TextView v : stickers.get(orders[i]).getView()) {
-                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
-            }
+        for (i = 0; i < size; i++)
+        for (TextView v : stickers.get(orders[orders.length-1]).getView()) {
+                v.setBackgroundColor(x);
         }
+
 
     }
 
