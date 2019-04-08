@@ -11,6 +11,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Database.Task.Task;
@@ -42,15 +43,21 @@ public class ReportActivity extends AppCompatActivity {
         float hoursCompleted[] = new float[allTimetables.size()];
         float assignedHours[] = new float[allTimetables.size()];
 
-        int x = 0;
+        int x = -1;
+        String date = "";
         for(Timetable timetable : allTimetables){
             //check it is a task and not an event
-            if(timetable.getTaskID() != -1 && timetable.getTaskID() == taskID){
+            if(timetable.getEventID() == 0 && timetable.getTaskID() == taskID){
+                date = timetable.getDate().substring(0, 6);
+                //check if date is already there if so dont add another to dates
+                if(!(Arrays.asList(dates).contains(date)) ) {
+                    x++;
+                    dates[x] = date;
+                }
                 if(timetable.getCompleted() == 1 ) {
                     hoursCompleted[x] = hoursCompleted[x] + timetable.getDuration();
                 }
                 assignedHours[x] = assignedHours[x] + timetable.getDuration();
-                dates[x] = timetable.getDate();
             }
         }
 
@@ -133,5 +140,14 @@ public class ReportActivity extends AppCompatActivity {
         graph.addSeries(ExpectedWork);
     }
 
+    /* Code for history page
+
+    //for a given task id and date it needs to update the timetable table to say whether it was completed or not
+    //should get completion status from the shell...
+
+    
+
+
+     */
 
 }
