@@ -112,7 +112,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace()+"\n"+ schedule.getProfessorName());
+            tv.setText(schedule.getTitle() + "\n" + schedule.getLocation());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -160,7 +160,7 @@ public class TimetableView extends LinearLayout {
 
     public void load(String data) {
         removeAll();
-        stickers = SaveManager.loadSticker(data);
+        stickers = SaveManager.loadSticker(context);
         int maxKey = 0;
         for (int key : stickers.keySet()) {
             ArrayList<Schedule> schedules = stickers.get(key).getSchedules();

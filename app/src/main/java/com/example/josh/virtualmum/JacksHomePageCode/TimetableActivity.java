@@ -32,11 +32,10 @@ import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
-import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Time;
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
-    private Schedule schedule;
+
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -44,13 +43,11 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
         this.context = this;
         timetable = findViewById(R.id.timetable);
-        schedule = new Schedule();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +84,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-                    Date cur = new Date(2019 - 1900, 3, 6);
-                    Date next = new Date(2019 - 1900, 3, 7);
+                    Date cur = new Date(2019 - 1900, 2, 22);
 
                     @Override
                     public void onDateSelected(Date date, int position) {
@@ -101,29 +97,12 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        date = Calendar.getInstance().getTime();
 //                        position = originalPosition;
 //                    }
-
-
-                        //loadSavedData();
-                        //timetable.removeAll();
-
-                        if (isSameDate(cur,date)){
+                        loadSavedData();
+                       if (isSameDate(cur,date)){
                            timetable.removeAll();
-                            add("1","Math","CB5.14",11,15,12,05);
-                            add("2","AI","CB1.11",14,15,15,05);
-
-                            add("3","FP","EB1.1",16,15,17,05);
 
                  }
-                        else if(isSameDate(next,date)){
-                            timetable.removeAll();
-                            add("1","ALGE","CB5.14",10,15,11,05);
-                            add("2","AI","CB1.11",12,15,13,05);
 
-                            add("3","FPLab","EB1.1",16,15,18,05);
-                        }
-                         else{
-                             timetable.removeAll();
-                        }
                     }
 
                 }
@@ -169,7 +148,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_task) {
 
-
         } else if (id == R.id.nav_weektable) {
              Intent i = new Intent(context,weektable.class);
              startActivity(i);
@@ -189,25 +167,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void add(String z,String j,String k, int StartHour, int StartM,int endh,int endm){
-        schedule = new Schedule();
-
-        schedule.setClassTitle(z);
-        schedule.setClassPlace(j);
-        schedule.setProfessorName(k);
-        schedule.getStartTime().setHour(StartHour);
-        schedule.getStartTime().setMinute(StartM);
-        schedule.getEndTime().setHour(endh);
-        schedule.getEndTime().setMinute(endm);
-        Intent i = new Intent();
-        ArrayList<Schedule> schedules = new ArrayList<Schedule>();
-        schedules.add(schedule);
-        i.putExtra("schedules",schedules);
-        onActivityResult(1,1,i);
-
-
-
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
@@ -215,7 +174,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 if(resultCode == EditActivity.RESULT_OK_ADD){
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.add(item);
-                    //saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
                 }
                 break;
             case REQUEST_EDIT:
@@ -224,14 +183,14 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
-                  //  saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
 
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
-                //    saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
 
                 }
                 break;
