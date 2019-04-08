@@ -22,7 +22,7 @@ public class User {
     public int endOfDay;
     public int startOfWeek;
     public int endOfWeek;
-    public formatter formatter;
+    public Formatter formatter;
 
     VMDbHelper db;
 
@@ -34,7 +34,7 @@ public class User {
         this.endOfDay = 17;
         this.startOfWeek = 1;
         this.endOfWeek = 6;
-        this.formatter = new formatter(startOfDay, endOfDay, timeTable);
+        this.formatter = new Formatter(startOfDay, endOfDay, timeTable);
 
 
     }
