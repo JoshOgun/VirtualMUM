@@ -18,7 +18,6 @@ public class Sticker implements Serializable {
     public Sticker() {
         this.view = new ArrayList<TextView>();
         this.schedules = new ArrayList<Schedule>();
-
     }
 
     public void addTextView(TextView v){
