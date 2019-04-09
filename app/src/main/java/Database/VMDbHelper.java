@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Time;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -575,43 +573,30 @@ public class VMDbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<Timetable> getTimetable(){
-            List<Timetable> timetable = new ArrayList<>();
+    public Timetable getTimetable(long id){
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        Date today = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmm");
-        String strDate = dateFormat.format(today);
+        Cursor cursor = db.query(Timetable.VMTimetable.TABLE_NAME,
+                new String[]{Timetable.VMTimetable._ID, Timetable.VMTimetable.COLUMN_NAME_TITLE2 , Timetable.VMTimetable.COLUMN_NAME_TITLE3,
+                        Timetable.VMTimetable.COLUMN_NAME_TITLE4, Timetable.VMTimetable.COLUMN_NAME_TITLE5, Timetable.VMTimetable.COLUMN_NAME_TITLE6},
+                Timetable.VMTimetable._ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
 
-        // Need to query it do that it is from this date.
+        if (cursor != null)
+            cursor.moveToFirst();
 
-        // Select All Query
-            String selectQuery = "SELECT  * FROM " + Timetable.VMTimetable.TABLE_NAME + " ORDER BY " +
-                    Timetable.VMTimetable.COLUMN_NAME_TITLE2 + " DESC";
+        // prepare report object
+        Timetable timetable = new Timetable(
+                cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)),
+                cursor.getFloat(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)),
+                cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
 
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
+        // close the db connection
+        cursor.close();
 
-            // looping through all rows and adding to list
-            if (cursor.moveToFirst()) {
-                do {
-                    Timetable timetableElement = new Timetable();
-                    timetableElement.setId(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable._ID)));
-                    timetableElement.setDate(cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)));
-                    timetableElement.setTaskID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)));
-                    timetableElement.setEventID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)));
-                    timetableElement.setDuration(cursor.getLong(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)));
-                    timetableElement.setCompleted(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
-
-
-                    timetable.add(timetableElement);
-                } while (cursor.moveToNext());
-            }
-
-            // close db connection
-            db.close();
-
-            // return notes list
-            return timetable;
+        return timetable;
 
     }
 
@@ -628,6 +613,46 @@ public class VMDbHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(Timetable.VMTimetable.TABLE_NAME, values, Timetable.VMTimetable._ID + " = ?",
                 new String[]{String.valueOf(timetable.getId())});
+
+    }
+
+    public List<Timetable> getFullTimetable(){
+        List<Timetable> timetable = new ArrayList<>();
+
+        Date today = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmm");
+        String strDate = dateFormat.format(today);
+
+        // Need to query it do that it is from this date.
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Timetable.VMTimetable.TABLE_NAME + " ORDER BY " +
+                Timetable.VMTimetable.COLUMN_NAME_TITLE2 + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Timetable timetableElement = new Timetable();
+                timetableElement.setId(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable._ID)));
+                timetableElement.setDate(cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)));
+                timetableElement.setTaskID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)));
+                timetableElement.setEventID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)));
+                timetableElement.setDuration(cursor.getLong(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)));
+                timetableElement.setCompleted(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
+
+
+                timetable.add(timetableElement);
+            } while (cursor.moveToNext());
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return timetable;
 
     }
 

@@ -19,12 +19,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import Database.Task.Task;
 import Database.Timetable.Timetable;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -33,10 +33,11 @@ import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
+
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
-
+    private Schedule schedule;
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -44,11 +45,13 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate_timetable);
+        setContentView(R.layout.activity_navigate);
         this.context = this;
         timetable = findViewById(R.id.timetable);
-
+        schedule = new Schedule();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,20 +75,29 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
-        startDate.add(Calendar.MONTH, -1);
+        //startDate.add(3,-1);
 
         /* ends after 1 month from now */
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 1);
+        //endDate.add(3, 1);
+
+
 
 
         final HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+                //.endDate(endDate.add())
+                .startDate(startDate.getTime())
                 .datesNumberOnScreen(5)
                 .build();
 
+        final Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        final Date today = c.getTime();
+
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-                    Date cur = new Date(2019 - 1900, 2, 22);
+
+
 
                     @Override
                     public void onDateSelected(Date date, int position) {
@@ -98,29 +110,66 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        date = Calendar.getInstance().getTime();
 //                        position = originalPosition;
 //                    }
-                        loadSavedData();
-                       if (isSameDate(cur,date)){
+
+
+                        //loadSavedData();
+                        //timetable.removeAll();
+
+                        VMDbHelper db;
+                        db = new VMDbHelper(getApplicationContext());
+
+
+                        //long timetable_id = db.insertTimetable("100420191200", 0, 2, 1,0);
+
+                        SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
+                        String todayStr = simpleDate.format(today);
+
+                        // We only work in hours so i add the duration to the hour.
+                        if (isSameDate(today,date)){
                            timetable.removeAll();
+                            List<Timetable> allT = db.getFullTimetable();
 
-                 }
+                            for (Timetable t : allT) {
+                                //db.deleteTimetable(t);
+                                Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
+                                String eDate = t.getDate().substring(0,8);
+                                if(todayStr.equals(eDate) ){
+                                    if(t.getTaskID() == 0){
+                                        String name = db.getEvent(t.getEventID()).getName();
+                                        String fullDate = t.getDate();
+                                        int startH, startM, endH;
+                                        startH = Integer.parseInt(fullDate.substring(8,10));
+                                        startM = Integer.parseInt(fullDate.substring(10,12));
+                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
 
+                                        add(name, startH, startM, endH, startM);
+                                    }
+                                    else{
+                                        String name = db.getTask(t.getTaskID()).getName();
+                                        String fullDate = t.getDate();
+                                        int startH, startM, endH;
+                                        startH = Integer.parseInt(fullDate.substring(8,10));
+                                        startM = Integer.parseInt(fullDate.substring(10,12));
+                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
+
+                                        add(name, startH, startM, endH, startM);
+                                    }
+                                }
+                            }
+
+                        }
+                         else{
+                             timetable.removeAll();
+                         }
+
+                        db.closeDB();
                     }
 
                 }
         );
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        VMDbHelper db;
-        db = new VMDbHelper(getApplicationContext());
 
-        //long timetable_id = db.insertTimetable("080420191200", 0, 2, 1,0);
-
-//        List<Timetable> allT = db.getTimetable();
-//        for (Timetable t : allT) {
-//            Log.d("Timetable Table", t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
-//        }
-
-        db.closeDB();
 
     }
 
@@ -149,6 +198,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_task) {
 
+
         } else if (id == R.id.nav_weektable) {
 //             Intent i = new Intent(context,weektable.class);
 //             startActivity(i);
@@ -167,6 +217,22 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void add(String name, int startHour, int startMin,int endh,int endm){
+        schedule = new Schedule();
+
+        schedule.setTitle(name);
+        schedule.getStartTime().setHour(startHour);
+        schedule.getStartTime().setMinute(startMin);
+        schedule.getEndTime().setHour(endh);
+        schedule.getEndTime().setMinute(endm);
+        Intent i = new Intent();
+        ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+        schedules.add(schedule);
+        i.putExtra("schedules",schedules);
+        onActivityResult(1,1,i);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode){
@@ -174,7 +240,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 if(resultCode == EditActivity.RESULT_OK_ADD){
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.add(item);
-                    saveByPreference(timetable.createSaveData());
+                    //saveByPreference(timetable.createSaveData());
                 }
                 break;
             case REQUEST_EDIT:
@@ -183,14 +249,14 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
-                    saveByPreference(timetable.createSaveData());
+                  //  saveByPreference(timetable.createSaveData());
 
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
-                    saveByPreference(timetable.createSaveData());
+                //    saveByPreference(timetable.createSaveData());
 
                 }
                 break;
@@ -212,7 +278,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
         String savedData = mPref.getString("timetable_demo","");
         if(savedData == null && savedData.equals("")) return;
-        timetable.load(savedData);
+        //timetable.load(savedData);
         Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
     }
 }

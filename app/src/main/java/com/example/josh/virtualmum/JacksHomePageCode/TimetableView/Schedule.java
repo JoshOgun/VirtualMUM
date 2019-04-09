@@ -7,12 +7,8 @@ import java.util.Date;
 
 public class Schedule implements Serializable {
 
-    String title="";
-    String location="";
-
-    int task_id = 0;
-    int event_id = 0;
-
+    String title ="";
+    String professorName="";
 
     private Time startTime;
     private Time endTime;
@@ -27,6 +23,13 @@ public class Schedule implements Serializable {
 
     }
 
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public void setProfessorName(String professorName) {
+        this.professorName = professorName;
+    }
 
     public String getTitle() {
         return title;
@@ -34,14 +37,6 @@ public class Schedule implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
 

@@ -94,9 +94,7 @@ public class TimetableView extends LinearLayout {
         stickerSelectedListener = listener;
     }
 
-  public String createSaveData() {
-        return SaveManager.saveSticker(stickers);
-    }
+
 
 
     public void add(ArrayList<Schedule> schedules) {
@@ -112,7 +110,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getTitle() + "\n" + schedule.getLocation());
+            tv.setText(schedule.getTitle() +"\n"+ schedule.getProfessorName());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -158,18 +156,18 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
-    public void load(String data) {
-        removeAll();
-        stickers = SaveManager.loadSticker(context);
-        int maxKey = 0;
-        for (int key : stickers.keySet()) {
-            ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
-            add(schedules, key);
-            if (maxKey < key) maxKey = key;
-        }
-        stickerCount = maxKey + 1;
-        setStickerColor();
-    }
+//    public void load(String data) {
+//        removeAll();
+//        stickers = SaveManager.loadSticker(data);
+//        int maxKey = 0;
+//        for (int key : stickers.keySet()) {
+//            ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
+//            add(schedules, key);
+//            if (maxKey < key) maxKey = key;
+//        }
+//        stickerCount = maxKey + 1;
+//        setStickerColor();
+//    }
 
     private void setStickerColor() {
         int size = stickers.size();
