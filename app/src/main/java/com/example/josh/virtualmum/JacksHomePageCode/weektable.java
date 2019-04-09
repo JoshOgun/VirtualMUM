@@ -41,8 +41,11 @@ public class weektable extends AppCompatActivity {
     }
 
     public void add(int d,String z,String j,String k, int StartHour, int StartM,int endh,int endm,int p){
+        if (d==0){
+            d = 7;
+        }
         schedule = new Schedule();
-        schedule.setDay(d);
+        schedule.setDay(d-1);
         schedule.setClassTitle(z);
         schedule.setClassPlace(j);
         schedule.setProfessorName(k);
