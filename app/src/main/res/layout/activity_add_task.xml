@@ -7,6 +7,21 @@
     tools:context=".AddTaskActivity">
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/exitFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:backgroundTint="@color/colorHeaderText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

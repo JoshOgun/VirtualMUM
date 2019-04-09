@@ -215,6 +215,9 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // close db connection
         db.close();
+        // 10042019 1200
+        int duration = Integer.parseInt(endDate.substring(8,10)) - Integer.parseInt(startDate.substring(8,10));
+        long timetable_id = insertTimetable(startDate, 0, (int) id, duration, 0);
 
         // return newly inserted row id
         return id;

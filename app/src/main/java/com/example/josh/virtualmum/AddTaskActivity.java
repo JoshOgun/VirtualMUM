@@ -1,5 +1,6 @@
 package com.example.josh.virtualmum;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,14 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        FloatingActionButton eFab = findViewById(R.id.exitFab);
+        eFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Spinner spinner = findViewById(R.id.daySpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout

@@ -15,6 +15,7 @@ public class Task {
     private int completed;
 
     public int getWeight() {
+        weight = priority * difficulty;
         return weight;
     }
 

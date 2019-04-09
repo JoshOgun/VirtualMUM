@@ -94,7 +94,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 .build();
 
         final Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_YEAR, 1);
         final Date today = c.getTime();
 
         horizontalCalendar.setCalendarListener(
@@ -104,15 +103,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
                     @Override
                     public void onDateSelected(Date date, int position) {
-                        // Something Josh is working on
-//                    if(counter == 0){
-//                        originalPosition = position;
-//                        counter++;
-//                    }
-//                    if(position > originalPosition + 5 ){
-//                        date = Calendar.getInstance().getTime();
-//                        position = originalPosition;
-//                    }
 
 
                         //loadSavedData();
@@ -133,7 +123,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                             List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
-                                //db.deleteTimetable(t);
+                                db.deleteTimetable(t);
                                 Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
                                 String eDate = t.getDate().substring(0,8);
                                 if(todayStr.equals(eDate) ){
