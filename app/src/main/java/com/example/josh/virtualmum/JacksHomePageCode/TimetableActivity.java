@@ -30,9 +30,12 @@ import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
+import com.example.josh.virtualmum.EventListActivity;
+import com.example.josh.virtualmum.ProfileActivity;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
+import com.example.josh.virtualmum.TaskListActivity;
 
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -187,31 +190,43 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
 
     }
-   // @Override
+    // @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
         } else if (id == R.id.nav_progress) {
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
-
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//             Intent i = new Intent(context,WeekTable.class);
-//             startActivity(i);
+//            Intent intent = new Intent(this, .class);
+//            startActivity(intent);
+
+        }  else if (id == R.id.nav_events) {
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_setting) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
 
         }
 
 
-    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void add(String name, int startHour, int startMin,int endh,int endm){
         schedule = new Schedule();
 

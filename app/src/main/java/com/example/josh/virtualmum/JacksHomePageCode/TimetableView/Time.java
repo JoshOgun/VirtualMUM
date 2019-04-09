@@ -1,5 +1,4 @@
 package com.example.josh.virtualmum.JacksHomePageCode.TimetableView;
-
 import java.io.Serializable;
 
 public class Time implements Serializable {

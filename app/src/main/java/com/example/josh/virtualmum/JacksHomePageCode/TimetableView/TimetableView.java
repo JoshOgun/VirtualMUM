@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Display;
@@ -22,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
+import com.example.josh.virtualmum.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,9 +96,6 @@ public class TimetableView extends LinearLayout {
         stickerSelectedListener = listener;
     }
 
-  public String createSaveData() {
-        return SaveManager.saveSticker(stickers);
-    }
 
 
     public void add(ArrayList<Schedule> schedules) {
@@ -112,7 +111,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getTitle() + "\n" + schedule.getLocation());
+            tv.setText(schedule.getTitle() + "\n" );
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -158,19 +157,19 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
-    public void load(String data) {
-        removeAll();
-        stickers = SaveManager.loadSticker(context);
-        int maxKey = 0;
-        for (int key : stickers.keySet()) {
-            ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
-            add(schedules, key);
-            if (maxKey < key) maxKey = key;
-        }
-
-        stickerCount = maxKey + 1;
-        setStickerColor();
-    }
+//    public void load(String data) {
+//        removeAll();
+//        stickers = SaveManager.loadSticker(context);
+//        int maxKey = 0;
+//        for (int key : stickers.keySet()) {
+//            ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
+//            add(schedules, key);
+//            if (maxKey < key) maxKey = key;
+//        }
+//
+//        stickerCount = maxKey + 1;
+//        setStickerColor();
+//    }
 
     private void setStickerColor() {
         int size = stickers.size();
@@ -202,14 +201,16 @@ public class TimetableView extends LinearLayout {
                 tv.setLayoutParams(createTableRowParam(cellHeight));
                 if (k == 0) {
                     tv.setText(getHeaderTime(i));
-                    tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
+                    tv.setTextColor(getResources().getColor(R.color.colorHeaderText));
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SIDE_HEADER_FONT_SIZE_DP);
-                    tv.setBackgroundColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeader));
+                    tv.setBackgroundColor(getResources().getColor(R.color.colorHeader));
                     tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
                     tv.setText("");
-                    tv.setBackground(getResources().getDrawable(com.example.josh.virtualmum.R.drawable.item_border));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        tv.setBackground(getResources().getDrawable(R.drawable.item_border));
+                    }
                     tv.setGravity(Gravity.RIGHT);
                 }
                 tableRow.addView(tv);

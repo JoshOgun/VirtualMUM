@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".JacksHomePageCode.TimetableActivity">
+        <activity android:name=".JacksHomePageCode.TimetableActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +30,8 @@
                 android:value="com.example.josh.virtualmum.EventListActivity" />
         </activity>
         <!--<activity android:name="com.example.josh.virtualmum.JacksHomePageCode.EditActivity"></activity>-->
-        <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.WeekTable"></activity>
+        <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.WeekTable"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity android:name=".SetUpActivity"/>
         <activity

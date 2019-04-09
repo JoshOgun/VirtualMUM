@@ -133,15 +133,14 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, TimetableActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
 //            Intent intent = new Intent(this, .class);
 //            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
-
             drawer.closeDrawer(GravityCompat.START);
             return true;
 
@@ -154,8 +153,8 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
         }
         else if (id == R.id.nav_setting) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
 
         }
 

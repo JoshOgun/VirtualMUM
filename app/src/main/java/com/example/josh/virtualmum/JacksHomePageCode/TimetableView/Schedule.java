@@ -1,7 +1,7 @@
 package com.example.josh.virtualmum.JacksHomePageCode.TimetableView;
 
 
-import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Time;
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Time;
 
 import java.io.Serializable;
 import java.util.Date;
