@@ -56,20 +56,20 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, EditActivity.class);
-                i.putExtra("mde",REQUEST_ADD);
-                startActivityForResult(i,REQUEST_ADD);
+//                Intent i = new Intent(context, EditActivity.class);
+//                i.putExtra("mde",REQUEST_ADD);
+//                startActivityForResult(i,REQUEST_ADD);
 
             }
         });
         timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
             @Override
             public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
-                Intent i = new Intent(context, EditActivity.class);
-                i.putExtra("mode",REQUEST_EDIT);
-                i.putExtra("idx", idx);
-                i.putExtra("schedules", schedules);
-                startActivityForResult(i,REQUEST_EDIT);
+//                Intent i = new Intent(context, EditActivity.class);
+//                i.putExtra("mode",REQUEST_EDIT);
+//                i.putExtra("idx", idx);
+//                i.putExtra("schedules", schedules);
+//                startActivityForResult(i,REQUEST_EDIT);
             }
         });
 
@@ -202,11 +202,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_weektable) {
 //             Intent i = new Intent(context,weektable.class);
 //             startActivity(i);
-        } else if (id == R.id.nav_reward) {
-
-
-        }else if (id == R.id.nav_highscore) {
-
         }
         else if (id == R.id.nav_setting) {
 
@@ -233,35 +228,35 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
-            case REQUEST_ADD:
-                if(resultCode == EditActivity.RESULT_OK_ADD){
-                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
-                    timetable.add(item);
-                    //saveByPreference(timetable.createSaveData());
-                }
-                break;
-            case REQUEST_EDIT:
-                /** Edit -> Submit */
-                if(resultCode == EditActivity.RESULT_OK_EDIT){
-                    int idx = data.getIntExtra("idx",-1);
-                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
-                    timetable.edit(idx,item);
-                  //  saveByPreference(timetable.createSaveData());
-
-                }
-                /** Edit -> Delete */
-                else if(resultCode == EditActivity.RESULT_OK_DELETE){
-                    int idx = data.getIntExtra("idx",-1);
-                    timetable.remove(idx);
-                //    saveByPreference(timetable.createSaveData());
-
-                }
-                break;
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        switch (requestCode){
+//            case REQUEST_ADD:
+//                if(resultCode == EditActivity.RESULT_OK_ADD){
+//                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+//                    timetable.add(item);
+//                    //saveByPreference(timetable.createSaveData());
+//                }
+//                break;
+//            case REQUEST_EDIT:
+//                /** Edit -> Submit */
+//                if(resultCode == EditActivity.RESULT_OK_EDIT){
+//                    int idx = data.getIntExtra("idx",-1);
+//                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+//                    timetable.edit(idx,item);
+//                  //  saveByPreference(timetable.createSaveData());
+//
+//                }
+//                /** Edit -> Delete */
+//                else if(resultCode == EditActivity.RESULT_OK_DELETE){
+//                    int idx = data.getIntExtra("idx",-1);
+//                    timetable.remove(idx);
+//                //    saveByPreference(timetable.createSaveData());
+//
+//                }
+//                break;
+//        }
+//    }
 
     /** save timetableView's data to SharedPreferences in json format */
     private void saveByPreference(String data){

@@ -22,6 +22,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
+import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Sticker;
+import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Time;
 
 import java.util.ArrayList;
 import java.util.Arrays;

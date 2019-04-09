@@ -114,17 +114,9 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
 //            Intent intent = new Intent(this, .class);
 //            startActivity(intent);
 
-        } else if (id == R.id.nav_reward) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
-
         } else if (id == R.id.nav_events) {
             drawer.closeDrawer(GravityCompat.START);
             return true;
-
-        }else if (id == R.id.nav_highscore) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
 
         }
         else if (id == R.id.nav_setting) {

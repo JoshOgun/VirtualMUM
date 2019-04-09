@@ -149,18 +149,9 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 //            Intent intent = new Intent(this, .class);
 //            startActivity(intent);
 
-        } else if (id == R.id.nav_reward) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
-
-        } else if (id == R.id.nav_events) {
+        }  else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);
             startActivity(intent);
-
-        }else if (id == R.id.nav_highscore) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
-
         }
         else if (id == R.id.nav_setting) {
 //            Intent intent = new Intent(this, .class);
