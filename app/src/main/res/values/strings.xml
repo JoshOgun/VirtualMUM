@@ -24,6 +24,17 @@
         <item>Sun</item>
     </string-array>
 
+    <string-array name="header_title">
+        <item></item>
+        <item>yyy</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
     <string-array name="dayDate_array">
         <item>01</item>
         <item>02</item>

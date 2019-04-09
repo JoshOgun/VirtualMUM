@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#E01089</color>
     <color name="colorHeader">#fcfcfc</color>
-    <color name="colorHeaderText">#7D7D7D</color>
+    <color name="colorHeaderText">#7d7d7d</color>
     <color name="colorTableItem">#efefef</color>
 
     <color name="address">#2F7092</color>

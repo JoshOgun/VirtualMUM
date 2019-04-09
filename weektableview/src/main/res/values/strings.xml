@@ -1,0 +1,10 @@
+<resources>
+    <string-array name="header_title">
+        <item></item>
+        <item>wwww</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+    </string-array>
+</resources>

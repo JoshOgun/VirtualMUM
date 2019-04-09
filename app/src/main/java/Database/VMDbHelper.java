@@ -6,7 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import Database.AllocationAlgorithm.User;
@@ -81,6 +85,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
         long id = db.insert(Task.VMTask.TABLE_NAME, null, values);
         user.updateEvents(context);
         user.updateEvents(context);
+
+//        insertReport(i)
 
         // close db connection
         db.close();
@@ -334,6 +340,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // prepare report object
         Report report = new Report(
+                cursor.getInt(cursor.getColumnIndex(Report.VMReport._ID)),
                 cursor.getDouble(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE2)),
                 cursor.getFloat(cursor.getColumnIndex(Report.VMReport.COLUMN_NAME_TITLE3)));
 
@@ -640,6 +647,46 @@ public class VMDbHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(Timetable.VMTimetable.TABLE_NAME, values, Timetable.VMTimetable._ID + " = ?",
                 new String[]{String.valueOf(timetable.getId())});
+
+    }
+
+    public List<Timetable> getFullTimetable(){
+        List<Timetable> timetable = new ArrayList<>();
+
+        Date today = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmm");
+        String strDate = dateFormat.format(today);
+
+        // Need to query it do that it is from this date.
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + Timetable.VMTimetable.TABLE_NAME + " ORDER BY " +
+                Timetable.VMTimetable.COLUMN_NAME_TITLE2 + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Timetable timetableElement = new Timetable();
+                timetableElement.setId(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable._ID)));
+                timetableElement.setDate(cursor.getString(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE2)));
+                timetableElement.setTaskID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE3)));
+                timetableElement.setEventID(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE4)));
+                timetableElement.setDuration(cursor.getLong(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE5)));
+                timetableElement.setCompleted(cursor.getInt(cursor.getColumnIndex(Timetable.VMTimetable.COLUMN_NAME_TITLE6)));
+
+
+                timetable.add(timetableElement);
+            } while (cursor.moveToNext());
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return timetable;
 
     }
 

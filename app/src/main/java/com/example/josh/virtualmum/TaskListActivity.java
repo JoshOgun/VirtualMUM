@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +119,6 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         List<Task> allTasks = db.getAllTasks();
         for (Task task : allTasks) {
             taskList.add(task);
-
         }
 
         db.closeDB();
@@ -178,5 +179,3 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 
 
     }
-
-

@@ -10,7 +10,8 @@ public class Report {
 
     public Report(){}
 
-    public Report(double hoursSpent, float estimatedHours) {
+    public Report(int id, double hoursSpent, float estimatedHours) {
+        this.id = id;
         this.hoursSpent = hoursSpent;
         this.estimatedHours = estimatedHours;
     }
