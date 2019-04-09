@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <include layout="@layout/table_header"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,14 +13,13 @@
         >
 
         <RelativeLayout
-            android:id="@+id/sticker_box1"
+            android:id="@+id/sticker_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/inner_weektable"/>
+            <include layout="@layout/inner_table"/>
 
         </RelativeLayout>
     </ScrollView>
-
 
 </LinearLayout>
