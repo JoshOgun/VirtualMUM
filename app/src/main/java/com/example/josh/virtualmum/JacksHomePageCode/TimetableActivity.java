@@ -99,18 +99,18 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        position = originalPosition;
 //                    }
                      //   loadSavedData();
-                       if (isSameDate(cur,date)){
+                      // if (isSameDate(cur,date)){
                            timetable.removeAll();
-                           add("AI",12,05,13,11);
-                           add("LAB",13,05,14,11);
+                           add("AI",12,00,13,11);
+                           add("LAB",13,00,14,11);
                            add("ALGEBRA",9,05,10,15);
-                           add("ANA",11,15,112,11);
+                           add("ANA",11,15,2,11);
 
                            add("AILAB",16,05,18,15);
 
 
 
-                       }
+                     //  }
 
                     }
 
@@ -195,7 +195,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 if(resultCode == EditActivity.RESULT_OK_ADD){
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.add(item);
-                    saveByPreference(timetable.createSaveData());
+                    //saveByPreference(timetable.createSaveData());
                 }
                 break;
             case REQUEST_EDIT:
@@ -204,14 +204,14 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
-                    saveByPreference(timetable.createSaveData());
+                   // saveByPreference(timetable.createSaveData());
 
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
-                    saveByPreference(timetable.createSaveData());
+                   // saveByPreference(timetable.createSaveData());
 
                 }
                 break;

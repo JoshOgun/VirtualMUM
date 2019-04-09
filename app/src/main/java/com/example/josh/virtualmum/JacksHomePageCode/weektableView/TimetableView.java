@@ -44,7 +44,7 @@ public class TimetableView extends LinearLayout {
     private int columnCount;
     private int cellHeight;
     private int sideCellWidth;
-   // private String[] stickerColors;
+    private String[] stickerColors;
     private int startTime;
     private int headerHighlightColor;
 
@@ -82,7 +82,7 @@ public class TimetableView extends LinearLayout {
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
         sideCellWidth = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors,com.example.josh.virtualmum.R.array.default_sticker_color);
-      //  stickerColors = a.getResources().getStringArray(colorsId);
+        stickerColors = a.getResources().getStringArray(colorsId);
         startTime = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_start_time, DEFAULT_START_TIME);
         headerHighlightColor = a.getColor(com.example.josh.virtualmum.R.styleable.TimetableView_header_highlight_color, getResources().getColor(com.example.josh.virtualmum.R.color.default_header_highlight_color));
         a.recycle();
@@ -116,7 +116,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace()+"\n"+schedule.getProfessorName());
+            tv.setText(schedule.getClassTitle());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -135,7 +135,7 @@ public class TimetableView extends LinearLayout {
             stickerBox.addView(tv);
 
         }
-
+          setStickerColor1();
     }
 
 
@@ -191,6 +191,24 @@ public class TimetableView extends LinearLayout {
                 v.setBackgroundColor(x);
         }
 
+
+    }
+    private void setStickerColor1() {
+        int size = stickers.size();
+        int[] orders = new int[size];
+        int i = 0;
+        for (int key : stickers.keySet()) {
+            orders[i++] = key;
+        }
+        Arrays.sort(orders);
+
+        int colorSize = stickerColors.length;
+
+        for (i = 0; i < size; i++) {
+            for (TextView v : stickers.get(orders[i]).getView()) {
+                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
+            }
+        }
 
     }
 
