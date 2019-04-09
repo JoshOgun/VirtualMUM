@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Display;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Sticker;
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Time;
+import com.example.josh.virtualmum.R;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -201,14 +204,16 @@ public class TimetableView extends LinearLayout {
                 tv.setLayoutParams(createTableRowParam(cellHeight));
                 if (k == 0) {
                     tv.setText(getHeaderTime(i));
-                    tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
+                    tv.setTextColor(getResources().getColor(R.color.colorHeaderText));
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SIDE_HEADER_FONT_SIZE_DP);
-                    tv.setBackgroundColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeader));
+                    tv.setBackgroundColor(getResources().getColor(R.color.colorHeader));
                     tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
                     tv.setText("");
-                    tv.setBackground(getResources().getDrawable(com.example.josh.virtualmum.R.drawable.item_border));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        tv.setBackground(getResources().getDrawable(R.drawable.item_border));
+                    }
                     tv.setGravity(Gravity.RIGHT);
                 }
                 tableRow.addView(tv);

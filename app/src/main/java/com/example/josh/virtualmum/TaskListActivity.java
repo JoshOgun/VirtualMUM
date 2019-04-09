@@ -133,7 +133,7 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-//            Intent intent = new Intent(this, TimetableActivity.class);
+//            Intent intent = new Intent(this, .class);
 //            startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
