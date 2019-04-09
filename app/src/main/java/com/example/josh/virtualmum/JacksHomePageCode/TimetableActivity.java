@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import java.nio.channels.ShutdownChannelGroupException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,7 +36,7 @@ import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
-
+     private Schedule schedule;
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -100,8 +101,16 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                      //   loadSavedData();
                        if (isSameDate(cur,date)){
                            timetable.removeAll();
+                           add("AI",12,05,13,11);
+                           add("LAB",13,05,14,11);
+                           add("ALGEBRA",9,05,10,15);
+                           add("ANA",11,15,112,11);
 
-                 }
+                           add("AILAB",16,05,18,15);
+
+
+
+                       }
 
                     }
 
@@ -122,7 +131,20 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         db.closeDB();
 
     }
+    public void add(String name, int startHour, int startMin,int endh,int endm){
+        schedule = new Schedule();
 
+        schedule.setTitle(name);
+        schedule.getStartTime().setHour(startHour);
+        schedule.getStartTime().setMinute(startMin);
+        schedule.getEndTime().setHour(endh);
+        schedule.getEndTime().setMinute(endm);
+        Intent i = new Intent();
+        ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+        schedules.add(schedule);
+        i.putExtra("schedules",schedules);
+        onActivityResult(1,1,i);
+    }
     public static boolean isSameDate(Date date1, Date date2) {
 
         if (date1.getYear() == date2.getYear()) {
