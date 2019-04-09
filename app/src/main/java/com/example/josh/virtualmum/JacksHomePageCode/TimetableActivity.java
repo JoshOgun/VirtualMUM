@@ -48,7 +48,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate);
+        setContentView(R.layout.activity_navigate_timetable);
         this.context = this;
         timetable = findViewById(R.id.timetable);
         schedule = new Schedule();
@@ -200,7 +200,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
 
         } else if (id == R.id.nav_weektable) {
-//             Intent i = new Intent(context,weektable.class);
+//             Intent i = new Intent(context,WeekTable.class);
 //             startActivity(i);
         }
         else if (id == R.id.nav_setting) {

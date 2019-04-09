@@ -9,21 +9,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Schedule;
-import com.example.josh.virtualmum.JacksHomePageCode.weektableView.TimetableView;
+
 import java.util.ArrayList;
 
-public class weektable extends AppCompatActivity {
+public class WeekTable extends AppCompatActivity {
    //
     // private Context context;
-    private TimetableView weektable;
+    private TimetableView weekTable;
     private Schedule schedule;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weektable);
-        weektable = findViewById(R.id.timetable);
-        weektable.setHeaderHighlight(1);
-        weektable.removeAll();
+        weekTable = findViewById(R.id.timetable);
+        weekTable.setHeaderHighlight(1);
+        weekTable.removeAll();
         //init();
         add(0,"1","Math","CB5.14",11,15,12,05,1);
         add(0,"2","AI","CB1.11",14,15,15,05,1);
@@ -65,17 +65,17 @@ public class weektable extends AppCompatActivity {
     protected void onActivityResult( @Nullable Intent data,int i) {
 
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
-                    weektable.add(item);
+                    weekTable.add(item);
         if (i  ==1 ) {
-            weektable.setStickerColor(Color.YELLOW);
+            weekTable.setStickerColor(Color.YELLOW);
         }
         else if(i == 2){
-            weektable.setStickerColor(Color.GREEN);
+            weekTable.setStickerColor(Color.GREEN);
 
 
         }
         else{
-            weektable.setStickerColor(Color.BLUE);
+            weekTable.setStickerColor(Color.BLUE);
         }
 
     }

@@ -29,7 +29,7 @@
                 android:value="com.example.josh.virtualmum.EventListActivity" />
         </activity>
         <!--<activity android:name="com.example.josh.virtualmum.JacksHomePageCode.EditActivity"></activity>-->
-        <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.weektable"></activity>
+        <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.WeekTable"></activity>
 
         <activity android:name=".SetUpActivity"/>
         <activity
