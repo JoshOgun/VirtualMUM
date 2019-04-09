@@ -10,4 +10,5 @@
         <attr name="start_time" format="integer"/>
         <attr name="header_highlight_color" format="color"/>
     </declare-styleable>
+
 </resources>
