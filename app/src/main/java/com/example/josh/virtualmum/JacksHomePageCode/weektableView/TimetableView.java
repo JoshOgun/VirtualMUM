@@ -136,7 +136,7 @@ public class TimetableView extends LinearLayout {
             stickerBox.addView(tv);
 
         }
-
+setStickerColor1();
     }
 
 
@@ -173,6 +173,25 @@ public class TimetableView extends LinearLayout {
         tx.setBackgroundColor(headerHighlightColor);
         tx.setTypeface(null, Typeface.BOLD);
         tx.setTextSize(TypedValue.COMPLEX_UNIT_DIP,DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP);
+    }
+
+    private void setStickerColor1() {
+        int size = stickers.size();
+        int[] orders = new int[size];
+        int i = 0;
+        for (int key : stickers.keySet()) {
+            orders[i++] = key;
+        }
+        Arrays.sort(orders);
+
+        int colorSize = stickerColors.length;
+
+        for (i = 0; i < size; i++) {
+            for (TextView v : stickers.get(orders[i]).getView()) {
+                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
+            }
+        }
+
     }
 
     public void setStickerColor(int x) {
