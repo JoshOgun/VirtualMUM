@@ -33,13 +33,9 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
 
-        try {
-            String activityUPIDstr = getIntent().getStringExtra("USERPREF");
-            int activityUPID = Integer.parseInt(activityUPIDstr);
-            userPref = db.getUserPref(activityUPID);
-        } catch (Exception e) {
-            userPref = db.getTopUP();
-        }
+
+        userPref = db.getTopUP();
+
 
         Log.d(" UP", userPref.getId() + "\t" + userPref.getName() + "\t" + userPref.getWorkPref() + "\t" +
                     userPref.getNoDayPref() );

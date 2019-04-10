@@ -86,9 +86,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
 
 
-
         final HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
-                //.endDate(endDate.add())
+                .endDate(endDate.getTime())
                 .startDate(startDate.getTime())
                 .datesNumberOnScreen(5)
                 .build();
@@ -98,8 +97,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-
-
 
                     @Override
                     public void onDateSelected(Date date, int position) {

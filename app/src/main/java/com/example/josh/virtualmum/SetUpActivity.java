@@ -1,14 +1,22 @@
 package com.example.josh.virtualmum;
 
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+
+import java.util.List;
+
+import Database.AllocationAlgorithm.User;
+import Database.UserPreference.UserPref;
 import Database.VMDbHelper;
 
 public class SetUpActivity extends AppCompatActivity {
@@ -17,6 +25,24 @@ public class SetUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up);
+
+        VMDbHelper db = new VMDbHelper(getApplicationContext());
+
+        // FOR TESTING
+//        List<UserPref> ups = db.getAllUserPref();
+//        for(UserPref u : ups){
+//            Log.d(" UserPREF", "\t" + u.getId() + "\t" + u.getName());
+//            db.deleteUserPref(u);
+//        }
+
+        UserPref up = db.getTopUP();
+        db.closeDB();
+
+        if(up.getName() != null){
+            Intent myIntent = new Intent(getBaseContext(), TimetableActivity.class);
+            startActivity(myIntent);
+        }
+
 
         Spinner spinner = findViewById(R.id.WPspinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -49,6 +75,8 @@ public class SetUpActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 VMDbHelper db;
                 db = new VMDbHelper(getApplicationContext());
 
@@ -62,13 +90,12 @@ public class SetUpActivity extends AppCompatActivity {
                 String dayPrefs = sp.getSelectedItem().toString();
 
                 sp = findViewById(R.id.DPspinner2);
-                dayPrefs += "|" + sp.getSelectedItem().toString();
+                dayPrefs += "\t|\t" + sp.getSelectedItem().toString();
 
                 long upId = db.insertUserPref(name, workPref, dayPrefs);
 
                 db.closeDB();
-                Intent myIntent = new Intent(getBaseContext(), ProfileActivity.class);
-                myIntent.putExtra("USERPREF", Long.toString(upId));
+                Intent myIntent = new Intent(getBaseContext(), SetUpEventsActivity.class);
                 startActivity(myIntent);
             }
         });

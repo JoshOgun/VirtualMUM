@@ -540,6 +540,31 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
     }
 
+
+    public List<UserPref> getAllUserPref(){
+        List<UserPref> ups = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + UserPref.VMUserPref.TABLE_NAME + " ORDER BY " +
+                UserPref.VMUserPref._ID + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                UserPref up = new UserPref();
+                up.setId(cursor.getInt(cursor.getColumnIndex( UserPref.VMUserPref._ID)));
+                up.setName(cursor.getString(cursor.getColumnIndex( UserPref.VMUserPref.COLUMN_NAME_TITLE2)));
+                up.setWorkPref(cursor.getString(cursor.getColumnIndex( UserPref.VMUserPref.COLUMN_NAME_TITLE3)));
+                up.setNoDayPref(cursor.getString(cursor.getColumnIndex( UserPref.VMUserPref.COLUMN_NAME_TITLE4)));
+
+                ups.add(up);
+            } while (cursor.moveToNext());
+        }
+        return ups;
+    }
+
     public int updateUserPref(UserPref userPref){
         SQLiteDatabase db = this.getWritableDatabase();
 

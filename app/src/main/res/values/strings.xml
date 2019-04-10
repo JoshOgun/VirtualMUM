@@ -103,7 +103,6 @@
     <string name="action_settings">Settings</string>
 
 
-
     <string-array name="hours_array">
         <item>00</item>
         <item>01</item>
@@ -146,4 +145,5 @@
         <item>50</item>
         <item>55</item>
     </string-array>
+    <string name="title_activity_set_up_events">SetUpEventsActivity</string>
 </resources>
