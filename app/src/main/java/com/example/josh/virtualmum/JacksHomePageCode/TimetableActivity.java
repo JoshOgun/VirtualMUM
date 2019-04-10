@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
-import java.nio.channels.ShutdownChannelGroupException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +35,7 @@ import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
-     private Schedule schedule;
+
     private Context context;
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
@@ -45,7 +44,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigate_timetable);
+        setContentView(R.layout.activity_navigate);
         this.context = this;
         timetable = findViewById(R.id.timetable);
 
@@ -98,19 +97,11 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 //                        date = Calendar.getInstance().getTime();
 //                        position = originalPosition;
 //                    }
-                     //   loadSavedData();
-                      // if (isSameDate(cur,date)){
+                        loadSavedData();
+                       if (isSameDate(cur,date)){
                            timetable.removeAll();
-                           add("AI",12,00,13,11);
-                           add("LAB",13,00,14,11);
-                           add("ALGEBRA",9,05,10,15);
-                           add("ANA",11,15,2,11);
 
-                           add("AILAB",16,05,18,15);
-
-
-
-                     //  }
+                 }
 
                     }
 
@@ -131,20 +122,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         db.closeDB();
 
     }
-    public void add(String name, int startHour, int startMin,int endh,int endm){
-        schedule = new Schedule();
 
-        schedule.setTitle(name);
-        schedule.getStartTime().setHour(startHour);
-        schedule.getStartTime().setMinute(startMin);
-        schedule.getEndTime().setHour(endh);
-        schedule.getEndTime().setMinute(endm);
-        Intent i = new Intent();
-        ArrayList<Schedule> schedules = new ArrayList<Schedule>();
-        schedules.add(schedule);
-        i.putExtra("schedules",schedules);
-        onActivityResult(1,1,i);
-    }
     public static boolean isSameDate(Date date1, Date date2) {
 
         if (date1.getYear() == date2.getYear()) {
@@ -171,10 +149,11 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.nav_task) {
 
         } else if (id == R.id.nav_weektable) {
-            Intent i = new Intent(context,weektable.class);
-             startActivity(i);
+//             Intent i = new Intent(context,weektable.class);
+//             startActivity(i);
         } else if (id == R.id.nav_reward) {
 
+        } else if (id == R.id.nav_calendar) {
 
         }else if (id == R.id.nav_highscore) {
 
@@ -195,7 +174,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                 if(resultCode == EditActivity.RESULT_OK_ADD){
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.add(item);
-                    //saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
                 }
                 break;
             case REQUEST_EDIT:
@@ -204,14 +183,14 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                     int idx = data.getIntExtra("idx",-1);
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     timetable.edit(idx,item);
-                   // saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
 
                 }
                 /** Edit -> Delete */
                 else if(resultCode == EditActivity.RESULT_OK_DELETE){
                     int idx = data.getIntExtra("idx",-1);
                     timetable.remove(idx);
-                   // saveByPreference(timetable.createSaveData());
+                    saveByPreference(timetable.createSaveData());
 
                 }
                 break;

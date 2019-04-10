@@ -168,6 +168,7 @@ public class TimetableView extends LinearLayout {
             add(schedules, key);
             if (maxKey < key) maxKey = key;
         }
+
         stickerCount = maxKey + 1;
         setStickerColor();
     }
