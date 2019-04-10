@@ -84,8 +84,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // insert row
         long id = db.insert(Task.VMTask.TABLE_NAME, null, values);
-        user.updateEvents(context);
-        user.updateEvents(context);
+        //user.updateEvents(context);
 
         // close db connection
         db.close();

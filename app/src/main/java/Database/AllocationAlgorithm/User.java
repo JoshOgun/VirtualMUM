@@ -29,12 +29,12 @@ public class User {
     public User() {
         taskList = new ArrayList<Task>();
         eventList = new ArrayList<Event>();
-        timetableHandler = new assignTimetable(this);
         this.startOfDay = 8;
         this.endOfDay = 17;
         this.startOfWeek = 1;
         this.endOfWeek = 6;
-        this.formatter = new Formatter(startOfDay, endOfDay, timeTable);
+        timetableHandler = new assignTimetable(this);
+        this.formatter = new Formatter(endOfDay, startOfDay, timeTable);
 
 
     }
@@ -55,8 +55,10 @@ public class User {
 
 
     public void saveToDb(Context context){
+        db = new VMDbHelper(context);
         toDbList = formatter.convertor();
         //here need to do SQL query to delete all tasks (it eventID = 0) from timetable
+        db.deleteTimetableTasks();
         for (String str : toDbList){
             String[] components  = str.split("/");
             String date = components[0];
@@ -66,6 +68,7 @@ public class User {
             int completed = 0;
             db.insertTimetable(date, taskId, eventId, duration, completed);
         }
+        db.closeDB();
     }
 
     public void updateEvents(Context context){

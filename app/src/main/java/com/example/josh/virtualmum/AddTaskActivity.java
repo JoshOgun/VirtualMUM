@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
+import Database.Event.Event;
 import Database.Task.Task;
 import Database.VMDbHelper;
 
@@ -100,6 +102,12 @@ public class AddTaskActivity extends AppCompatActivity {
                     Log.d(" Tasks", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate()  + "\t" +
                             task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours());
                 }
+
+                List<Event> allEvents = db.getAllEvents();
+                for(Event e : allEvents){
+                    Log.d(" Events", e.getId() + "\t" + e.getName());
+                }
+                //new User().updateEvents(getApplicationContext());
 
                 db.closeDB();
 
