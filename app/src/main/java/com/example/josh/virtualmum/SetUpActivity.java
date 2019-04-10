@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -71,12 +72,9 @@ public class SetUpActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
+        Button button = findViewById(R.id.NextBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 VMDbHelper db;
                 db = new VMDbHelper(getApplicationContext());
 
@@ -99,5 +97,6 @@ public class SetUpActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
     }
 }
