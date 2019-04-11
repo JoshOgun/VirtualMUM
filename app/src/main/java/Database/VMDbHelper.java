@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
 import Database.Completion.Completion;
 import Database.Event.Event;
 import Database.Progress.Progress;
@@ -22,9 +23,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "VM.db";
+    private User user;
+    private Context context;
 
     public VMDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+        user = new User();
     }
 
     // All the tables must be created here when the application is downloaded and opened
@@ -35,6 +40,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.execSQL(Report.SQL_CREATE_REPORTS);
         db.execSQL(Progress.SQL_CREATE_PROGRESS);
         db.execSQL(Completion.SQL_CREATE_COMPLETIONS);
+        db.execSQL(Timetable.SQL_CREATE_TIMETABLES);
+        db.execSQL(UserPref.SQL_CREATE_USERPREF);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -45,6 +52,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
        db.execSQL(Report.SQL_DELETE_REPORTS);
        db.execSQL(Progress.SQL_DELETE_PROGRESS);
        db.execSQL(Completion.SQL_DELETE_COMPLETIONS);
+        db.execSQL(Timetable.SQL_DELETE_TIMETABLES);
+        db.execSQL(UserPref.SQL_DELETE_USERPREF);
         onCreate(db);
     }
 
@@ -71,6 +80,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
         // insert row
         long id = db.insert(Task.VMTask.TABLE_NAME, null, values);
+        user.updateEvents(context);
+        user.updateEvents(context);
 
         // close db connection
         db.close();
@@ -252,6 +263,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteSpecificEvent(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Event.VMEvent.TABLE_NAME, Event.VMEvent._ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
 
@@ -266,11 +284,11 @@ public class VMDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Event event = new Event();
-                event.setId(cursor.getInt(cursor.getColumnIndex(Task.VMTask._ID)));
-                event.setName(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE2)));
-                event.setStartDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE3)));
-                event.setEndDate(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE4)));
-                event.setLocation(cursor.getString(cursor.getColumnIndex(Task.VMTask.COLUMN_NAME_TITLE5)));
+                event.setId(cursor.getInt(cursor.getColumnIndex(Event.VMEvent._ID)));
+                event.setName(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE2)));
+                event.setStartDate(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE3)));
+                event.setEndDate(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE4)));
+                event.setLocation(cursor.getString(cursor.getColumnIndex(Event.VMEvent.COLUMN_NAME_TITLE5)));
 
                 events.add(event);
             } while (cursor.moveToNext());
@@ -470,15 +488,16 @@ public class VMDbHelper extends SQLiteOpenHelper {
     }
 
     /* USER PREFERENCE Table Methods*/
-    public long insertUserPref(String workPref, String noDayPref){
+    public long insertUserPref(String name, String workPref, String noDayPref){
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // the id of the progress should be the same as the id of the task it corresponds to ******
 
-        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE2, workPref);
-        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE3, noDayPref);
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE2, name);
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE3, workPref);
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE4, noDayPref);
 
         //insert row
         long id = db.insert(UserPref.VMUserPref.TABLE_NAME, null, values);
@@ -492,7 +511,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(UserPref.VMUserPref.TABLE_NAME,
-                new String[]{UserPref.VMUserPref._ID, UserPref.VMUserPref.COLUMN_NAME_TITLE2, UserPref.VMUserPref.COLUMN_NAME_TITLE3},
+                new String[]{UserPref.VMUserPref._ID, UserPref.VMUserPref.COLUMN_NAME_TITLE2, UserPref.VMUserPref.COLUMN_NAME_TITLE3, UserPref.VMUserPref.COLUMN_NAME_TITLE4},
                 UserPref.VMUserPref._ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
@@ -502,7 +521,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
         // prepare report object
         UserPref userPref = new UserPref(
                 cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE2)),
-                cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE3)));
+                cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE3)),
+                cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE4)));
 
                 // close the db connection
         cursor.close();
@@ -517,7 +537,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE2, userPref.getWorkPref());
         values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE3, userPref.getNoDayPref());
-
+        values.put(UserPref.VMUserPref.COLUMN_NAME_TITLE4, userPref.getNoDayPref());
 
         // updating row
         return db.update(UserPref.VMUserPref.TABLE_NAME, values, UserPref.VMUserPref._ID + " = ?",
@@ -530,6 +550,34 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.delete(UserPref.VMUserPref.TABLE_NAME, UserPref.VMUserPref._ID + " = ?",
                 new String[]{String.valueOf(userPref.getId())});
         db.close();
+    }
+
+    public UserPref getTopUP() {
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + UserPref.VMUserPref.TABLE_NAME + " ORDER BY " +
+                UserPref.VMUserPref._ID + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        UserPref userPref = new UserPref();
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+
+            userPref.setId(cursor.getInt(cursor.getColumnIndex(UserPref.VMUserPref._ID)));
+            userPref.setName(cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE2)));
+            userPref.setWorkPref(cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE3)));
+            userPref.setNoDayPref(cursor.getString(cursor.getColumnIndex(UserPref.VMUserPref.COLUMN_NAME_TITLE4)));
+
+        }
+
+        // close db connection
+        db.close();
+
+        // return notes list
+        return userPref;
     }
 
     /*TIMETABLE Table Methods*/

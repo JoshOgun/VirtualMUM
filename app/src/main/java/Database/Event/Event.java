@@ -22,7 +22,6 @@ public class Event {
     public int endTimeNumber;
 
     public Event(String name, String startDate, String endDate, String location) {
-        this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -38,11 +37,14 @@ public class Event {
 
     }
 
+    public void calculateDay(){
+        dayNumber = parseDay(endDate);
+    }
+
     private int parseDay(String date){
-        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss" );
-        String datenow = date;
+        DateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmm" );
         try {
-            Date date2 = formatter.parse(datenow);
+            Date date2 = formatter.parse(date);
 
             Calendar c = Calendar.getInstance();
             c.setTime(date2);
@@ -97,7 +99,7 @@ public class Event {
     }
 
     public void setLocation(String location) {
-        location = location;
+        this.location = location;
     }
 
     /* Inner class that defines the table contents */

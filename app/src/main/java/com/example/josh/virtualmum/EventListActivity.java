@@ -12,38 +12,36 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-import Database.AllocationAlgorithm.User;
 import Database.Event.Event;
-import Database.Task.Task;
 import Database.VMDbHelper;
 import DividerDetails.MyDividerItemDecoration;
 
-public class TaskListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class EventListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private List<Task> taskList = new ArrayList<>();
+    private List<Event> eventList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private TaskAdapter tAdapter;
+    private EventAdapter eAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation_task_list);
+        setContentView(R.layout.activity_navigate_event_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.addFab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getBaseContext(), AddTaskActivity.class);
+                Intent myIntent = new Intent(getBaseContext(), AddEventActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -51,36 +49,36 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.taskRV);
+        recyclerView = (RecyclerView) findViewById(R.id.eventRV);
 
-        tAdapter = new TaskAdapter(taskList);
+        eAdapter = new EventAdapter(eventList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
-        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
+        FloatingActionButton reloadFab = findViewById(R.id.reloadFab);
         reloadFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                taskList.clear();
-                tAdapter.notifyDataSetChanged();
-                prepareTaskData();
-                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
+                eventList.clear();
+                eAdapter.notifyDataSetChanged();
+                prepareEventData();
+                Toast.makeText(getApplicationContext(), "Events Refreshed!", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        recyclerView.setAdapter(tAdapter);
+        recyclerView.setAdapter(eAdapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Task task = taskList.get(position);
-                Toast.makeText(getApplicationContext(), task.getName() + " is selected!", Toast.LENGTH_SHORT).show();
-                int taskId = task.getId();
-                Intent intent = new Intent(TaskListActivity.this, EditTaskActivity.class);
-                intent.putExtra("TASK", Integer.toString(taskId));
+                Event event = eventList.get(position);
+                Toast.makeText(getApplicationContext(), event.getName() + " is selected!", Toast.LENGTH_SHORT).show();
+                int eventId = event.getId();
+                Intent intent = new Intent(EventListActivity.this, EditEventActivity.class);
+                intent.putExtra("EVENT", Integer.toString(eventId));
                 startActivity(intent);
             }
 
@@ -90,40 +88,9 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
             }
         }));
 
-        prepareTaskData();
-
-        User u = new User();
-        u.updateEvents(getApplicationContext());
-        for(int i = 0; i < 7; i++) {
-            for(int j = 0; j < 24; j++){
-                u.printTimetable();
-            }
-
-        }
-        //u.printTimetable();
-        //u.updateEvents(getApplicationContext());
-        //u.updateTasks(getApplicationContext());
-
-
-
+        prepareEventData();
     }
 
-    private void prepareTaskData() {
-
-
-        VMDbHelper db;
-        db = new VMDbHelper(getApplicationContext());
-
-        List<Task> allTasks = db.getAllTasks();
-        for (Task task : allTasks) {
-            taskList.add(task);
-
-        }
-
-        db.closeDB();
-
-        tAdapter.notifyDataSetChanged();
-    }
 
     // @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -140,9 +107,8 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 //            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
-
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
 //            Intent intent = new Intent(this, .class);
@@ -153,8 +119,8 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 //            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
-            Intent intent = new Intent(this, EventListActivity.class);
-            startActivity(intent);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
 
         }else if (id == R.id.nav_highscore) {
 //            Intent intent = new Intent(this, .class);
@@ -168,15 +134,28 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         }
 
 
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
 
+    private void prepareEventData() {
+
+
+        VMDbHelper db;
+        db = new VMDbHelper(getApplicationContext());
 
 
 
+        List<Event> allEvents = db.getAllEvents();
+        for (Event event : allEvents) {
+            eventList.add(event);
+        }
 
+        db.closeDB();
+
+        eAdapter.notifyDataSetChanged();
     }
 
-
+}

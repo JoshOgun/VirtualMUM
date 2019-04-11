@@ -2,5 +2,27 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#E01089</color>
+    <color name="colorHeader">#fcfcfc</color>
+    <color name="colorHeaderText">#7D7D7D</color>
+    <color name="colorTableItem">#efefef</color>
+
+    <color name="address">#2F7092</color>
+    <color name="followers">#0D5D98</color>
+    <color name="headings">#3797CF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="gradStart">#63C9FF</color>
+    <color name="followersBg">#65DCE5</color>
+    <color name="followingBg">#49BEFF</color>
+    <color name="grey">#E5E5E5</color>
+
+    <color name="default_side_header_font_color">#7d7d7d</color>
+    <color name="default_header_font_color">#7d7d7d</color>
+    <color name="default_header_highlight_font_color">#ffffff</color>
+    <color name="default_header_highlight_color">#74a4f3</color>
+    <color name="default_sticker_font_color">#ffffff</color>
+
+    <color name="white">#FFFFFF</color>
 </resources>

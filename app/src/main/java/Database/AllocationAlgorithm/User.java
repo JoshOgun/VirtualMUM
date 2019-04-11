@@ -1,9 +1,8 @@
-package AllocationAlgorithm;
+package Database.AllocationAlgorithm;
 
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import Database.Event.Event;
@@ -30,6 +29,7 @@ public class User {
         taskList = new ArrayList<Task>();
         eventList = new ArrayList<Event>();
         timetableHandler = new assignTimetable(this);
+
     }
 
     public void setGoogleURL(String url) { //adds google url to user
@@ -40,41 +40,31 @@ public class User {
 
         db = new VMDbHelper(context);
         taskList = db.getAllTasks();
+        timetableHandler.orderTasks();
+        db.closeDB();
+
     }
 
     public void updateEvents(Context context){
 
         db = new VMDbHelper(context);
         eventList = db.getAllEvents();
+        populateNumbers();
+        timetableHandler.updateEvents();
+        db.closeDB();
+        updateTasks(context);
     }
 
-//    public boolean addEvent(String name, Date startDate, Date endDate, String recurrance) {  //adds an event to the user's event list
-//        if(!eventList.isEmpty()) {
-//            for(Event e:eventList) {
-//                if(e.getName().equals(name)){
-//                    return false;
-//                }
-//            }
-//        }
-//        Event e = new Event(name, startDate, endDate, recurrance);
-//        eventList.add(e);
-//        timetableHandler.updateEvents();
-//        return true;
-//    }
+    public void populateNumbers(){
+        for(Event e : eventList){
+            e.calculateDay();
+            e.startTimeNumber = Integer.parseInt(e.getStartDate().substring(8,10));
+            e.endTimeNumber = Integer.parseInt(e.getEndDate().substring(8,10));
+    }
+    }
 
-//    public boolean addTask(String name, int priority, int difficulty, Date dueDate) { //method that adds a new task to the taskList
-//        if (!taskList.isEmpty()){
-//            for (Task t:taskList){ //checks to see if another task has the same name, in which case it rejects the addition, (task name as primary key)
-//                if(t.getName().equals(name)) {
-//                    return false;
-//                }
-//            }
-//        }
-//        Task t = new Task(name, priority, difficulty, dueDate);
-//        taskList.add(t);
-//        timetableHandler.orderTasks();
-//        return true; //successful adding of task
-//    }
+
+
 
     //test method please ignore
     public void printTimetable() {
