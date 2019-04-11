@@ -12,6 +12,8 @@ import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Schedule;
 
 import java.util.ArrayList;
 
+import Database.AllocationAlgorithm.User;
+
 public class WeekTable extends AppCompatActivity {
    //
     // private Context context;
@@ -28,6 +30,8 @@ public class WeekTable extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weektable);
+        User u = new User();
+        u.updateEvents(getApplicationContext());
         weekTable = findViewById(R.id.timetable);
         weekTable.setHeaderHighlight(1);
         weekTable.removeAll();

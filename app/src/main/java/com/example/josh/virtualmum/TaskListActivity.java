@@ -94,8 +94,8 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 
         prepareTaskData();
 
-        User u = new User();
-        u.updateEvents(getApplicationContext());
+//        User u = new User();
+//        u.updateEvents(getApplicationContext());
 
         //u.printTimetable();
         //u.updateEvents(getApplicationContext());

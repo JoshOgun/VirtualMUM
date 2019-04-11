@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
 import Database.Timetable.Timetable;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -52,6 +53,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate_timetable);
+        User u = new User();
+        u.updateEvents(getApplicationContext());
         this.context = this;
         timetable = findViewById(R.id.timetable);
         schedule = new Schedule();

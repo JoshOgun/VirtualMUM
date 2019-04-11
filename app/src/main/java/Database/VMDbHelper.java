@@ -725,6 +725,21 @@ public class VMDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public void deleteTimetableTasks() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Timetable> allElements = getFullTimetable();
+        for(Timetable t : allElements){
+            if(t.getEventID() == 0){
+                db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable._ID + " = ?",
+                        new String[]{String.valueOf(t.getId())});
+            }
+        }
+
+
+        db.close();
+    }
+
     // closing database
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();

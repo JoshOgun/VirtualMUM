@@ -46,7 +46,7 @@ public class User {
         taskList = db.getAllTasks();
         timetableHandler.orderTasks();
         List<String> taskToDB = convertor();
-        //delete timetabletasks here
+        db.deleteTimetableTasks();
         for (String str : taskToDB){
             String[] parts = str.split("/");
             String date = parts[0];
