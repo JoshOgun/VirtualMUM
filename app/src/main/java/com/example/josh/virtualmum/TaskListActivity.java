@@ -96,12 +96,7 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 
         User u = new User();
         u.updateEvents(getApplicationContext());
-        for(int i = 0; i < 7; i++) {
-            for(int j = 0; j < 24; j++){
-                u.printTimetable();
-            }
 
-        }
         //u.printTimetable();
         //u.updateEvents(getApplicationContext());
         //u.updateTasks(getApplicationContext());
