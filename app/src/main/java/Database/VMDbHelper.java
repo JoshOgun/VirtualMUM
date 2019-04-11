@@ -268,6 +268,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Event.VMEvent.TABLE_NAME, Event.VMEvent._ID + " = ?",
                 new String[]{String.valueOf(event.getId())});
+        deleteEventTimetable(event.getId());
         db.close();
     }
 
@@ -722,6 +723,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable._ID + " = ?",
                 new String[]{String.valueOf(timetable.getId())});
+        db.close();
+    }
+
+    public void deleteEventTimetable(int eventId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable.COLUMN_NAME_TITLE4 + " = ?",
+                new String[]{String.valueOf(eventId)});
         db.close();
     }
 
