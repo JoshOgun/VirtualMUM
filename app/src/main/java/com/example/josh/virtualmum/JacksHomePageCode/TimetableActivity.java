@@ -92,68 +92,68 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         final Calendar c = Calendar.getInstance();
         final Date today = c.getTime();
-        horizontalCalendar.setCalendarListener(
-                new HorizontalCalendarListener() {
-
-                    @Override
-                    public void onDateSelected(Date date, int position) {
-
-
-                        //loadSavedData();
-                        //timetable.removeAll();
-
-                        VMDbHelper db;
-                        db = new VMDbHelper(getApplicationContext());
-
-
-                        //long timetable_id = db.insertTimetable("100420191200", 0, 2, 1,0);
-
-                        SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
-                        String todayStr = simpleDate.format(today);
-
-                        // We only work in hours so i add the duration to the hour.
-                        if (isSameDate(today,date)){
-                        //   timetable.removeAll();
-                            List<Timetable> allT = db.getFullTimetable();
-
-                            for (Timetable t : allT) {
-                                db.deleteTimetable(t);
-                                Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
-                                String eDate = t.getDate().substring(0,8);
-                                if(todayStr.equals(eDate) ){
-                                    if(t.getTaskID() == 0){
-                                        String name = db.getEvent(t.getEventID()).getName();
-                                        String fullDate = t.getDate();
-                                        int startH, startM, endH;
-                                        startH = Integer.parseInt(fullDate.substring(8,10));
-                                        startM = Integer.parseInt(fullDate.substring(10,12));
-                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
-
-                                        add(name, startH, startM, endH, startM);
-                                    }
-                                    else{
-                                        String name = db.getTask(t.getTaskID()).getName();
-                                        String fullDate = t.getDate();
-                                        int startH, startM, endH;
-                                        startH = Integer.parseInt(fullDate.substring(8,10));
-                                        startM = Integer.parseInt(fullDate.substring(10,12));
-                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
-
-                                        add(name, startH, startM, endH, startM);
-                                    }
-                                }
-                            }
-
-                        }
-                         else{
-                            // timetable.removeAll();
-                         }
-
-                        db.closeDB();
-                    }
-
-                }
-        );
+//        horizontalCalendar.setCalendarListener(
+//                new HorizontalCalendarListener() {
+//
+//                    @Override
+//                    public void onDateSelected(Date date, int position) {
+//
+//
+//                        //loadSavedData();
+//                        //timetable.removeAll();
+//
+//                        VMDbHelper db;
+//                        db = new VMDbHelper(getApplicationContext());
+//
+//
+//                        //long timetable_id = db.insertTimetable("100420191200", 0, 2, 1,0);
+//
+//                        SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
+//                        String todayStr = simpleDate.format(today);
+//
+//                        // We only work in hours so i add the duration to the hour.
+//                        if (isSameDate(today,date)){
+//                        //   timetable.removeAll();
+//                            List<Timetable> allT = db.getFullTimetable();
+//
+//                            for (Timetable t : allT) {
+//                                db.deleteTimetable(t);
+//                                Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
+//                                String eDate = t.getDate().substring(0,8);
+//                                if(todayStr.equals(eDate) ){
+//                                    if(t.getTaskID() == 0){
+//                                        String name = db.getEvent(t.getEventID()).getName();
+//                                        String fullDate = t.getDate();
+//                                        int startH, startM, endH;
+//                                        startH = Integer.parseInt(fullDate.substring(8,10));
+//                                        startM = Integer.parseInt(fullDate.substring(10,12));
+//                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
+//
+//                                        add(name, startH, startM, endH, startM);
+//                                    }
+//                                    else{
+//                                        String name = db.getTask(t.getTaskID()).getName();
+//                                        String fullDate = t.getDate();
+//                                        int startH, startM, endH;
+//                                        startH = Integer.parseInt(fullDate.substring(8,10));
+//                                        startM = Integer.parseInt(fullDate.substring(10,12));
+//                                        endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
+//
+//                                        add(name, startH, startM, endH, startM);
+//                                    }
+//                                }
+//                            }
+//
+//                        }
+//                         else{
+//                            // timetable.removeAll();
+//                         }
+//
+//                        db.closeDB();
+//                    }
+//
+//                }
+//        );
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
