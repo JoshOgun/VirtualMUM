@@ -153,7 +153,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         }
 
         // close db connection
-        db.close();
+//        db.close();
 
         // return notes list
         return tasks;
@@ -631,7 +631,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         //insert row
         long id = db.insert(Timetable.VMTimetable.TABLE_NAME, null, values);
 
-        db.close();
+        //db.close();
         //return date ???
         return id;
     }
@@ -712,7 +712,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         }
 
         // close db connection
-        db.close();
+        //db.close();
 
         // return notes list
         return timetable;
@@ -738,13 +738,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
         List<Timetable> allElements = getFullTimetable();
         for(Timetable t : allElements){
             if(t.getEventID() == 0){
-                db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable._ID + " = ?",
+                db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable.COLUMN_NAME_TITLE3+ " = ?",
                         new String[]{String.valueOf(t.getId())});
             }
         }
 
 
-        db.close();
+//        db.close();
     }
 
     // closing database

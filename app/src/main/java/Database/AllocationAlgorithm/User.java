@@ -43,16 +43,25 @@ public class User {
     public void updateTasks(Context context){
 
         db = new VMDbHelper(context);
+
         taskList = db.getAllTasks();
+       // db.closeDB();
         timetableHandler.orderTasks();
         List<String> taskToDB = convertor();
+
+        //db = new VMDbHelper(context);
         db.deleteTimetableTasks();
+        //db.closeDB();
+
+       // db = new VMDbHelper(context);
         for (String str : taskToDB){
             String[] parts = str.split("/");
             String date = parts[0];
             int taskId = Integer.parseInt(parts[1]);
             float duration = (float)Integer.parseInt(parts[3]);
-            db.insertTimetable(date, taskId, 0, duration, 0);
+
+            long id = db.insertTimetable(date, taskId, 0, duration, 0);
+
         }
         db.closeDB();
 
