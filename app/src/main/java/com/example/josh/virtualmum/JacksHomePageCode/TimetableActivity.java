@@ -31,6 +31,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
 import com.example.josh.virtualmum.EventListActivity;
+//import com.example.josh.virtualmum.ProfileActivity;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
@@ -93,15 +94,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         final Calendar c = Calendar.getInstance();
         final Date today = c.getTime();
-
-        add("test", 12, 0, 13, 0);
-
-
-
         horizontalCalendar.setCalendarListener(
                 new HorizontalCalendarListener() {
-
-
 
                     @Override
                     public void onDateSelected(Date date, int position) {
@@ -121,12 +115,11 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
                         // We only work in hours so i add the duration to the hour.
                         if (isSameDate(today,date)){
-
-                            timetable.removeAll();
+                        //   timetable.removeAll();
                             List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
-                                //db.deleteTimetable(t);
+                                db.deleteTimetable(t);
                                 Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
                                 String eDate = t.getDate().substring(0,8);
                                 if(todayStr.equals(eDate) ){
@@ -155,7 +148,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
                         }
                          else{
-                             timetable.removeAll();
+                            // timetable.removeAll();
                          }
 
                         db.closeDB();
@@ -210,8 +203,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
         }
         else if (id == R.id.nav_setting) {
-//            Intent intent = new Intent(this, ProfileActivity.class);
-//            startActivity(intent);
+          //  Intent intent = new Intent(this, ProfileActivity.class);
+           // startActivity(intent);
 
         }
 
@@ -223,7 +216,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
     public void add(String name, int startHour, int startMin,int endh,int endm){
         schedule = new Schedule();
 
-        schedule.setTitle(name);
+        schedule.setLocation(name);
         schedule.getStartTime().setHour(startHour);
         schedule.getStartTime().setMinute(startMin);
         schedule.getEndTime().setHour(endh);
@@ -232,56 +225,61 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         ArrayList<Schedule> schedules = new ArrayList<Schedule>();
         schedules.add(schedule);
         i.putExtra("schedules",schedules);
-        onActivityResult(1,1,i);
+        onActivityResult(i);
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
-            case REQUEST_ADD:
-                if(resultCode == EditActivity.RESULT_OK_ADD){
-                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
-                    timetable.add(item);
-                    saveByPreference(timetable.createSaveData());
-                }
-                break;
-            case REQUEST_EDIT:
-                /** Edit -> Submit */
-                if(resultCode == EditActivity.RESULT_OK_EDIT){
-                    int idx = data.getIntExtra("idx",-1);
-                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
-                    timetable.edit(idx,item);
-                  //  saveByPreference(timetable.createSaveData());
+    protected void onActivityResult( @Nullable Intent data) {
 
-                }
-                /** Edit -> Delete */
-                else if(resultCode == EditActivity.RESULT_OK_DELETE){
-                    int idx = data.getIntExtra("idx",-1);
-                    timetable.remove(idx);
-                //    saveByPreference(timetable.createSaveData());
-
-                }
-                break;
-        }
+        ArrayList<Schedule> item = (ArrayList<Schedule>) data.getSerializableExtra("schedules");
+        timetable.add(item);
     }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        switch (requestCode){
+//            case REQUEST_ADD:
+//                if(resultCode == EditActivity.RESULT_OK_ADD){
+//                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+//                    timetable.add(item);
+//                    //saveByPreference(timetable.createSaveData());
+//                }
+//                break;
+//            case REQUEST_EDIT:
+//                /** Edit -> Submit */
+//                if(resultCode == EditActivity.RESULT_OK_EDIT){
+//                    int idx = data.getIntExtra("idx",-1);
+//                    ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
+//                    timetable.edit(idx,item);
+//                  //  saveByPreference(timetable.createSaveData());
+//
+//                }
+//                /** Edit -> Delete */
+//                else if(resultCode == EditActivity.RESULT_OK_DELETE){
+//                    int idx = data.getIntExtra("idx",-1);
+//                    timetable.remove(idx);
+//                //    saveByPreference(timetable.createSaveData());
+//
+//                }
+//                break;
+//        }
+//    }
 
-    /** save timetableView's data to SharedPreferences in json format */
-    private void saveByPreference(String data){
-        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putString("timetable_demo",data);
-        editor.commit();
-        Toast.makeText(this,"saved!",Toast.LENGTH_SHORT).show();
-    }
-
-    /** get json data from SharedPreferences and then restore the timetable */
-    private void loadSavedData(){
-        timetable.removeAll();
-        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String savedData = mPref.getString("timetable_demo","");
-        if(savedData == null && savedData.equals("")) return;
-        //timetable.load(savedData);
-        Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
-    }
+//    /** save timetableView's data to SharedPreferences in json format */
+//    private void saveByPreference(String data){
+//        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = mPref.edit();
+//        editor.putString("timetable_demo",data);
+//        editor.commit();
+//        Toast.makeText(this,"saved!",Toast.LENGTH_SHORT).show();
+//    }
+//
+//    /** get json data from SharedPreferences and then restore the timetable */
+//    private void loadSavedData(){
+//        timetable.removeAll();
+//        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        String savedData = mPref.getString("timetable_demo","");
+//        if(savedData == null && savedData.equals("")) return;
+//        //timetable.load(savedData);
+//        Toast.makeText(this,"loaded!",Toast.LENGTH_SHORT).show();
+//    }
 }
