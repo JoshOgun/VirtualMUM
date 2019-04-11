@@ -36,7 +36,6 @@ import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
 import com.example.josh.virtualmum.TaskListActivity;
-
 public class TimetableActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TimetableView timetable;
@@ -181,8 +180,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+          Intent intent = new Intent(this,WeekTable.class);
+            startActivity(intent);
 
         }  else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);
