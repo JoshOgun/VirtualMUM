@@ -48,8 +48,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate_timetable);
         this.context = this;

@@ -183,7 +183,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void inputDataProcessing(){
-//        schedule.setClassTitle(subjectEdit.getText().toString());
-//        schedule.setClassPlace(classroomEdit.getText().toString());
+       // schedule.setClassTitle(subjectEdit.getText().toString());
+      // schedule.setClassPlace(classroomEdit.getText().toString());
     }
 }

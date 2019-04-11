@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Display;
@@ -37,13 +38,12 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_HEADER_FONT_SIZE_DP = 15;
     private static final int DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP = 15;
     private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
-
+    private  String[] weekDays = {  "MON", "TUE", "WED", "THU", "FRI", "SAT","SUN" };
 
     private int rowCount;
     private int columnCount;
     private int cellHeight;
     private int sideCellWidth;
-    private String[] headerTitle;
     private String[] stickerColors;
     private int startTime;
     private int headerHighlightColor;
@@ -116,7 +116,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace()+"\n"+schedule.getProfessorName());
+            tv.setText(schedule.getClassTitle());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -135,7 +135,7 @@ public class TimetableView extends LinearLayout {
             stickerBox.addView(tv);
 
         }
-
+          setStickerColor1();
     }
 
 
@@ -193,6 +193,24 @@ public class TimetableView extends LinearLayout {
 
 
     }
+    private void setStickerColor1() {
+        int size = stickers.size();
+        int[] orders = new int[size];
+        int i = 0;
+        for (int key : stickers.keySet()) {
+            orders[i++] = key;
+        }
+        Arrays.sort(orders);
+
+        int colorSize = stickerColors.length;
+
+        for (i = 0; i < size; i++) {
+            for (TextView v : stickers.get(orders[i]).getView()) {
+                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
+            }
+        }
+
+    }
 
     private void createTable() {
        createTableHeader();
@@ -212,7 +230,9 @@ public class TimetableView extends LinearLayout {
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
                     tv.setText("");
-                    tv.setBackground(getResources().getDrawable(com.example.josh.virtualmum.R.drawable.item_border));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        tv.setBackground(getResources().getDrawable(R.drawable.item_border));
+                    }
                     tv.setGravity(Gravity.RIGHT);
                 }
                 tableRow.addView(tv);
@@ -236,7 +256,7 @@ public class TimetableView extends LinearLayout {
             tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_HEADER_FONT_SIZE_DP);
             if (i != 0){
-            tv.setText(getWeekOfDate(date,i-1));}
+            tv.setText(weekDays[i-1]);}
             else
                 tv.setText(" ");
             tv.setGravity(Gravity.CENTER);
@@ -246,18 +266,18 @@ public class TimetableView extends LinearLayout {
         tableHeader.addView(tableRow);
     }
 
-    public String getWeekOfDate(Date date,int i) {
-        String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (w < 0)
-            w = 0;
-        w = w+i;
-        if (w >=7)
-          w=w-7;
-        return weekDays[w];
-    }
+  //  public String getWeekOfDate(Date date,int i) {
+    //    String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+      //  Calendar cal = Calendar.getInstance();
+        //cal.setTime(date);
+        //int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        //if (w < 0)
+         //   w = 0;
+        //w = w+i;
+        //if (w >=7)
+         // w=w-7;
+        //return weekDays[w];
+    //}
 
     private RelativeLayout.LayoutParams createStickerParam(Schedule schedule) {
         int cell_w = calCellWidth();
