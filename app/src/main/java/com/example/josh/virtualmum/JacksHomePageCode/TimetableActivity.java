@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Database.AllocationAlgorithm.User;
 import Database.Timetable.Timetable;
 import Database.VMDbHelper;
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -51,6 +52,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate_timetable);
+        User u = new User();
+        u.updateEvents(getApplicationContext());
         this.context = this;
         timetable = findViewById(R.id.timetable);
         schedule = new Schedule();
@@ -94,7 +97,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                         db = new VMDbHelper(getApplicationContext());
 
 
-
                         SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
                         String todayStr = simpleDate.format(today);
 
@@ -104,7 +106,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                             List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
-                                //db.deleteTimetable(t);
                                 Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
                                 String eDate = t.getDate().substring(0,8);
                                 if(todayStr.equals(eDate) ){
