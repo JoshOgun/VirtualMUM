@@ -30,11 +30,11 @@ public class SetUpActivity extends AppCompatActivity {
         VMDbHelper db = new VMDbHelper(getApplicationContext());
 
         // FOR TESTING
-//        List<UserPref> ups = db.getAllUserPref();
-//        for(UserPref u : ups){
-//            Log.d(" UserPREF", "\t" + u.getId() + "\t" + u.getName());
-//            db.deleteUserPref(u);
-//        }
+        List<UserPref> ups = db.getAllUserPref();
+        for(UserPref u : ups){
+            Log.d(" UserPREF", "\t" + u.getId() + "\t" + u.getName());
+            db.deleteUserPref(u);
+        }
 
         UserPref up = db.getTopUP();
 //        // FOR TESTING
