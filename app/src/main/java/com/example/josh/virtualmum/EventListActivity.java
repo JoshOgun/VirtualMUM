@@ -59,17 +59,17 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
-        FloatingActionButton reloadFab = findViewById(R.id.reloadFab);
-        reloadFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventList.clear();
-                eAdapter.notifyDataSetChanged();
-                prepareEventData();
-                Toast.makeText(getApplicationContext(), "Events Refreshed!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        FloatingActionButton reloadFab = findViewById(R.id.reloadFab);
+//        reloadFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                eventList.clear();
+//                eAdapter.notifyDataSetChanged();
+//                prepareEventData();
+//                Toast.makeText(getApplicationContext(), "Events Refreshed!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         recyclerView.setAdapter(eAdapter);
 

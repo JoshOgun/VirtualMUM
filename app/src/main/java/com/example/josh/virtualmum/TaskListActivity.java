@@ -61,17 +61,17 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
-        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
-        reloadFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                taskList.clear();
-                tAdapter.notifyDataSetChanged();
-                prepareTaskData();
-                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
+//        reloadFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                taskList.clear();
+//                tAdapter.notifyDataSetChanged();
+//                prepareTaskData();
+//                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         recyclerView.setAdapter(tAdapter);
 
