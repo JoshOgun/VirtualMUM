@@ -48,26 +48,18 @@ public class ProgressActivity extends AppCompatActivity {
 
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
+        //db.insertReport(0,30);
+
         long taskID = 1;
-        /*
-        List<Task> allTasks = db.getAllTasks();
-        for(Task task: allTasks){
-            db.deleteTask(task);
-        }
-        */
-        //db.insertTask("Task", "090420190000", "150420190000", 3,3, 20,0);
-        //db.insertProgress(0,8);
         //getIntent();
         //getIntent().getLongExtra(taskID, 0);
-        //start = "090420190000";
-        //end = "150420190000";
-        cur = "110420190000";
+
         start = db.getTask(taskID).getStartDate().substring(0,8);
         end = db.getTask(taskID).getDueDate().substring(0,8);
         try {
             startDate = sdf.parse(start);
             endDate = sdf.parse(end);
-            curDate = sdf.parse(cur);
+            //curDate = sdf.parse(cur);
         } catch(ParseException e){
             e.printStackTrace();
         }
@@ -75,13 +67,13 @@ public class ProgressActivity extends AppCompatActivity {
         timeLength = (int) (TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
        // timeLength = (int)( (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
         timeLengthCur = (int)(TimeUnit.DAYS.convert(curDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
-        double theirEstimated = 22;
+        //double theirEstimated = 22;
         double ourEstimated = 20;
-        double actualSpent = 10;
+        //double actualSpent = 10;
 
-       // double theirEstimated = db.getTask(taskID).getEstimatedHours();
-       // double ourEstimated = db.getTask(taskID).getEstimatedHours();
-       // double actualSpent = db.getProgress(taskID).getHoursSpent();
+        double theirEstimated = db.getTask(taskID).getEstimatedHours();
+       // float ourEstimated = db.getReport(taskID).getEstimatedHours();
+        double actualSpent = db.getProgress(taskID).getHoursSpent();
 
         db.close();
 
@@ -98,9 +90,17 @@ public class ProgressActivity extends AppCompatActivity {
         ourEst.appendData(new DataPoint(0,0),true, 2);
         actual.appendData(new DataPoint(0,0),true, 2);
 
-        theirEst.appendData(new DataPoint(timeLength, theirEstimated), true, 2);
-        ourEst.appendData(new DataPoint(timeLength, ourEstimated), true, 2);
-        actual.appendData(new DataPoint(timeLengthCur, actualSpent), true, 2);
+        if(timeLengthCur != 0){
+            actual.appendData(new DataPoint(timeLengthCur, actualSpent), true, 2);
+        } else {
+            actual.appendData(new DataPoint(0.1,actualSpent), true, 2);
+        }
+
+        if(timeLength != 0) {
+            theirEst.appendData(new DataPoint(timeLength, theirEstimated), true, 2);
+            ourEst.appendData(new DataPoint(timeLength, ourEstimated), true, 2);
+        }
+
 
         theirEst.setColor(Color.GREEN);
         ourEst.setColor(Color.RED);
@@ -138,9 +138,9 @@ public class ProgressActivity extends AppCompatActivity {
             public String formatLabel(double value, boolean isValueX) {
                 if(isValueX) {
                     if(value == 0 ){
-                        return start;
+                        return convertString(start);
                     } else if(value == timeLength){
-                        return end;
+                        return convertString(end);
                     } else {
                         return "";
                     }
@@ -165,6 +165,18 @@ public class ProgressActivity extends AppCompatActivity {
 
     }
 
+    public String convertString(String string){
+        String newString = "";
+        for(int x =0 ; x< 8; x++){
+            if(x ==2){
+                newString = newString + "/";
+            }else if(x == 4) {
+                newString = newString + "/";
+            }
+            newString = newString + string.charAt(x);
+        }
+        return newString;
+    }
 
 
 }
