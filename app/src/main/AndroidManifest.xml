@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.josh.virtualmum">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,18 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GCAPIActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SetUpEventsActivity"
-            android:label="@string/title_activity_set_up_events"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="Please enter your events..."
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".JacksHomePageCode.TimetableActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".EditEventActivity" />
         <activity
             android:name=".AddEventActivity"
@@ -44,13 +53,12 @@
         <activity
             android:name=".EventListActivity"
             android:label="@string/title_activity_event_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditTaskActivity" />
         <activity
             android:name=".TaskListActivity"
             android:label="@string/title_activity_task_list"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".AddTaskActivity" />
     </application>
 
