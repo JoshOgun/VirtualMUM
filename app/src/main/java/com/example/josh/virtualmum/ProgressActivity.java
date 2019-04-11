@@ -53,9 +53,11 @@ public class ProgressActivity extends AppCompatActivity {
         long taskID = 1;
         //getIntent();
         //getIntent().getLongExtra(taskID, 0);
+        start = "090420190000";
+        end = "150420190000";
 
-        start = db.getTask(taskID).getStartDate().substring(0,8);
-        end = db.getTask(taskID).getDueDate().substring(0,8);
+        //start = db.getTask(taskID).getStartDate().substring(0,8);
+        //end = db.getTask(taskID).getDueDate().substring(0,8);
         try {
             startDate = sdf.parse(start);
             endDate = sdf.parse(end);
@@ -67,13 +69,13 @@ public class ProgressActivity extends AppCompatActivity {
         timeLength = (int) (TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
        // timeLength = (int)( (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
         timeLengthCur = (int)(TimeUnit.DAYS.convert(curDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
-        //double theirEstimated = 22;
+        double theirEstimated = 22;
         double ourEstimated = 20;
-        //double actualSpent = 10;
+        double actualSpent = 10;
 
-        double theirEstimated = db.getTask(taskID).getEstimatedHours();
+        //double theirEstimated = db.getTask(taskID).getEstimatedHours();
        // float ourEstimated = db.getReport(taskID).getEstimatedHours();
-        double actualSpent = db.getProgress(taskID).getHoursSpent();
+        //double actualSpent = db.getProgress(taskID).getHoursSpent();
 
         db.close();
 
