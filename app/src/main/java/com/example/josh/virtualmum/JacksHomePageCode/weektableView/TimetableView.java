@@ -38,13 +38,16 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_HEADER_FONT_SIZE_DP = 15;
     private static final int DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP = 15;
     private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
-    private  String[] weekDays = {  "MON", "TUE", "WED", "THU", "FRI", "SAT","SUN" };
+
 
     private int rowCount;
     private int columnCount;
     private int cellHeight;
     private int sideCellWidth;
+    private String[] headerTitle;
     private String[] stickerColors;
+    private String[] stickerColors1;
+
     private int startTime;
     private int headerHighlightColor;
 
@@ -81,8 +84,10 @@ public class TimetableView extends LinearLayout {
         columnCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
         sideCellWidth = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
-        int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors,com.example.josh.virtualmum.R.array.default_sticker_color);
+        int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_task);
         stickerColors = a.getResources().getStringArray(colorsId);
+        int colorsId1 = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_event);
+        stickerColors1 = a.getResources().getStringArray(colorsId1);
         startTime = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_start_time, DEFAULT_START_TIME);
         headerHighlightColor = a.getColor(com.example.josh.virtualmum.R.styleable.TimetableView_header_highlight_color, getResources().getColor(com.example.josh.virtualmum.R.color.default_header_highlight_color));
         a.recycle();
@@ -116,7 +121,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getClassTitle());
+            tv.setText(schedule.getClassTitle() + "\n" + schedule.getClassPlace()+"\n"+schedule.getProfessorName());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -135,7 +140,6 @@ public class TimetableView extends LinearLayout {
             stickerBox.addView(tv);
 
         }
-          setStickerColor1();
     }
 
 
@@ -151,18 +155,18 @@ public class TimetableView extends LinearLayout {
         stickers.clear();
     }
 
-  //  public void edit(int idx, ArrayList<Schedule> schedules) {
+    //  public void edit(int idx, ArrayList<Schedule> schedules) {
     //    remove(idx);
-      //  add(schedules, idx);
-   // }
+    //  add(schedules, idx);
+    // }
 
-  //  public void remove(int idx) {
+    //  public void remove(int idx) {
     //    Sticker sticker = stickers.get(idx);
-      //  for (TextView tv : sticker.getView()) {
-        //    stickerBox.removeView(tv);
-        //}
-       // stickers.remove(idx);
-        //setStickerColor();
+    //  for (TextView tv : sticker.getView()) {
+    //    stickerBox.removeView(tv);
+    //}
+    // stickers.remove(idx);
+    //setStickerColor();
     //}
 
     public void setHeaderHighlight(int idx) {
@@ -174,6 +178,10 @@ public class TimetableView extends LinearLayout {
         tx.setTextSize(TypedValue.COMPLEX_UNIT_DIP,DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP);
     }
 
+
+
+
+
     public void setStickerColor(int x) {
         int size = stickers.size();
         int[] orders = new int[size];
@@ -183,37 +191,30 @@ public class TimetableView extends LinearLayout {
 
         }
         Arrays.sort(orders);
+        if(x==0) {
 
-        //int colorSize = stickerColors.length;
+            int colorSize = stickerColors.length;
+            int b=(int)(Math.random()*colorSize);
 
-        for (i = 0; i < size; i++)
-        for (TextView v : stickers.get(orders[orders.length-1]).getView()) {
-                v.setBackgroundColor(x);
+            for (i = 0; i < size; i++)
+                for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
+                    v.setBackgroundColor(Color.parseColor(stickerColors[b]));
+                }
         }
+        else{
+            int colorSize = stickerColors1.length;
+            int b=(int)(Math.random()*colorSize);
 
-
-    }
-    private void setStickerColor1() {
-        int size = stickers.size();
-        int[] orders = new int[size];
-        int i = 0;
-        for (int key : stickers.keySet()) {
-            orders[i++] = key;
-        }
-        Arrays.sort(orders);
-
-        int colorSize = stickerColors.length;
-
-        for (i = 0; i < size; i++) {
-            for (TextView v : stickers.get(orders[i]).getView()) {
-                v.setBackgroundColor(Color.parseColor(stickerColors[i % (colorSize)]));
-            }
+            for (i = 0; i < size; i++)
+                for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
+                    v.setBackgroundColor(Color.parseColor(stickerColors1[b]));
+                }
         }
 
     }
 
     private void createTable() {
-       createTableHeader();
+        createTableHeader();
         for (int i = 0; i < rowCount; i++) {
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(createTableLayoutParam());
@@ -223,9 +224,9 @@ public class TimetableView extends LinearLayout {
                 tv.setLayoutParams(createTableRowParam(cellHeight));
                 if (k == 0) {
                     tv.setText(getHeaderTime(i));
-                    tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
+                    tv.setTextColor(getResources().getColor(R.color.colorHeaderText));
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SIDE_HEADER_FONT_SIZE_DP);
-                    tv.setBackgroundColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeader));
+                    tv.setBackgroundColor(getResources().getColor(R.color.colorHeader));
                     tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
@@ -256,7 +257,7 @@ public class TimetableView extends LinearLayout {
             tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_HEADER_FONT_SIZE_DP);
             if (i != 0){
-            tv.setText(weekDays[i-1]);}
+                tv.setText(getWeekOfDate(date,i-1));}
             else
                 tv.setText(" ");
             tv.setGravity(Gravity.CENTER);
@@ -266,18 +267,18 @@ public class TimetableView extends LinearLayout {
         tableHeader.addView(tableRow);
     }
 
-  //  public String getWeekOfDate(Date date,int i) {
-    //    String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
-      //  Calendar cal = Calendar.getInstance();
-        //cal.setTime(date);
-        //int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        //if (w < 0)
-         //   w = 0;
-        //w = w+i;
-        //if (w >=7)
-         // w=w-7;
-        //return weekDays[w];
-    //}
+    public String getWeekOfDate(Date date,int i) {
+        String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        w = w+i;
+        if (w >=7)
+            w=w-7;
+        return weekDays[w];
+    }
 
     private RelativeLayout.LayoutParams createStickerParam(Schedule schedule) {
         int cell_w = calCellWidth();
