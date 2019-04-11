@@ -21,7 +21,9 @@ import Database.VMDbHelper;
 public class ReportActivity extends AppCompatActivity {
 
     String dates[];
- 
+
+    //point graph for every completed task hours spent
+    //2 lines, estimated hours we thought they would spend, estimated hours they thought they would spend
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class ReportActivity extends AppCompatActivity {
         for(Timetable timetable : allTimetables){
             //check it is a task and not an event
             if(timetable.getEventID() == 0 && timetable.getTaskID() == taskID){
-                date = timetable.getDate().substring(0, 6);
+                date = timetable.getDate().substring(0, 8);
                 //check if date is already there if so dont add another to dates
                 if(!(Arrays.asList(dates).contains(date)) ) {
                     x++;
@@ -140,14 +142,5 @@ public class ReportActivity extends AppCompatActivity {
         graph.addSeries(ExpectedWork);
     }
 
-    /* Code for history page
-
-    //for a given task id and date it needs to update the timetable table to say whether it was completed or not
-    //should get completion status from the shell...
-
-    
-
-
-     */
 
 }

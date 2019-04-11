@@ -9,9 +9,14 @@ import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import Database.Progress.Progress;
 import Database.Task.Task;
@@ -20,86 +25,111 @@ import Database.VMDbHelper;
 public class ProgressActivity extends AppCompatActivity {
 
 
-    //progress for each activity
-    float progress[];
-    List<Task> allTasks;
+    String start;
+    String end;
+    String cur;
+    Date startDate;
+    Date endDate;
+    Date curDate = new Date();
+    int timeLength;
+    int timeLengthCur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_graph);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
+
+        /*Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+        intent.putExtra("EXTRA_SESSION_ID", sessionId);
+        startActivity(intent);
+        */
+
         VMDbHelper db;
         db = new VMDbHelper(getApplicationContext());
-
-        // db.insertTask("coursework 2", "110219","110318", 5, 3, 7.5, 0);
-        //db.insertProgress(80, 5);
-
-        int taskCount = db.getTasksCount();
-        allTasks = db.getAllTasks();
-        List<Task> ableTasks = new ArrayList<>();
-        //display every task or just ones not completed yet?
-        //ideally it would be progress for each individual task
-
-        for (Task task : allTasks) {
-            //filter out tasks that are completed
-            //could be filtered so that if is completed but not handed in it still shows??
-            if(task.getCompleted() == 0){
-                ableTasks.add(task);
-            }
-
+        long taskID = 1;
+        /*
+        List<Task> allTasks = db.getAllTasks();
+        for(Task task: allTasks){
+            db.deleteTask(task);
         }
-        progress = new float[ableTasks.size()];
-
-        int m = 0;
-        for(Task task : ableTasks){
-            //db.getProgress(task.getId());
-            Progress taskProgress = db.getProgress(task.getId());
-            progress[m] = taskProgress.getProgress();
-            //Log.d("m value", "value: " + m);
-            m++;
+        */
+        //db.insertTask("Task", "090420190000", "150420190000", 3,3, 20,0);
+        //db.insertProgress(0,8);
+        //getIntent();
+        //getIntent().getLongExtra(taskID, 0);
+        //start = "090420190000";
+        //end = "150420190000";
+        cur = "110420190000";
+        start = db.getTask(taskID).getStartDate().substring(0,8);
+        end = db.getTask(taskID).getDueDate().substring(0,8);
+        try {
+            startDate = sdf.parse(start);
+            endDate = sdf.parse(end);
+            curDate = sdf.parse(cur);
+        } catch(ParseException e){
+            e.printStackTrace();
         }
+
+        timeLength = (int) (TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
+       // timeLength = (int)( (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        timeLengthCur = (int)(TimeUnit.DAYS.convert(curDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
+        double theirEstimated = 22;
+        double ourEstimated = 20;
+        double actualSpent = 10;
+
+       // double theirEstimated = db.getTask(taskID).getEstimatedHours();
+       // double ourEstimated = db.getTask(taskID).getEstimatedHours();
+       // double actualSpent = db.getProgress(taskID).getHoursSpent();
 
         db.close();
 
         //maybe need to get context here instead of (GraphView)
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
+        LineGraphSeries<DataPoint> theirEst = new LineGraphSeries<>();
+        LineGraphSeries<DataPoint> ourEst = new LineGraphSeries<>();
+        LineGraphSeries<DataPoint> actual = new LineGraphSeries<>();
 
         //seems like there is a bug on the graph when there is only one datapoint, it messes up the graph a little bit
         //series.appendData(new DataPoint(1, 4), true, 2);
 
-        int n = 0;
-        for(float y : progress){
-            n++;
-            series.appendData(new DataPoint(n, y) , true, progress.length);
-        }
-        //Log.d("Progress length", "value: " + progress.length);
+        theirEst.appendData(new DataPoint(0,0),true, 2);
+        ourEst.appendData(new DataPoint(0,0),true, 2);
+        actual.appendData(new DataPoint(0,0),true, 2);
 
-        //everything below customises the graph
-        series.setSpacing(50);
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.BLUE);
+        theirEst.appendData(new DataPoint(timeLength, theirEstimated), true, 2);
+        ourEst.appendData(new DataPoint(timeLength, ourEstimated), true, 2);
+        actual.appendData(new DataPoint(timeLengthCur, actualSpent), true, 2);
+
+        theirEst.setColor(Color.GREEN);
+        ourEst.setColor(Color.RED);
+        actual.setColor(Color.BLUE);
+
 
         Viewport viewport = graph.getViewport();
         viewport.setXAxisBoundsManual(true);
         viewport.setMinX(0);
-        viewport.setMaxX(10);
+        viewport.setMaxX(timeLength + 3);
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(0);
-        viewport.setMaxY(100);
+        viewport.setMaxY(Math.max(Math.max(theirEstimated,ourEstimated),actualSpent) + 5);
         //enables scrolling as well as zooming on the graph
         viewport.setScalable(true);
         viewport.setScalableY(true);
 
         //label axis
         GridLabelRenderer gridLabel = graph.getGridLabelRenderer();
-        gridLabel.setHorizontalAxisTitle("Tasks");
-        gridLabel.setVerticalAxisTitle("Completion percent");
+        gridLabel.setHorizontalAxisTitle("Date");
+        gridLabel.setVerticalAxisTitle("Hours");
 
-
-        //changes the name for the data along the x axis
-        //need to get this to be the actual name of the task rather than task 1 etc.
+        //legend
+        theirEst.setTitle("Your Total Estimated Hours");
+        ourEst.setTitle("Our Estimated Hours");
+        actual.setTitle("Hours spent currently");
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graph.getLegendRenderer().setMargin(50);
         
         //make list to pass in task names
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
@@ -107,9 +137,11 @@ public class ProgressActivity extends AppCompatActivity {
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if(isValueX) {
-                    if(value != 0 || value == (int) value && value <= allTasks.size()){
-                        return allTasks.get((int) value -1).getName();
-                    }else {
+                    if(value == 0 ){
+                        return start;
+                    } else if(value == timeLength){
+                        return end;
+                    } else {
                         return "";
                     }
                 } else {
@@ -119,16 +151,20 @@ public class ProgressActivity extends AppCompatActivity {
 
         });
 
-        /*
-        for(Task task: ableTasks){
-            graph.getGridLabelRenderer().getLabelFormatter().formatLabel(0 , true, task);
-        }
-        */
+
+        graph.addSeries(theirEst);
+        graph.addSeries(ourEst);
+        graph.addSeries(actual);
+
+        theirEst.setDrawDataPoints(true);
+        ourEst.setDrawDataPoints(true);
+        actual.setDrawDataPoints(true);
 
 
-        graph.addSeries(series);
+
 
     }
+
 
 
 }
