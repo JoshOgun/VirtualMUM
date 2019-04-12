@@ -24,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_profile);
 
-        UserPref userPref;
+        final UserPref userPref;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -59,6 +59,15 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                VMDbHelper db;
+                db = new VMDbHelper(getApplicationContext());
+
+
+                db.deleteUserPref(userPref);
+
+
+                db.closeDB();
                 Intent myIntent = new Intent(getBaseContext(), SetUpActivity.class);
                 startActivity(myIntent);
 
