@@ -34,7 +34,7 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_SIDE_CELL_WIDTH_DP = 30;
     private static final int DEFAULT_START_TIME = 7;
 
-    private static final int DEFAULT_SIDE_HEADER_FONT_SIZE_DP = 13;
+    private static final int DEFAULT_SIDE_HEADER_FONT_SIZE_DP = 14;
     private static final int DEFAULT_HEADER_FONT_SIZE_DP = 15;
     private static final int DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP = 15;
     private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
@@ -84,7 +84,7 @@ public class TimetableView extends LinearLayout {
         rowCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
         columnCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
-        sideCellWidth = 140;//a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
+        sideCellWidth = 120;//a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_task);
         stickerColors = a.getResources().getStringArray(colorsId);
         int colorsId1 = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_event);

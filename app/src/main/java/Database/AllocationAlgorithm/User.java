@@ -351,26 +351,27 @@ public class User {
     public String[][] getTasks() {
         String[][] sa = new String[7][10];
         List<String> list = convertor();
+        if (!list.isEmpty()) {
+            String compare = list.get(0).substring(0, 8);
+            int row = 0;
+            int index = 0;
+            for (String string : list) {
+                // 0 - date; 1 - taskID; 2 - eventID; 3 - duration; 4 - completed
+                String[] strArr = string.split("/");
 
-        String compare = list.get(0).substring(0, 8);
-        int row = 0;
-        int index = 0;
-        for (String string : list) {
-            // 0 - date; 1 - taskID; 2 - eventID; 3 - duration; 4 - completed
-            String[] strArr = string.split("/");
+                if (compare.equals(strArr[0].substring(0, 8))) {
+                    sa[row][index] = strArr[0].substring(8) + "/" + strArr[3] + "/" + strArr[1];
+                    index++;
+                } else {
+                    row++;
+                    index = 0;
+                    sa[row][index] = strArr[0].substring(8) + "/" + strArr[3] + "/" + strArr[1];
+                    index++;
+                    compare = strArr[0].substring(0, 8);
+                }
+            }}
 
-            if (compare.equals(strArr[0].substring(0, 8))) {
-                sa[row][index] = strArr[0].substring(8) + "/" + strArr[3] + "/" + strArr[1];
-                index++;
-            } else {
-                row++;
-                index = 0;
-                sa[row][index] = strArr[0].substring(8) + "/" + strArr[3] + "/" + strArr[1];
-                index++;
-                compare = strArr[0].substring(0, 8);
-            }
+            return removeNull(sa);
         }
 
-        return removeNull(sa);
-    }
 }
