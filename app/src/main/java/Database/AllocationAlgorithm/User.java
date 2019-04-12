@@ -309,14 +309,14 @@ public class User {
                         dur++;
                     } else if (!s.equals(currEvent) && !s.substring(0, 4).equals("TASK")) {
                         // enter code for event ID later
-                        sa[day][index] = startTime + "/" + dur + "/" + currEvent;
+                        sa[day][index] = startTime + "00" + "/" + dur + "/" + currEvent;
                         index++;
                         startTime += dur;
                         currEvent = s;
                         dur = 1;
                     } else if (!s.equals(currEvent) && !currEvent.equals("")) {
                         // enter code for event ID later
-                        sa[day][index] = startTime + "/" + dur + "/" + currEvent;
+                        sa[day][index] = startTime + "00" + "/" + dur + "/" + currEvent;
                         index++;
                         currEvent = "";
                         dur = 0;
@@ -325,7 +325,7 @@ public class User {
 
                 if (!currEvent.equals("") && s.equals("free")) {
                     // enter code for event ID later
-                    sa[day][index] = startTime + "/" + dur + "/" + currEvent;
+                    sa[day][index] = startTime +"00" + "/" + dur + "/" + currEvent;
                     index++;
                     currEvent = "";
                     dur = 0;

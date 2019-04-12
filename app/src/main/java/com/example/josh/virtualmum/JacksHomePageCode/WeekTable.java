@@ -34,8 +34,8 @@ public class WeekTable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        demo = new String[1000][1000];
-        demo1 = new String[1000][1000];
+        demo = new String[100][100];
+        demo1 = new String[100][100];
         setContentView(R.layout.activity_weektable);
         User u = new User();
         u.updateEvents(getApplicationContext());
@@ -64,8 +64,13 @@ public class WeekTable extends AppCompatActivity {
         for (int i = 0;i<demo1.length;i++){
             for (int j = 0;j<demo1[i].length;j++){
                 int[] tem = new int[5];
-                tem = getData(demo1[i][j]);
-                add(i,db.getEvent(tem[4]).getName(),tem[0],tem[1],tem[2],tem[3],1);
+                if(demo1[i][j]!=null) {
+                    tem = getData(demo1[i][j]);
+                    add(i, db.getEvent(tem[4]).getName(), tem[0], tem[1], tem[2], tem[3], 1);
+                }
+                else{
+                   break;
+                }
 
             }
         }
