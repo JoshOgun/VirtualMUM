@@ -130,7 +130,7 @@ public class VMDbHelper extends SQLiteOpenHelper {
         List<Task> tasks = new ArrayList<>();
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + Task.VMTask.TABLE_NAME + " WHERE Completed = 1"+ " ORDER BY " +
+        String selectQuery = "SELECT  * FROM " + Task.VMTask.TABLE_NAME + " WHERE Completed = 0"+ " ORDER BY " +
                 Task.VMTask.COLUMN_NAME_TITLE4 + " DESC" + "";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -192,9 +192,12 @@ public class VMDbHelper extends SQLiteOpenHelper {
 
     public void deleteTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
+        deleteTaskTimetable(task.getId());
         db.delete(Task.VMTask.TABLE_NAME, Task.VMTask._ID + " = ?",
                 new String[]{String.valueOf(task.getId())});
-        db.close();
+
+        deleteTaskTimetable(task.getId());
+
     }
 
     /* EVENT Table Methods*/
@@ -733,6 +736,13 @@ public class VMDbHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(eventId)});
         db.close();
     }
+
+    public void deleteTaskTimetable(int taskId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Timetable.VMTimetable.TABLE_NAME, Timetable.VMTimetable.COLUMN_NAME_TITLE3 + " = ?",
+                new String[]{String.valueOf(taskId)});
+    }
+
 
     public void deleteTimetableTasks() {
         SQLiteDatabase db = this.getWritableDatabase();
