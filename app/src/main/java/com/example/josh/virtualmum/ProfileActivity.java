@@ -86,8 +86,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
             Intent intent = new Intent(this, TaskListActivity.class);

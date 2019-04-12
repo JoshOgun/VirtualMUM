@@ -39,7 +39,7 @@ public class ReportActivity extends AppCompatActivity {
         db = new VMDbHelper(getApplicationContext());
 
         //get timetable
-        List<Timetable> allTimetables = db.getAllTimetables();
+        List<Timetable> allTimetables = db.getFullTimetable();
         //only look at one task - assume this gets passed in??
         dates = new String[allTimetables.size()];
         float hoursCompleted[] = new float[allTimetables.size()];

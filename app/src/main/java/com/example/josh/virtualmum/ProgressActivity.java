@@ -1,10 +1,17 @@
 package com.example.josh.virtualmum;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
+import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 import com.jjoe64.graphview.*;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -22,7 +29,7 @@ import Database.Progress.Progress;
 import Database.Task.Task;
 import Database.VMDbHelper;
 
-public class ProgressActivity extends AppCompatActivity {
+public class ProgressActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     String start;
@@ -37,7 +44,10 @@ public class ProgressActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_progress_graph);
+        setContentView(R.layout.activity_navigation_progress);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 
@@ -178,6 +188,43 @@ public class ProgressActivity extends AppCompatActivity {
             newString = newString + string.charAt(x);
         }
         return newString;
+    }
+
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(this, TimetableActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_progress) {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
+        } else if (id == R.id.nav_task) {
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_weektable) {
+            Intent intent = new Intent(this, WeekTable.class);
+            startActivity(intent);
+
+        }  else if (id == R.id.nav_events) {
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_setting) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+
+        }
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 

@@ -33,6 +33,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
 import com.example.josh.virtualmum.EventListActivity;
 import com.example.josh.virtualmum.ProfileActivity;
+import com.example.josh.virtualmum.ProgressActivity;
 import com.example.josh.virtualmum.R;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.Schedule;
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableView.TimetableView;
@@ -174,8 +175,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             return true;
 
         } else if (id == R.id.nav_progress) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
             Intent intent = new Intent(this, TaskListActivity.class);
