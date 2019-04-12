@@ -183,30 +183,30 @@ public void setStickerColor(int x) {
     int size = stickers.size();
     int[] orders = new int[size];
     int i = 0;
-    for (int key : stickers.keySet())
-    { orders[i++] = key;
+    for (int key : stickers.keySet()) {
+        orders[i++] = key;
 
     }
     Arrays.sort(orders);
-    if(x==0) {
+    if (x == 0) {
 
         int colorSize = stickerColors.length;
-        int b=(int)(Math.random()*colorSize);
+        int b = (int) (Math.random() * colorSize);
 
         for (i = 0; i < size; i++)
             for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
                 v.setBackgroundColor(Color.parseColor(stickerColors[b]));
             }
-    }
-    else{
+    } else {
         int colorSize = stickerColors1.length;
-        int b=(int)(Math.random()*colorSize);
+        int b = (int) (Math.random() * colorSize);
 
         for (i = 0; i < size; i++)
             for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
                 v.setBackgroundColor(Color.parseColor(stickerColors1[b]));
             }
     }
+}
     public void setStickerColor1(int x) {
         int size = stickers.size();
         int[] orders = new int[size];
@@ -230,7 +230,7 @@ public void setStickerColor(int x) {
             int colorSize = stickerColors1.length;
             int b=(int)(Math.random()*colorSize);
 
-            for (i = 0; i < size; i++)
+            for (i = 0; i < size; i++){
                 for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
                     v.setBackgroundColor(Color.parseColor(stickerColors1[b]));
                 }
