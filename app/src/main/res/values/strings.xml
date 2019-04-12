@@ -146,4 +146,5 @@
         <item>55</item>
     </string-array>
     <string name="title_activity_set_up_events">SetUpEventsActivity</string>
+    <string name="title_activity_set_up4_profile">SetUp4ProfileActivity</string>
 </resources>

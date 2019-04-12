@@ -68,7 +68,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
 
                 db.closeDB();
-                Intent myIntent = new Intent(getBaseContext(), SetUpActivity.class);
+                Intent myIntent = new Intent(getBaseContext(), SetUp4ProfileActivity.class);
                 startActivity(myIntent);
 
             }
