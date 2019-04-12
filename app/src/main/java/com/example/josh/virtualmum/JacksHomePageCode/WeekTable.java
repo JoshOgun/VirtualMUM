@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Schedule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import Database.AllocationAlgorithm.User;
 import Database.VMDbHelper;
@@ -34,6 +36,8 @@ public class WeekTable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Calendar cal = Calendar.getInstance();
+
         demo = new String[1000][1000];
         demo1 = new String[1000][1000];
         setContentView(R.layout.activity_weektable);
@@ -44,7 +48,7 @@ public class WeekTable extends AppCompatActivity {
         demo = u.getTasks();
         demo1 = u.getEvents();
         weekTable = findViewById(R.id.timetable);
-        weekTable.setHeaderHighlight(1);
+        weekTable.setHeaderHighlight(cal.get(Calendar.DAY_OF_WEEK) - 1);
         weekTable.removeAll();
 
      for (int i = 0;i<demo.length;i++){
@@ -136,6 +140,18 @@ public class WeekTable extends AppCompatActivity {
         return result;
     }
 
+    public int getWeekOfDate(Date date, int i) {
+        int[] weekDays = {0, 1, 2, 3, 4, 5, 6 };
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        w = w+i;
+        if (w >=7)
+            w=w-7;
+        return weekDays[w];
+    }
 
     protected void onActivityResult( @Nullable Intent data,int t) {
 
