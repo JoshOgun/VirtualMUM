@@ -6,7 +6,6 @@
     <color name="colorHeader">#fcfcfc</color>
     <color name="colorHeaderText">#848383</color>
     <color name="colorTableItem">#efefef</color>
-
     <color name="address">#2F7092</color>
     <color name="followers">#0D5D98</color>
     <color name="headings">#3797CF</color>
@@ -17,25 +16,53 @@
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
-
-    <string-array name="default_sticker_color">
-        <item>#f08676</item>
-        <item>#ecc369</item>
-        <item>#a7ca70</item>
-        <item>#7dd1c1</item>
-        <item>#7aa5e9</item>
-        <item>#fbaa68</item>
-        <item>#9f86e1</item>
-        <item>#78cb87</item>
-        <item>#d397ed</item>
+    <string-array name="default_sticker_color_for_task">
+        <item>#BA2617</item>
+     <item>#D12A1A</item>
+    <item>#FFA603</item>
+    <item>#FF9919</item>
+    <item>#C85E17</item>
+    <item>#DF742D</item>
+    <item>#BF4C29</item>
+    <item>#C43532</item>
+    <item>#DE0000</item>
+    <item>#F19117</item>
+    <item>#FFCC80</item>
+    <item>#FFB74D</item>
+    <item>#FFA726</item>
+    <item>#FF9800</item>
+    <item>#FB8C00</item>
+    <item>#F57C00</item>
+    <item>#EF6C00</item>
+    <item>#E65100</item>
     </string-array>
 
+    <string-array name="default_sticker_color_for_event">
+        <item>#3C6F93</item>
+        <item>#5386A9</item>
+        <item>#055D81</item>
+        <item>#2EAEE2</item>
+        <item>#1C4678</item>
+        <item>#428095</item>
+        <item>#002F5D</item>
+        <item>#20A5C0</item>
+        <item>#0056B1</item>
+        <item>#042F3E</item>
+        <item>#111E6C</item>
+        <item>#1034A6</item>
+        <item>#0F52BA</item>
+        <item>#4682B4</item>
+        <item>#57A0D3</item>
+        <item>#1D2951</item>
+        <item>#89CFF0</item>
+        <item>#73C2FB</item>
+    </string-array>
 
     <color name="default_side_header_font_color">#7d7d7d</color>
     <color name="default_header_font_color">#7d7d7d</color>
     <color name="default_header_highlight_font_color">#ffffff</color>
     <color name="default_header_highlight_color">#74a4f3</color>
     <color name="default_sticker_font_color">#ffffff</color>
-
     <color name="white">#FFFFFF</color>
+
 </resources>

@@ -26,6 +26,11 @@ public class WeekTable extends AppCompatActivity {
             {"1200/2/8"},
             {"0800/2/9","1400/3/10"},
             {"0900/1/11","1200/1/12","1300/1/13"}};
+    private String [][] demo1 = {{"0900/2/1","1500/1/2"},
+            {"0800/2/3","1600/3/4"},
+            {"0700/4/4","1800/2/5"},
+            {"1000/1/6","1400/1/7"},
+            };
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -51,19 +56,27 @@ public class WeekTable extends AppCompatActivity {
          for (int j = 0;j<demo[i].length;j++){
              int[] tem = new int[5];
              tem = getData(demo[i][j]);
-             add(i,String.valueOf(tem[4]),tem[0],tem[1],tem[2],tem[3]);
+             add(i,String.valueOf(tem[4]),tem[0],tem[1],tem[2],tem[3],0);
 
          }
      }
 
+        for (int i = 0;i<demo1.length;i++){
+            for (int j = 0;j<demo1[i].length;j++){
+                int[] tem = new int[5];
+                tem = getData(demo1[i][j]);
+                add(i,String.valueOf(tem[4]),tem[0],tem[1],tem[2],tem[3],1);
+
+            }
+        }
 
     }
 
-    public void add(int d,String k, int StartHour, int StartM,int endh,int endm){
+    public void add(int d,String k, int StartHour, int StartM,int endh,int endm,int t){
         schedule = new Schedule();
         schedule.setDay(d);
 
-        schedule.setProfessorName(k);
+        schedule.setClassTitle(k);
         schedule.getStartTime().setHour(StartHour);
         schedule.getStartTime().setMinute(StartM);
         schedule.getEndTime().setHour(endh);
@@ -72,7 +85,7 @@ public class WeekTable extends AppCompatActivity {
         ArrayList<Schedule> schedules = new ArrayList<Schedule>();
         schedules.add(schedule);
         i.putExtra("schedules",schedules);
-        onActivityResult(i);
+        onActivityResult(i,t);
 
 
 
@@ -93,11 +106,11 @@ public class WeekTable extends AppCompatActivity {
         return result;
     }
 
-    protected void onActivityResult( @Nullable Intent data) {
+    protected void onActivityResult( @Nullable Intent data,int t) {
 
                     ArrayList<Schedule> item = (ArrayList<Schedule>)data.getSerializableExtra("schedules");
                     weekTable.add(item);
-
+                    weekTable.setStickerColor(t);
 
     }
 
