@@ -97,7 +97,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                         VMDbHelper db;
                         db = new VMDbHelper(getApplicationContext());
 
-
                         SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
                         String todayStr = simpleDate.format(today);
 
@@ -107,6 +106,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                             List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
+
                                 Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
                                 String eDate = t.getDate().substring(0,8);
                                 if(todayStr.equals(eDate) ){
@@ -182,7 +182,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-          Intent intent = new Intent(this,WeekTable.class);
+          Intent intent = new Intent(this, WeekTable.class);
             startActivity(intent);
 
         }  else if (id == R.id.nav_events) {

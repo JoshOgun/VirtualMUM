@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,8 +141,8 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
             return true;
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, WeekTable.class);
+            startActivity(intent);
 
         }  else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);
