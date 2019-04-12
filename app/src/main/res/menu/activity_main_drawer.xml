@@ -29,6 +29,10 @@
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Settings" />
+        <item
+            android:id="@+id/nav_import"
+            android:icon="@android:drawable/stat_sys_download"
+            android:title="Import Calendar" />
     </group>
 
 </menu>

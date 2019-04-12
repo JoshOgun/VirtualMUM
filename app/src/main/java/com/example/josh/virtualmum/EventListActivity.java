@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-            Intent intent = new Intent(this, EventListActivity.class);
+            Intent intent = new Intent(this, WeekTable.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_events) {
@@ -126,8 +127,11 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         }
+         else if (id == R.id.nav_import) {
+                    Intent intent = new Intent(this, GCAPIActivity.class);
+                    startActivity(intent);
 
-
+         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

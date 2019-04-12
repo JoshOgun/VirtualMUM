@@ -32,6 +32,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
 import com.example.josh.virtualmum.EventListActivity;
+import com.example.josh.virtualmum.GCAPIActivity;
 import com.example.josh.virtualmum.ProfileActivity;
 import com.example.josh.virtualmum.ProgressActivity;
 import com.example.josh.virtualmum.R;
@@ -194,7 +195,11 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         }
+        else if (id == R.id.nav_import) {
+                    Intent intent = new Intent(this, GCAPIActivity.class);
+                    startActivity(intent);
 
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

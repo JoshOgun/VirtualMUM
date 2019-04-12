@@ -13,12 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GCAPIActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".GCAPIActivity"
+            android:label = "Import Calendar"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".SetUp4ProfileActivity"
@@ -75,7 +72,6 @@
         <activity
             android:name=".ProgressActivity"
             android:label="Progress"></activity>
-        <activity android:name=".ReportActivity" />
     </application>
 
 </manifest>

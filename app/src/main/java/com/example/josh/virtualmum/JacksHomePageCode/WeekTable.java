@@ -1,6 +1,7 @@
 package com.example.josh.virtualmum.JacksHomePageCode;
 
 import com.example.josh.virtualmum.EventListActivity;
+import com.example.josh.virtualmum.GCAPIActivity;
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.TimetableView;
 import com.example.josh.virtualmum.ProfileActivity;
 import com.example.josh.virtualmum.ProgressActivity;
@@ -206,6 +207,11 @@ public class WeekTable extends AppCompatActivity  implements NavigationView.OnNa
             startActivity(intent);
 
         }
+        else if (id == R.id.nav_import) {
+            Intent intent = new Intent(this, GCAPIActivity.class);
+            startActivity(intent);
+
+         }
 
 
         drawer.closeDrawer(GravityCompat.START);

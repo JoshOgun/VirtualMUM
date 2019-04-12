@@ -153,7 +153,10 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
 
         }
-
+        else if (id == R.id.nav_import) {
+                    Intent intent = new Intent(this, GCAPIActivity.class);
+                    startActivity(intent);
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
