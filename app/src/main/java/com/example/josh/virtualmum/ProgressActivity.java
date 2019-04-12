@@ -65,13 +65,14 @@ public class ProgressActivity extends AppCompatActivity implements NavigationVie
         //getIntent().getLongExtra(taskID, 0);
         start = "090420190000";
         end = "150420190000";
+        cur = "120420190000";
 
         //start = db.getTask(taskID).getStartDate().substring(0,8);
         //end = db.getTask(taskID).getDueDate().substring(0,8);
         try {
             startDate = sdf.parse(start);
             endDate = sdf.parse(end);
-            //curDate = sdf.parse(cur);
+            curDate = sdf.parse(cur);
         } catch(ParseException e){
             e.printStackTrace();
         }
@@ -81,7 +82,7 @@ public class ProgressActivity extends AppCompatActivity implements NavigationVie
         timeLengthCur = (int)(TimeUnit.DAYS.convert(curDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS));
         double theirEstimated = 22;
         double ourEstimated = 20;
-        double actualSpent = 10;
+        double actualSpent = 8;
 
         //double theirEstimated = db.getTask(taskID).getEstimatedHours();
        // float ourEstimated = db.getReport(taskID).getEstimatedHours();
@@ -171,6 +172,10 @@ public class ProgressActivity extends AppCompatActivity implements NavigationVie
         theirEst.setDrawDataPoints(true);
         ourEst.setDrawDataPoints(true);
         actual.setDrawDataPoints(true);
+
+        theirEst.setThickness(10);
+        ourEst.setThickness(10);
+        actual.setThickness(10);
 
 
 
