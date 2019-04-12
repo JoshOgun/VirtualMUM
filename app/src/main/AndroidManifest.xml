@@ -21,19 +21,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SetUpEventsActivity"
-            android:label="Please enter your events..."
+            android:name=".SetUp4ProfileActivity"
+            android:label="@string/title_activity_set_up4_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SetUpEventsActivity"
+            android:label="Set up your events..."
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SetUpActivity"
+            android:label="Please Enter The Following...">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".JacksHomePageCode.TimetableActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".EditEventActivity" />
+        <activity
+            android:name=".EditEventActivity"
+            android:label="Edit/Delete This Event" />
         <activity
             android:name=".AddEventActivity"
-            android:label="@string/title_activity_add_event"
+            android:label="Enter your event details..."
             android:parentActivityName=".EventListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -42,24 +57,25 @@
         </activity> <!-- <activity android:name="com.example.josh.virtualmum.JacksHomePageCode.EditActivity"></activity> -->
         <activity
             android:name=".JacksHomePageCode.WeekTable"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SetUpActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".EventListActivity"
-            android:label="@string/title_activity_event_list"
+            android:label="Your Events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditTaskActivity" />
+        <activity
+            android:name=".EditTaskActivity"
+            android:label="Edit/Delete This Task" />
         <activity
             android:name=".TaskListActivity"
-            android:label="@string/title_activity_task_list"
+            android:label="Your Tasks"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".AddTaskActivity" />
+        <activity
+            android:name=".AddTaskActivity"
+            android:label="Enter your task details..." />
+        <activity
+            android:name=".ProgressActivity"
+            android:label="Progress"></activity>
+        <activity android:name=".ReportActivity" />
     </application>
 
 </manifest>

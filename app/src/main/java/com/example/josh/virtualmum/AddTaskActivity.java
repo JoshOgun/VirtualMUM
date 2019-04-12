@@ -115,6 +115,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
                 Snackbar.make(view, "Task Added!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
             }
         });
 

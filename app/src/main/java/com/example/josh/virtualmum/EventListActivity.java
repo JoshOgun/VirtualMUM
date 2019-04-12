@@ -59,17 +59,17 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
-        FloatingActionButton reloadFab = findViewById(R.id.reloadFab);
-        reloadFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eventList.clear();
-                eAdapter.notifyDataSetChanged();
-                prepareEventData();
-                Toast.makeText(getApplicationContext(), "Events Refreshed!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        FloatingActionButton reloadFab = findViewById(R.id.reloadFab);
+//        reloadFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                eventList.clear();
+//                eAdapter.notifyDataSetChanged();
+//                prepareEventData();
+//                Toast.makeText(getApplicationContext(), "Events Refreshed!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         recyclerView.setAdapter(eAdapter);
 
@@ -105,16 +105,16 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
             Intent intent = new Intent(this, TaskListActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
             drawer.closeDrawer(GravityCompat.START);

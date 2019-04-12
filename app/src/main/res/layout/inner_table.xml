@@ -7,4 +7,10 @@
         >
     </TableLayout>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:text="" />
+
 </merge>

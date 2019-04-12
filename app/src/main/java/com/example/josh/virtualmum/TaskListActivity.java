@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,17 +62,17 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new MyDividerItemDecoration(this, LinearLayoutManager.VERTICAL, 16));
 
-        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
-        reloadFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                taskList.clear();
-                tAdapter.notifyDataSetChanged();
-                prepareTaskData();
-                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        FloatingActionButton reloadFab = findViewById(R.id.reloadfab);
+//        reloadFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                taskList.clear();
+//                tAdapter.notifyDataSetChanged();
+//                prepareTaskData();
+//                Toast.makeText(getApplicationContext(), "Tasks Refreshed!", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         recyclerView.setAdapter(tAdapter);
 
@@ -94,14 +95,9 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
 
         prepareTaskData();
 
-        User u = new User();
-        u.updateEvents(getApplicationContext());
-        for(int i = 0; i < 7; i++) {
-            for(int j = 0; j < 24; j++){
-                u.printTimetable();
-            }
+//        User u = new User();
+//        u.updateEvents(getApplicationContext());
 
-        }
         //u.printTimetable();
         //u.updateEvents(getApplicationContext());
         //u.updateTasks(getApplicationContext());
@@ -137,16 +133,16 @@ public class TaskListActivity extends AppCompatActivity implements NavigationVie
             startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
             drawer.closeDrawer(GravityCompat.START);
             return true;
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, WeekTable.class);
+            startActivity(intent);
 
         }  else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);

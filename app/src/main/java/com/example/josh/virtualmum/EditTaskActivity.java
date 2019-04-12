@@ -193,6 +193,9 @@ public class EditTaskActivity extends AppCompatActivity {
                     Log.d(" Tasks", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate() + "\t" +
                             task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours() + "\t" + task.getCompleted());
                 }
+
+                Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -221,6 +224,9 @@ public class EditTaskActivity extends AppCompatActivity {
                     Log.d(" Tasks", task.getId() + "\t" + task.getName() + "\t" + task.getDueDate() + "\t" +
                             task.getDifficulty() + "\t" + task.getPriority() + "\t" + task.getEstimatedHours());
                 }
+
+                Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+                startActivity(intent);
 
             }
         });

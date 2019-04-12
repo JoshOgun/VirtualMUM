@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 
 import Database.UserPreference.UserPref;
 import Database.VMDbHelper;
@@ -24,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_profile);
 
-        UserPref userPref;
+        final UserPref userPref;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -59,7 +60,16 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(getBaseContext(), SetUpActivity.class);
+
+                VMDbHelper db;
+                db = new VMDbHelper(getApplicationContext());
+
+
+                db.deleteUserPref(userPref);
+
+
+                db.closeDB();
+                Intent myIntent = new Intent(getBaseContext(), SetUp4ProfileActivity.class);
                 startActivity(myIntent);
 
             }
@@ -77,16 +87,16 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             startActivity(intent);
 
         } else if (id == R.id.nav_progress) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_task) {
             Intent intent = new Intent(this, TaskListActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, WeekTable.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);

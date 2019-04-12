@@ -238,7 +238,8 @@ public class EditEventActivity extends AppCompatActivity {
                 db.closeDB();
 
                 Toast.makeText(getApplicationContext(), "Events Updated!", Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(getApplicationContext(), EventListActivity.class);
+                startActivity(intent);
             }
         });
     }
