@@ -37,6 +37,7 @@ public class WeekTable extends AppCompatActivity {
         setContentView(R.layout.activity_weektable);
         User u = new User();
         u.updateEvents(getApplicationContext());
+        demo = u.getTasks();
         weekTable = findViewById(R.id.timetable);
         weekTable.setHeaderHighlight(1);
         weekTable.removeAll();
@@ -55,8 +56,13 @@ public class WeekTable extends AppCompatActivity {
      for (int i = 0;i<demo.length;i++){
          for (int j = 0;j<demo[i].length;j++){
              int[] tem = new int[5];
+             if (getData(demo[i][j])!=null){
              tem = getData(demo[i][j]);
              add(i,String.valueOf(tem[4]),tem[0],tem[1],tem[2],tem[3],0);
+             }
+             else{
+                 break;
+             }
 
          }
      }
