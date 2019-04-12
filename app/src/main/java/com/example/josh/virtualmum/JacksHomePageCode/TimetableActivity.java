@@ -118,7 +118,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                                         startM = Integer.parseInt(fullDate.substring(10,12));
                                         endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
 
-                                        add(name, startH, startM, endH, startM);
+                                        add(name, startH, startM, endH, startM,0);
                                     }
                                     else{
                                         String name = db.getTask(t.getTaskID()).getName();
@@ -128,7 +128,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                                         startM = Integer.parseInt(fullDate.substring(10,12));
                                         endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
 
-                                        add(name, startH, startM, endH, startM);
+                                        add(name, startH, startM, endH, startM,1);
                                     }
                                 }
                             }
@@ -200,7 +200,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
-    public void add(String name, int startHour, int startMin,int endh,int endm){
+    public void add(String name, int startHour, int startMin,int endh,int endm,int j){
         schedule = new Schedule();
 
         schedule.setTitle(name);
@@ -212,14 +212,15 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         ArrayList<Schedule> schedules = new ArrayList<Schedule>();
         schedules.add(schedule);
         i.putExtra("schedules",schedules);
-        onActivityResult(i);
+        onActivityResult(i,j);
     }
 
 
-    protected void onActivityResult( @Nullable Intent data) {
+    protected void onActivityResult( @Nullable Intent data,int i) {
 
         ArrayList<Schedule> item = (ArrayList<Schedule>) data.getSerializableExtra("schedules");
         timetable.add(item);
+        timetable.setStickerColor1(i);
     }
 
 
