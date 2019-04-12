@@ -113,8 +113,8 @@ public class EventListActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
             drawer.closeDrawer(GravityCompat.START);

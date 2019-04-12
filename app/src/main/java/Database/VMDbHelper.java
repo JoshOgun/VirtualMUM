@@ -130,8 +130,8 @@ public class VMDbHelper extends SQLiteOpenHelper {
         List<Task> tasks = new ArrayList<>();
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + Task.VMTask.TABLE_NAME + " ORDER BY " +
-                Task.VMTask.COLUMN_NAME_TITLE4 + " DESC";
+        String selectQuery = "SELECT  * FROM " + Task.VMTask.TABLE_NAME + " WHERE Completed = 1"+ " ORDER BY " +
+                Task.VMTask.COLUMN_NAME_TITLE4 + " DESC" + "";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

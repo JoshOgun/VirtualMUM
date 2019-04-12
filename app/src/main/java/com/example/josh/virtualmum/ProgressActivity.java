@@ -223,9 +223,7 @@ public class ProgressActivity extends AppCompatActivity implements NavigationVie
         else if (id == R.id.nav_setting) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
-
         }
-
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
