@@ -23,13 +23,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import com.example.josh.virtualmum.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-
 //import com.example.josh.virtualmum;
+import com.example.josh.virtualmum.R;
 //import com.example.timetableview.TimetableView;
 public class TimetableView extends LinearLayout {
     private static final int DEFAULT_ROW_COUNT = 17;
@@ -74,8 +73,8 @@ public class TimetableView extends LinearLayout {
         rowCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
         columnCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
-        sideCellWidth = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
-        int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_task);
+        sideCellWidth = 140;a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
+        int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_event);
         stickerColors = a.getResources().getStringArray(colorsId);
         startTime = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_start_time, DEFAULT_START_TIME);
 
@@ -111,7 +110,7 @@ public class TimetableView extends LinearLayout {
             RelativeLayout.LayoutParams param = createStickerParam(schedule);
             tv.setLayoutParams(param);
             tv.setPadding(10, 0, 10, 0);
-            tv.setText(schedule.getTitle() + "\n" );
+            tv.setText(schedule.getTitle());
             tv.setTextColor(Color.parseColor("#FFFFFF"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_STICKER_FONT_SIZE_DP);
             tv.setTypeface(null, Typeface.BOLD);
@@ -157,19 +156,6 @@ public class TimetableView extends LinearLayout {
         setStickerColor();
     }
 
-//    public void load(String data) {
-//        removeAll();
-//        stickers = SaveManager.loadSticker(context);
-//        int maxKey = 0;
-//        for (int key : stickers.keySet()) {
-//            ArrayList<Schedule> schedules = stickers.get(key).getSchedules();
-//            add(schedules, key);
-//            if (maxKey < key) maxKey = key;
-//        }
-//
-//        stickerCount = maxKey + 1;
-//        setStickerColor();
-//    }
 
     private void setStickerColor() {
         int size = stickers.size();
@@ -200,11 +186,14 @@ public class TimetableView extends LinearLayout {
                 TextView tv = new TextView(context);
                 tv.setLayoutParams(createTableRowParam(cellHeight));
                 if (k == 0) {
-                    tv.setText(getHeaderTime(i));
-                    tv.setTextColor(getResources().getColor(R.color.colorHeaderText));
+                    tv.setText(getHeaderTime(i+1));
+
+
+                    tv.setTextColor(Color.parseColor("#1034A6"));
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SIDE_HEADER_FONT_SIZE_DP);
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorHeader));
-                    tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        tv.setBackground(getResources().getDrawable(R.drawable.item_border));
+                    }                    tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
                     tv.setText("");
@@ -266,14 +255,26 @@ public class TimetableView extends LinearLayout {
         return new TableRow.LayoutParams(w_px, h_px);
     }
 
+//    private String getHeaderTime(int i) {
+//        int p =  startTime + i % 24 ;
+//        String t = " ";
+//        if(p<12){
+//            t= String.valueOf(p)+"\n"+  "A"+ "M";
+//        }
+//        else {
+//            t = String.valueOf(p)+"\n"+  "P"+ "M";
+//        }
+//
+//        return t;
+//    }
     private String getHeaderTime(int i) {
-        int p =  startTime + i % 24 ;
+        int p =  startTime + i;
         String t = " ";
-        if(p<12){
-            t= String.valueOf(p)+"\n"+  "A"+ "M";
+        if(p<10){
+            t= "\n\n"+"0"+String.valueOf(p)+ ":00";
         }
         else {
-            t = String.valueOf(p)+"\n"+  "P"+ "M";
+            t = "\n\n"+String.valueOf(p)+":00";
         }
 
         return t;

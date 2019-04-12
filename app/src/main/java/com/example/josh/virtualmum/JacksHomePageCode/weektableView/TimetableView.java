@@ -39,6 +39,7 @@ public class TimetableView extends LinearLayout {
     private static final int DEFAULT_HEADER_HIGHLIGHT_FONT_SIZE_DP = 15;
     private static final int DEFAULT_STICKER_FONT_SIZE_DP = 11;
 
+    private String[] weekDays = { "MON", "TUE", "WED", "THU", "FRI", "SAT","SUN" };
 
     private int rowCount;
     private int columnCount;
@@ -83,7 +84,7 @@ public class TimetableView extends LinearLayout {
         rowCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
         columnCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
-        sideCellWidth = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
+        sideCellWidth = 140;//a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_task);
         stickerColors = a.getResources().getStringArray(colorsId);
         int colorsId1 = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_event);
@@ -155,18 +156,18 @@ public class TimetableView extends LinearLayout {
         stickers.clear();
     }
 
-  //  public void edit(int idx, ArrayList<Schedule> schedules) {
+    //  public void edit(int idx, ArrayList<Schedule> schedules) {
     //    remove(idx);
-      //  add(schedules, idx);
-   // }
+    //  add(schedules, idx);
+    // }
 
-  //  public void remove(int idx) {
+    //  public void remove(int idx) {
     //    Sticker sticker = stickers.get(idx);
-      //  for (TextView tv : sticker.getView()) {
-        //    stickerBox.removeView(tv);
-        //}
-       // stickers.remove(idx);
-        //setStickerColor();
+    //  for (TextView tv : sticker.getView()) {
+    //    stickerBox.removeView(tv);
+    //}
+    // stickers.remove(idx);
+    //setStickerColor();
     //}
 
     public void setHeaderHighlight(int idx) {
@@ -201,7 +202,7 @@ public class TimetableView extends LinearLayout {
                     v.setBackgroundColor(Color.parseColor(stickerColors[b]));
                 }
         }
-         else{
+        else{
             int colorSize = stickerColors1.length;
             int b=(int)(Math.random()*colorSize);
 
@@ -214,7 +215,7 @@ public class TimetableView extends LinearLayout {
     }
 
     private void createTable() {
-       createTableHeader();
+        createTableHeader();
         for (int i = 0; i < rowCount; i++) {
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(createTableLayoutParam());
@@ -223,11 +224,15 @@ public class TimetableView extends LinearLayout {
                 TextView tv = new TextView(context);
                 tv.setLayoutParams(createTableRowParam(cellHeight));
                 if (k == 0) {
-                    tv.setText(getHeaderTime(i));
-                    tv.setTextColor(getResources().getColor(R.color.colorHeaderText));
+                    tv.setText(getHeaderTime(i+1));
+
+
+                    tv.setTextColor(Color.parseColor("#1034A6"));
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SIDE_HEADER_FONT_SIZE_DP);
-                    tv.setBackgroundColor(getResources().getColor(R.color.colorHeader));
-                    tv.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        tv.setBackground(getResources().getDrawable(R.drawable.item_border));
+                    }
+                    tv.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
                     tv.setLayoutParams(createTableRowParam(sideCellWidth, cellHeight));
                 } else {
                     tv.setText("");
@@ -257,7 +262,7 @@ public class TimetableView extends LinearLayout {
             tv.setTextColor(getResources().getColor(com.example.josh.virtualmum.R.color.colorHeaderText));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_HEADER_FONT_SIZE_DP);
             if (i != 0){
-            tv.setText(getWeekOfDate(date,i-1));}
+                tv.setText(weekDays[i-1]);}
             else
                 tv.setText(" ");
             tv.setGravity(Gravity.CENTER);
@@ -267,18 +272,18 @@ public class TimetableView extends LinearLayout {
         tableHeader.addView(tableRow);
     }
 
-    public String getWeekOfDate(Date date,int i) {
-        String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (w < 0)
-            w = 0;
-        w = w+i;
-        if (w >=7)
-          w=w-7;
-        return weekDays[w];
-    }
+//    public String getWeekOfDate(Date date,int i) {
+//        String[] weekDays = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(date);
+//        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+//        if (w < 0)
+//            w = 0;
+//        w = w+i;
+//        if (w >=7)
+//            w=w-7;
+//        return weekDays[w];
+//    }
 
     private RelativeLayout.LayoutParams createStickerParam(Schedule schedule) {
         int cell_w = calCellWidth();
@@ -326,13 +331,13 @@ public class TimetableView extends LinearLayout {
 
     private String getHeaderTime(int i) {
 
-        int p =  startTime + i % 24 ;
+        int p =  startTime + i;
         String t = " ";
-        if(p<=12){
-            t= String.valueOf(p)+"\n"+  "A"+ "M";
+        if(p<10){
+            t= "\n\n"+"0"+String.valueOf(p)+":00";
         }
         else {
-            t = String.valueOf(p-12)+"\n"+  "P"+ "M";
+            t = "\n\n"+String.valueOf(p)+":00";
         }
 
         return t;
