@@ -75,7 +75,7 @@ public class TimetableView extends LinearLayout {
         rowCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_row_count, DEFAULT_ROW_COUNT) - 1;
         columnCount = a.getInt(com.example.josh.virtualmum.R.styleable.TimetableView_column_count, DEFAULT_COLUMN_COUNT);
         cellHeight = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_cell_height, dp2Px(DEFAULT_CELL_HEIGHT_DP));
-        sideCellWidth = 120;//a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
+        sideCellWidth = a.getDimensionPixelSize(com.example.josh.virtualmum.R.styleable.TimetableView_side_cell_width, dp2Px(DEFAULT_SIDE_CELL_WIDTH_DP));
         int colorsId = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_task);
         stickerColors = a.getResources().getStringArray(colorsId);
         int colorsId1 = a.getResourceId(com.example.josh.virtualmum.R.styleable.TimetableView_sticker_colors, R.array.default_sticker_color_for_event);
@@ -132,7 +132,7 @@ public class TimetableView extends LinearLayout {
             stickers.put(count, sticker);
             stickerBox.addView(tv);
         }
-     //   setStickerColor();
+       // setStickerColor();
     }
 
 
@@ -206,6 +206,36 @@ public void setStickerColor(int x) {
             for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
                 v.setBackgroundColor(Color.parseColor(stickerColors1[b]));
             }
+    }
+    public void setStickerColor1(int x) {
+        int size = stickers.size();
+        int[] orders = new int[size];
+        int i = 0;
+        for (int key : stickers.keySet())
+        { orders[i++] = key;
+
+        }
+        Arrays.sort(orders);
+        if(x==0) {
+
+            int colorSize = stickerColors.length;
+            int b=(int)(Math.random()*colorSize);
+
+            for (i = 0; i < size; i++)
+                for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
+                    v.setBackgroundColor(Color.parseColor(stickerColors[b]));
+                }
+        }
+        else{
+            int colorSize = stickerColors1.length;
+            int b=(int)(Math.random()*colorSize);
+
+            for (i = 0; i < size; i++)
+                for (TextView v : stickers.get(orders[orders.length - 1]).getView()) {
+                    v.setBackgroundColor(Color.parseColor(stickerColors1[b]));
+                }
+        }
+
     }
 
 }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.josh.virtualmum.JacksHomePageCode.TimetableActivity;
+import com.example.josh.virtualmum.JacksHomePageCode.WeekTable;
 
 import Database.UserPreference.UserPref;
 import Database.VMDbHelper;
@@ -94,8 +95,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-//            Intent intent = new Intent(this, .class);
-//            startActivity(intent);
+            Intent intent = new Intent(this, WeekTable.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_events) {
             Intent intent = new Intent(this, EventListActivity.class);

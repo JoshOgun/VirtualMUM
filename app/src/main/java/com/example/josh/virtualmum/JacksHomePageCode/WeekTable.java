@@ -1,6 +1,9 @@
 package com.example.josh.virtualmum.JacksHomePageCode;
 
+import com.example.josh.virtualmum.EventListActivity;
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.TimetableView;
+import com.example.josh.virtualmum.ProfileActivity;
+import com.example.josh.virtualmum.ProgressActivity;
 import com.example.josh.virtualmum.R;
 
 import android.content.Intent;
@@ -8,20 +11,30 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+
 import com.example.josh.virtualmum.JacksHomePageCode.weektableView.Schedule;
+import com.example.josh.virtualmum.TaskListActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import Database.AllocationAlgorithm.User;
 import Database.VMDbHelper;
 
-public class WeekTable extends AppCompatActivity {
+public class WeekTable extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
    //
     // private Context context;
     private TimetableView weekTable;
     private Schedule schedule;
     private String [][] demo;
+
+
 
 //            = {{"1200/1/1","1300/1/2"},
 //            {"1159/2/3","1400/3/4"},
@@ -34,9 +47,15 @@ public class WeekTable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Calendar cal = Calendar.getInstance();
+
         demo = new String[1000][1000];
         demo1 = new String[1000][1000];
-        setContentView(R.layout.activity_weektable);
+        setContentView(R.layout.activity_navigate_weektable);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         User u = new User();
         u.updateEvents(getApplicationContext());
         VMDbHelper db;
@@ -44,7 +63,7 @@ public class WeekTable extends AppCompatActivity {
         demo = u.getTasks();
         demo1 = u.getEvents();
         weekTable = findViewById(R.id.timetable);
-        weekTable.setHeaderHighlight(1);
+        weekTable.setHeaderHighlight(cal.get(Calendar.DAY_OF_WEEK) - 1);
         weekTable.removeAll();
 
      for (int i = 0;i<demo.length;i++){
@@ -136,6 +155,18 @@ public class WeekTable extends AppCompatActivity {
         return result;
     }
 
+    public int getWeekOfDate(Date date, int i) {
+        int[] weekDays = {0, 1, 2, 3, 4, 5, 6 };
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        if (w < 0)
+            w = 0;
+        w = w+i;
+        if (w >=7)
+            w=w-7;
+        return weekDays[w];
+    }
 
     protected void onActivityResult( @Nullable Intent data,int t) {
 
@@ -143,6 +174,42 @@ public class WeekTable extends AppCompatActivity {
                     weekTable.add(item);
                     weekTable.setStickerColor(t);
 
+    }
+
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(this, TimetableActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_progress) {
+            Intent intent = new Intent(this, ProgressActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_task) {
+            Intent intent = new Intent(this, TaskListActivity.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_weektable) {
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
+        }  else if (id == R.id.nav_events) {
+            Intent intent = new Intent(this, EventListActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_setting) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+
+        }
+
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 }

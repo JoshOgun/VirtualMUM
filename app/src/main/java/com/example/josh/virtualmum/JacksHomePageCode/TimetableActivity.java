@@ -97,7 +97,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                         VMDbHelper db;
                         db = new VMDbHelper(getApplicationContext());
 
-
                         SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
                         String todayStr = simpleDate.format(today);
 
@@ -107,6 +106,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                             List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
+
                                 Log.d("TimetableTable", "\t" + t.getId()+ "\t" + t.getDate() + "\t" + t.getEventID() +  "\t" + t.getTaskID() +  "\t" + t.getDuration() + "\t" + t.getCompleted());
                                 String eDate = t.getDate().substring(0,8);
                                 if(todayStr.equals(eDate) ){
@@ -118,7 +118,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                                         startM = Integer.parseInt(fullDate.substring(10,12));
                                         endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
 
-                                        add(name, startH, startM, endH, startM,1);
+                                        add(name, startH, startM, endH, startM,0);
                                     }
                                     else{
                                         String name = db.getTask(t.getTaskID()).getName();
@@ -128,7 +128,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                                         startM = Integer.parseInt(fullDate.substring(10,12));
                                         endH =  (Integer.parseInt(fullDate.substring(8,10))) + Math.round(t.getDuration());
 
-                                        add(name, startH, startM, endH, startM,0);
+                                        add(name, startH, startM, endH, startM,1);
                                     }
                                 }
                             }
@@ -182,7 +182,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
 
         } else if (id == R.id.nav_weektable) {
-          Intent intent = new Intent(this,WeekTable.class);
+          Intent intent = new Intent(this, WeekTable.class);
             startActivity(intent);
 
         }  else if (id == R.id.nav_events) {
@@ -220,7 +220,7 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
         ArrayList<Schedule> item = (ArrayList<Schedule>) data.getSerializableExtra("schedules");
         timetable.add(item);
-        timetable.setStickerColor(i);
+        timetable.setStickerColor1(i);
     }
 
 
