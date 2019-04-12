@@ -34,8 +34,8 @@ public class WeekTable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        demo = new String[100][100];
-        demo1 = new String[100][100];
+        demo = new String[1000][1000];
+        demo1 = new String[1000][1000];
         setContentView(R.layout.activity_weektable);
         User u = new User();
         u.updateEvents(getApplicationContext());
@@ -65,13 +65,12 @@ public class WeekTable extends AppCompatActivity {
             for (int j = 0;j<demo1[i].length;j++){
                 int[] tem = new int[5];
                 if(demo1[i][j]!=null) {
-                    tem = getData(demo1[i][j]);
-                    add(i, db.getEvent(tem[4]).getName(), tem[0], tem[1], tem[2], tem[3], 1);
+                    tem = getData1(demo1[i][j]);
+                    add(i, getData2(demo1[i][j]), tem[0], tem[1], tem[2], tem[3], 1);
                 }
                 else{
-                   break;
+                    break;
                 }
-
             }
         }
 
@@ -110,6 +109,33 @@ public class WeekTable extends AppCompatActivity {
 
         return result;
     }
+
+    public int[] getData1 (String demo){
+        int[] result = new int[5];
+        String[] tem = new String[3];
+        int t = 0;
+        tem = demo.split("/");
+
+        t=Integer.parseInt(tem[1]);
+        result[1]=Integer.parseInt(tem[0].substring(2,4));
+        result[0]=Integer.parseInt(tem[0].substring(0,2));
+        result[2] = result[0]+((t*60)/60);
+        result[3] = result[1]+((t*60)%60);
+
+        return result;
+    }
+
+    public String getData2 (String demo){
+        String result=" ";
+        String[] tem = new String[3];
+        int t = 0;
+        tem = demo.split("/");
+        result = tem[2];
+
+
+        return result;
+    }
+
 
     protected void onActivityResult( @Nullable Intent data,int t) {
 
