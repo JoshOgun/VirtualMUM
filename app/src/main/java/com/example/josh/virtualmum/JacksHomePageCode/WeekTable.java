@@ -63,7 +63,11 @@ public class WeekTable extends AppCompatActivity  implements NavigationView.OnNa
         demo = u.getTasks();
         demo1 = u.getEvents();
         weekTable = findViewById(R.id.timetable);
-        weekTable.setHeaderHighlight(cal.get(Calendar.DAY_OF_WEEK) - 1);
+       int  k = cal.get(Calendar.DAY_OF_WEEK)-1;
+       if(k==0){
+           k=7;
+       }
+        weekTable.setHeaderHighlight(k);
         weekTable.removeAll();
 
      for (int i = 0;i<demo.length;i++){

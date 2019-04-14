@@ -59,17 +59,6 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
         timetable = findViewById(R.id.timetable);
         schedule = new Schedule();
 
-        timetable.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
-            @Override
-            public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
-//                Intent i = new Intent(context, EditActivity.class);
-//                i.putExtra("mode",REQUEST_EDIT);
-//                i.putExtra("idx", idx);
-//                i.putExtra("schedules", schedules);
-//                startActivityForResult(i,REQUEST_EDIT);
-            }
-        });
-
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
 
@@ -79,8 +68,8 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
 
         final HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
-                .endDate(endDate.getTime())
-                .startDate(startDate.getTime())
+               // .endDate(endDate.getTime())
+                //.startDate(startDate.getTime())
                 .datesNumberOnScreen(5)
                 .build();
 
@@ -92,18 +81,19 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
 
                     @Override
                     public void onDateSelected(Date date, int position) {
+                        timetable.removeAll();
 
 
                         VMDbHelper db;
                         db = new VMDbHelper(getApplicationContext());
 
                         SimpleDateFormat simpleDate =  new SimpleDateFormat("ddMMyyyy");
-                        String todayStr = simpleDate.format(today);
+                        String todayStr = simpleDate.format(date);
 
                         // We only work in hours so i add the duration to the hour.
-                        if (isSameDate(today,date)){
-                           timetable.removeAll();
-                            List<Timetable> allT = db.getFullTimetable();
+                     // if (isSameDate(today,date)){
+
+                          List<Timetable> allT = db.getFullTimetable();
 
                             for (Timetable t : allT) {
 
@@ -132,14 +122,15 @@ public class TimetableActivity extends AppCompatActivity implements NavigationVi
                                     }
                                 }
                             }
+                        db.closeDB();
 
                         }
-                         else{
-                             timetable.removeAll();
-                         }
+                      //   else{
+                        //     timetable.removeAll();
+                        // }
 
-                        db.closeDB();
-                    }
+                      //  db.closeDB();
+                   // }
 
                 }
         );
